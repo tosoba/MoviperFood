@@ -1,0 +1,55 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "com.example.there.moviperfood"
+        minSdkVersion 16
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:27.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+    implementation 'com.github.bumptech.glide:glide:' + rootProject.ext.glideVersion
+
+    implementation 'io.reactivex.rxjava2:rxjava:' + rootProject.ext.rxJavaVersion
+    implementation 'io.reactivex.rxjava2:rxandroid:' + rootProject.ext.rxAndroidVersion
+    implementation 'com.squareup.retrofit2:retrofit:' + rootProject.ext.retrofitVersion
+    implementation 'com.squareup.retrofit2:converter-gson:' + rootProject.ext.retrofitVersion
+    implementation 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:' + rootProject.ext.retrofitRxVersion
+    implementation 'com.squareup.okhttp3:logging-interceptor:' + rootProject.ext.okHttpVersion
+
+    // Moviper
+    implementation 'com.mateuszkoslacz.moviper:moviper-rx:2.0.4'
+
+    // Google
+    implementation 'com.google.android.gms:play-services-maps:12.0.1'
+    implementation 'com.google.android.gms:play-services-places:12.0.1'
+
+    // Dagger
+    implementation 'com.google.dagger:dagger-android:2.13'
+    implementation 'com.google.dagger:dagger-android-support:2.13' // if you use the support libraries
+    annotationProcessor 'com.google.dagger:dagger-android-processor:2.13'
+    annotationProcessor "com.google.dagger:dagger-compiler:2.13"
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+}
