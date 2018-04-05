@@ -102,7 +102,8 @@ public class SearchActivity
         @Override
         public void onClick(Cuisine cuisine) {
             if (lastPlaceLatLng != null)
-                presenter.loadRestaurants(lastPlaceLatLng, cuisine);
+                presenter.startRestaurantsActivity(cuisine, lastPlaceLatLng);
+                //presenter.loadRestaurants(lastPlaceLatLng, cuisine);
         }
     };
 

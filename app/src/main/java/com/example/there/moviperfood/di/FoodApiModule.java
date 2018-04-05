@@ -1,9 +1,7 @@
-package com.example.there.moviperfood.viper.search;
+package com.example.there.moviperfood.di;
 
 import com.example.there.moviperfood.data.FoodApiService;
 import com.example.there.moviperfood.data.FoodRepository;
-import com.example.there.moviperfood.data.cuisine.CuisineMapper;
-import com.example.there.moviperfood.data.restaurant.RestaurantMapper;
 import com.example.there.moviperfood.domain.BaseFoodRepository;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
@@ -17,7 +15,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
-public class SearchInteractorModule {
+public class FoodApiModule {
 
     @Provides
     @Singleton
@@ -39,19 +37,7 @@ public class SearchInteractorModule {
 
     @Provides
     @Singleton
-    CuisineMapper cuisineMapper() {
-        return new CuisineMapper();
-    }
-
-    @Provides
-    @Singleton
-    RestaurantMapper restaurantMapper() {
-        return new RestaurantMapper();
-    }
-
-    @Provides
-    @Singleton
-    BaseFoodRepository foodRepository(CuisineMapper cuisineMapper, RestaurantMapper restaurantMapper, FoodApiService service) {
-        return new FoodRepository(cuisineMapper, restaurantMapper, service);
+    BaseFoodRepository foodRepository(FoodApiService service) {
+        return new FoodRepository(service);
     }
 }

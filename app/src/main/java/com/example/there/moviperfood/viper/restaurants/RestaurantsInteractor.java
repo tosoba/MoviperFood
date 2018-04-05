@@ -1,6 +1,7 @@
-package com.example.there.moviperfood.viper.search;
+package com.example.there.moviperfood.viper.restaurants;
 
 import com.example.there.moviperfood.data.cuisine.Cuisine;
+import com.example.there.moviperfood.data.restaurant.Restaurant;
 import com.example.there.moviperfood.di.DaggerFoodApiComponent;
 import com.example.there.moviperfood.di.FoodApiModule;
 import com.example.there.moviperfood.domain.BaseFoodRepository;
@@ -14,14 +15,14 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import lombok.val;
 
-public class SearchInteractor
+public class RestaurantsInteractor
         extends BaseRxInteractor
-        implements SearchContract.Interactor {
+        implements RestaurantsContract.Interactor {
 
     @Inject
     BaseFoodRepository foodRepository;
 
-    public SearchInteractor() {
+    public RestaurantsInteractor() {
         super();
         val component = DaggerFoodApiComponent.builder()
                 .searchInteractorModule(new FoodApiModule())
@@ -30,7 +31,7 @@ public class SearchInteractor
     }
 
     @Override
-    public Observable<List<Cuisine>> loadCuisines(LatLng latLng) {
-        return foodRepository.loadCuisines(latLng);
+    public Observable<List<Restaurant>> loadRestaurants(LatLng latLng, Cuisine cuisine) {
+        return foodRepository.loadRestaurants(latLng, cuisine);
     }
 }

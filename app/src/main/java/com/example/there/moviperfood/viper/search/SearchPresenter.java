@@ -3,7 +3,6 @@ package com.example.there.moviperfood.viper.search;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.annimon.stream.Stream;
 import com.example.there.moviperfood.data.cuisine.Cuisine;
 import com.google.android.gms.maps.model.LatLng;
 import com.mateuszkoslacz.moviper.base.presenter.BaseRxPresenter;
@@ -36,22 +35,26 @@ public class SearchPresenter
     }
 
     private List<Cuisine> cuisinesToUpdate;
+    private boolean cuisinesLoadingInProgress = false;
 
     private void updateCuisines(List<Cuisine> cuisines) {
+        if (cuisines == null || cuisines.isEmpty()) return;
+
         val view = getView();
         if (view != null) {
             view.updateCuisines(cuisines);
             cuisinesToUpdate = null;
-        }
-        else cuisinesToUpdate = cuisines;
+        } else cuisinesToUpdate = cuisines;
     }
 
     @Override
     public void loadCuisines(LatLng latLng) {
-        if (cuisinesToUpdate == null) {
+        if (cuisinesToUpdate == null && !cuisinesLoadingInProgress) {
+            cuisinesLoadingInProgress = true;
             addSubscription(getInteractor().loadCuisines(latLng)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
+                    .doFinally(() -> cuisinesLoadingInProgress = false)
                     .subscribe(this::updateCuisines, error -> Log.e("Error", error.getMessage())));
         } else {
             updateCuisines(cuisinesToUpdate);
@@ -59,11 +62,7 @@ public class SearchPresenter
     }
 
     @Override
-    public void loadRestaurants(LatLng latLng, Cuisine cuisine) {
-        addSubscription(getInteractor().loadRestaurants(latLng, cuisine)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(restaurants -> Stream.of(restaurants).forEach(restaurant -> Log.e("Restaurant", restaurant.getName())),
-                        error -> Log.e("Error", error.getMessage())));
+    public void startRestaurantsActivity(Cuisine cuisine, LatLng latLng) {
+        getRouting().startRestaurantsActivity(cuisine, latLng);
     }
 }
