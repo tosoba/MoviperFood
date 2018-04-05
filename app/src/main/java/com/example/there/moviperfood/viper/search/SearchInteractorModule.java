@@ -5,7 +5,6 @@ import com.example.there.moviperfood.data.FoodRepository;
 import com.example.there.moviperfood.data.cuisine.CuisineMapper;
 import com.example.there.moviperfood.data.restaurant.RestaurantMapper;
 import com.example.there.moviperfood.domain.BaseFoodRepository;
-import com.google.gson.annotations.SerializedName;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import javax.inject.Singleton;

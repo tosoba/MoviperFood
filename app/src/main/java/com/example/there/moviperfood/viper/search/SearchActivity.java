@@ -1,5 +1,6 @@
 package com.example.there.moviperfood.viper.search;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,7 +16,9 @@ import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.maps.model.LatLng;
 import com.mateuszkoslacz.moviper.base.view.activity.ViperActivity;
+import com.example.there.moviperfood.databinding.ActivitySearchBinding;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -25,13 +28,20 @@ public class SearchActivity
 
     private CuisinesAdapter cuisinesAdapter;
 
+    private static final String KEY_SEARCH_VIEW_MODEL = "KEY_SEARCH_VIEW_MODEL";
+    private SearchViewModel searchViewModel = new SearchViewModel();
+
     private static final String KEY_LAST_PLACE_LAT_LNG = "KEY_LAST_PLACE_LAT_LNG";
     private LatLng lastPlaceLatLng;
+
+    private static final String KEY_LAST_CUISINES = "KEY_LAST_CUISINES";
+    private ArrayList<Cuisine> lastCuisines;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+        ActivitySearchBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_search);
+        binding.setViewModel(searchViewModel);
 
         initFromSavedState(savedInstanceState);
         initSearchFragment();
@@ -42,11 +52,24 @@ public class SearchActivity
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if (lastPlaceLatLng != null) outState.putParcelable(KEY_LAST_PLACE_LAT_LNG, lastPlaceLatLng);
+        if (searchViewModel != null) outState.putParcelable(KEY_SEARCH_VIEW_MODEL, searchViewModel);
+        if (lastCuisines != null) outState.putParcelableArrayList(KEY_LAST_CUISINES, lastCuisines);
     }
 
     private void initFromSavedState(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             if (savedInstanceState.containsKey(KEY_LAST_PLACE_LAT_LNG)) lastPlaceLatLng = savedInstanceState.getParcelable(KEY_LAST_PLACE_LAT_LNG);
+            if (savedInstanceState.containsKey(KEY_SEARCH_VIEW_MODEL)) searchViewModel = savedInstanceState.getParcelable(KEY_SEARCH_VIEW_MODEL);
+            if (savedInstanceState.containsKey(KEY_LAST_CUISINES)) lastCuisines = savedInstanceState.getParcelableArrayList(KEY_LAST_CUISINES);
+
+            initSearchFromSavedState();
+        }
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    private void initSearchFromSavedState() {
+        if (lastPlaceLatLng != null && searchViewModel.isLoading != null && searchViewModel.isLoading.get()) {
+            presenter.loadCuisines(lastPlaceLatLng);
         }
     }
 
@@ -59,6 +82,7 @@ public class SearchActivity
     private PlaceSelectionListener placeSelectionListener = new PlaceSelectionListener() {
         @Override
         public void onPlaceSelected(Place place) {
+            searchViewModel.isLoading.set(true);
             lastPlaceLatLng = place.getLatLng();
             presenter.loadCuisines(lastPlaceLatLng);
         }
@@ -78,19 +102,25 @@ public class SearchActivity
         @Override
         public void onClick(Cuisine cuisine) {
             if (lastPlaceLatLng != null)
-            presenter.loadRestaurants(lastPlaceLatLng, cuisine);
+                presenter.loadRestaurants(lastPlaceLatLng, cuisine);
         }
     };
 
     private void initCuisinesRecyclerView() {
         RecyclerView cuisinesRecyclerView = findViewById(R.id.cuisines_recycler_view);
         cuisinesRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        cuisinesAdapter = new CuisinesAdapter(Collections.emptyList(), listener);
+        if (lastCuisines == null) {
+            cuisinesAdapter = new CuisinesAdapter(Collections.emptyList(), listener);
+        } else {
+            cuisinesAdapter = new CuisinesAdapter(lastCuisines, listener);
+        }
         cuisinesRecyclerView.setAdapter(cuisinesAdapter);
     }
 
     @Override
     public void updateCuisines(List<Cuisine> cuisines) {
+        searchViewModel.isLoading.set(false);
+        lastCuisines = new ArrayList<>(cuisines);
         cuisinesAdapter.setCuisines(cuisines);
     }
 }
