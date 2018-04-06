@@ -11,8 +11,8 @@ public @Data class ReviewUser {
     @SerializedName("profile_image")
     private String profileImage;
 
-    @SerializedName("profile_deeplink")
-    private String profile_deeplink;
+    @SerializedName("profileDeeplink")
+    private String profileDeeplink;
 
     private String name;
 

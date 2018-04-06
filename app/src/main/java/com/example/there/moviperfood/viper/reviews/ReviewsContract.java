@@ -1,7 +1,6 @@
-package com.example.there.moviperfood.viper.restaurant;
+package com.example.there.moviperfood.viper.reviews;
 
 import android.app.Activity;
-import android.app.ListActivity;
 
 import com.example.there.moviperfood.data.restaurant.Restaurant;
 import com.example.there.moviperfood.data.review.Review;
@@ -14,14 +13,14 @@ import java.util.List;
 
 import io.reactivex.Observable;
 
-interface RestaurantContract {
+interface ReviewsContract {
 
     interface Presenter extends ViperPresenter<View> {
         void loadReviews(Restaurant restaurant);
     }
 
     interface View extends MvpView {
-
+        void updateReviews(List<Review> reviews);
     }
 
     interface Interactor extends ViperRxInteractor {

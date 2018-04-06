@@ -3,8 +3,8 @@ package com.example.there.moviperfood.viper.restaurants;
 import android.app.Activity;
 
 import com.example.there.moviperfood.data.restaurant.Restaurant;
-import com.example.there.moviperfood.viper.restaurant.RestaurantActivity;
-import com.example.there.moviperfood.viper.restaurant.RestaurantPresenter;
+import com.example.there.moviperfood.viper.reviews.ReviewsActivity;
+import com.example.there.moviperfood.viper.reviews.ReviewsPresenter;
 import com.mateuszkoslacz.moviper.base.routing.BaseRxRouting;
 import com.mateuszkoslacz.moviper.presentersdispatcher.ActivityStarter;
 import com.mateuszkoslacz.moviper.presentersdispatcher.MoviperPresentersDispatcher;
@@ -19,11 +19,11 @@ class RestaurantsRouting
     @Override
     public void startRestaurantActivity(Restaurant restaurant) {
         if (isContextAttached()) {
-            val startingIntent = RestaurantActivity.startingIntent(getRelatedContext(), restaurant);
+            val startingIntent = ReviewsActivity.startingIntent(getRelatedContext(), restaurant);
             MoviperPresentersDispatcher.getInstance().startActivity(ActivityStarter.newBuilder()
                     .withContext(getRelatedContext())
                     .withIntent(startingIntent)
-                    .withPresenter(new RestaurantPresenter())
+                    .withPresenter(new ReviewsPresenter())
                     .build());
         }
     }

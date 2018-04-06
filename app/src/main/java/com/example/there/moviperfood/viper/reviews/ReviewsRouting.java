@@ -1,11 +1,11 @@
-package com.example.there.moviperfood.viper.restaurant;
+package com.example.there.moviperfood.viper.reviews;
 
 import android.app.Activity;
 
 import com.mateuszkoslacz.moviper.base.routing.BaseRxRouting;
 
-class RestaurantRouting
+class ReviewsRouting
         extends BaseRxRouting<Activity>
-        implements RestaurantContract.Routing {
+        implements ReviewsContract.Routing {
 
 }

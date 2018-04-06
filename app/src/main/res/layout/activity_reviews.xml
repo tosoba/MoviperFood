@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+    <data>
+        <variable
+            name="restaurant"
+            type="com.example.there.moviperfood.data.restaurant.Restaurant"/>
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        tools:context=".viper.reviews.ReviewsActivity">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/restaurant_app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/app_bar_height_vertical"
+            android:fitsSystemWindows="true"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/restaurant_toolbar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                app:contentScrim="@color/colorPrimary"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:statusBarScrim="@android:color/transparent"
+                app:toolbarId="@+id/restaurant_toolbar"
+                app:expandedTitleTextAppearance="@style/TextAppearance.Design.CollapsingToolbar.Expanded.Shadow">
+
+                <ImageView
+                    android:id="@+id/restaurant_image_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    imageUrl="@{restaurant.featuredImage}"/>
+
+                <View
+                    android:id="@+id/gradient_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/top_dark_gradient" />
+
+                <View
+                    android:id="@+id/gradient_bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bottom_dark_gradient" />
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/restaurant_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?android:attr/actionBarSize"
+                    android:background="@android:color/transparent"
+                    app:layout_collapseMode="pin"
+                    app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <include layout="@layout/reviews_content" />
+
+    </android.support.design.widget.CoordinatorLayout>
+
+</layout>

@@ -3,6 +3,7 @@ package com.example.there.moviperfood.viper.search;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -21,6 +22,8 @@ import com.example.there.moviperfood.databinding.ActivitySearchBinding;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import lombok.val;
 
 public class SearchActivity
         extends ViperActivity<SearchContract.View, SearchContract.Presenter>
@@ -108,13 +111,15 @@ public class SearchActivity
 
     private void initCuisinesRecyclerView() {
         RecyclerView cuisinesRecyclerView = findViewById(R.id.cuisines_recycler_view);
-        cuisinesRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        val layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        cuisinesRecyclerView.setLayoutManager(layoutManager);
         if (lastCuisines == null) {
             cuisinesAdapter = new CuisinesAdapter(Collections.emptyList(), listener);
         } else {
             cuisinesAdapter = new CuisinesAdapter(lastCuisines, listener);
         }
         cuisinesRecyclerView.setAdapter(cuisinesAdapter);
+        cuisinesRecyclerView.addItemDecoration(new DividerItemDecoration(cuisinesRecyclerView.getContext(), layoutManager.getOrientation()));
     }
 
     @Override

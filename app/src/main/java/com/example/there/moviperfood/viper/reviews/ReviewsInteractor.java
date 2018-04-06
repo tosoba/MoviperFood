@@ -1,4 +1,4 @@
-package com.example.there.moviperfood.viper.restaurant;
+package com.example.there.moviperfood.viper.reviews;
 
 import com.example.there.moviperfood.data.restaurant.Restaurant;
 import com.example.there.moviperfood.data.review.Review;
@@ -8,9 +8,9 @@ import java.util.List;
 
 import io.reactivex.Observable;
 
-public class RestaurantInteractor
+public class ReviewsInteractor
         extends BaseApiInteractor
-        implements RestaurantContract.Interactor {
+        implements ReviewsContract.Interactor {
 
     @Override
     public Observable<List<Review>> loadReviews(Restaurant restaurant) {

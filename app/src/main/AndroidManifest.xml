@@ -20,7 +20,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".viper.restaurants.RestaurantsActivity" />
-        <activity android:name=".viper.restaurant.RestaurantActivity" />
+        <activity android:name=".viper.restaurants.RestaurantsActivity"
+            android:parentActivityName=".viper.search.SearchActivity"/>
+        <activity android:name=".viper.reviews.ReviewsActivity"
+            android:parentActivityName=".viper.restaurants.RestaurantsActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 </manifest>
