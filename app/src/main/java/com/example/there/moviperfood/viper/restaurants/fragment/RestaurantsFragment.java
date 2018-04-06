@@ -44,7 +44,7 @@ public abstract class RestaurantsFragment extends Fragment {
 
     private void initFromSavedState(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
-            if (savedInstanceState.containsKey(KEY_RESTAURANTS)) restaurants = savedInstanceState.getParcelableArrayList(KEY_RESTAURANTS);
+            if (savedInstanceState.containsKey(KEY_RESTAURANTS)) setRestaurants(savedInstanceState.getParcelableArrayList(KEY_RESTAURANTS));
         }
     }
 
