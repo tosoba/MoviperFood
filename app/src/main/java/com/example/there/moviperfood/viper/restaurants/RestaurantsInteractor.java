@@ -22,7 +22,7 @@ public class RestaurantsInteractor
     @Inject
     BaseFoodRepository foodRepository;
 
-    public RestaurantsInteractor() {
+    RestaurantsInteractor() {
         super();
         val component = DaggerFoodApiComponent.builder()
                 .searchInteractorModule(new FoodApiModule())

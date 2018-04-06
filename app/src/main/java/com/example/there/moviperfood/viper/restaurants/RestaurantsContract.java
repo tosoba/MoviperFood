@@ -21,7 +21,7 @@ interface RestaurantsContract {
     }
 
     interface View extends MvpView {
-
+        void updateRestaurants(List<Restaurant> restaurants);
     }
 
     interface Interactor extends ViperRxInteractor {

@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">MoviperFood</string>
     <string name="api_key">AIzaSyC3xZTUUT7GiB1wX3dcogzLUGx8Yedpldc</string>
+    <string name="list">List</string>
+    <string name="map">Map</string>
+    <string name="cuisines">Cuisines:</string>
 </resources>

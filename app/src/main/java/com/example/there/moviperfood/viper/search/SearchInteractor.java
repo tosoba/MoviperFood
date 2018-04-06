@@ -21,7 +21,7 @@ public class SearchInteractor
     @Inject
     BaseFoodRepository foodRepository;
 
-    public SearchInteractor() {
+    SearchInteractor() {
         super();
         val component = DaggerFoodApiComponent.builder()
                 .searchInteractorModule(new FoodApiModule())

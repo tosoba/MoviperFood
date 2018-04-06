@@ -16,7 +16,7 @@ class SearchRouting
         extends BaseRxRouting<Activity>
         implements SearchContract.Routing {
 
-    @SuppressWarnings("ConstantConditions")
+    @SuppressWarnings({"ConstantConditions", "unchecked"})
     @Override
     public void startRestaurantsActivity(Cuisine cuisine, LatLng latLng) {
         if (isContextAttached()) {

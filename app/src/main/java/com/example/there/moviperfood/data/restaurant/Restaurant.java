@@ -1,10 +1,13 @@
 package com.example.there.moviperfood.data.restaurant;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import lombok.Data;
 
-public @Data class Restaurant {
+public @Data class Restaurant implements Parcelable {
     private String cuisines;
 
     @SerializedName("photos_url")
@@ -58,4 +61,66 @@ public @Data class Restaurant {
 
     @SerializedName("has_table_booking")
     private String hasTableBooking;
+
+    private Restaurant(Parcel in) {
+        cuisines = in.readString();
+        photosUrl = in.readString();
+        hasOnlineDelivery = in.readString();
+        featuredImage = in.readString();
+        offers = in.createStringArray();
+        menuUrl = in.readString();
+        isDeliveringNow = in.readString();
+        establishmentTypes = in.createStringArray();
+        url = in.readString();
+        switchToOrderMenu = in.readString();
+        currency = in.readString();
+        id = in.readString();
+        priceRange = in.readString();
+        name = in.readString();
+        deeplink = in.readString();
+        eventsUrl = in.readString();
+        averageCostForTwo = in.readString();
+        thumb = in.readString();
+        hasTableBooking = in.readString();
+    }
+
+    public static final Creator<Restaurant> CREATOR = new Creator<Restaurant>() {
+        @Override
+        public Restaurant createFromParcel(Parcel in) {
+            return new Restaurant(in);
+        }
+
+        @Override
+        public Restaurant[] newArray(int size) {
+            return new Restaurant[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(cuisines);
+        dest.writeString(photosUrl);
+        dest.writeString(hasOnlineDelivery);
+        dest.writeString(featuredImage);
+        dest.writeStringArray(offers);
+        dest.writeString(menuUrl);
+        dest.writeString(isDeliveringNow);
+        dest.writeStringArray(establishmentTypes);
+        dest.writeString(url);
+        dest.writeString(switchToOrderMenu);
+        dest.writeString(currency);
+        dest.writeString(id);
+        dest.writeString(priceRange);
+        dest.writeString(name);
+        dest.writeString(deeplink);
+        dest.writeString(eventsUrl);
+        dest.writeString(averageCostForTwo);
+        dest.writeString(thumb);
+        dest.writeString(hasTableBooking);
+    }
 }
