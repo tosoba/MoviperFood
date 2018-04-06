@@ -1,10 +1,7 @@
 package com.example.there.moviperfood.viper.restaurants.fragment.list;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,9 +19,6 @@ import java.util.List;
 import lombok.val;
 
 public class RestaurantsListFragment extends RestaurantsFragment {
-
-    private OnFragmentInteractionListener mListener;
-
     private RestaurantsListAdapter restaurantsListAdapter;
 
     @Override
@@ -42,39 +36,20 @@ public class RestaurantsListFragment extends RestaurantsFragment {
         }
     }
 
+    private OnRestaurantItemClickListener onRestaurantClickListener = restaurant -> {
+        if (fragmentInteractionListener != null) fragmentInteractionListener.onRestaurantSelected(restaurant);
+    };
+
     private void initRestaurantsRecyclerView(View fragmentView) {
         RecyclerView restaurantsRecyclerView = fragmentView.findViewById(R.id.restaurants_recycler_view);
         restaurantsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         if (restaurants == null) {
-            restaurantsListAdapter = new RestaurantsListAdapter(Collections.emptyList(), restaurant -> {});
+            restaurantsListAdapter = new RestaurantsListAdapter(Collections.emptyList(), onRestaurantClickListener);
         } else {
-            restaurantsListAdapter = new RestaurantsListAdapter(restaurants, restaurant -> {});
+            restaurantsListAdapter = new RestaurantsListAdapter(restaurants, onRestaurantClickListener);
         }
         restaurantsRecyclerView.setAdapter(restaurantsListAdapter);
 
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
     }
 
     public static RestaurantsListFragment newInstance(ArrayList<Restaurant> restaurants) {
@@ -83,9 +58,4 @@ public class RestaurantsListFragment extends RestaurantsFragment {
         return fragment;
     }
 
-
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
 }

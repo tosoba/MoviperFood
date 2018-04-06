@@ -3,5 +3,5 @@
     <string name="api_key">AIzaSyC3xZTUUT7GiB1wX3dcogzLUGx8Yedpldc</string>
     <string name="list">List</string>
     <string name="map">Map</string>
-    <string name="cuisines">Cuisines:</string>
+    <string name="cuisines">Cuisines: %s</string>
 </resources>

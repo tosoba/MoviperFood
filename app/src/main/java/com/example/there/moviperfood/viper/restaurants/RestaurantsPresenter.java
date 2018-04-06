@@ -61,4 +61,9 @@ public class RestaurantsPresenter
             updateRestaurants(restaurantsToUpdate);
         }
     }
+
+    @Override
+    public void startRestaurantActivity(Restaurant restaurant) {
+        getRouting().startRestaurantActivity(restaurant);
+    }
 }

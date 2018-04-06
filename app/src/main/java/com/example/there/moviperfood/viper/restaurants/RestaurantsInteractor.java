@@ -5,6 +5,7 @@ import com.example.there.moviperfood.data.restaurant.Restaurant;
 import com.example.there.moviperfood.di.DaggerFoodApiComponent;
 import com.example.there.moviperfood.di.FoodApiModule;
 import com.example.there.moviperfood.domain.BaseFoodRepository;
+import com.example.there.moviperfood.viper.common.BaseApiInteractor;
 import com.google.android.gms.maps.model.LatLng;
 import com.mateuszkoslacz.moviper.base.interactor.BaseRxInteractor;
 
@@ -16,22 +17,11 @@ import io.reactivex.Observable;
 import lombok.val;
 
 public class RestaurantsInteractor
-        extends BaseRxInteractor
+        extends BaseApiInteractor
         implements RestaurantsContract.Interactor {
-
-    @Inject
-    BaseFoodRepository foodRepository;
-
-    RestaurantsInteractor() {
-        super();
-        val component = DaggerFoodApiComponent.builder()
-                .searchInteractorModule(new FoodApiModule())
-                .build();
-        component.inject(this);
-    }
 
     @Override
     public Observable<List<Restaurant>> loadRestaurants(LatLng latLng, Cuisine cuisine) {
-        return foodRepository.loadRestaurants(latLng, cuisine);
+        return getFoodRepository().loadRestaurants(latLng, cuisine);
     }
 }

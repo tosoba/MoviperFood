@@ -10,8 +10,9 @@ import android.support.v4.app.Fragment;
 import com.example.there.moviperfood.R;
 import com.example.there.moviperfood.data.cuisine.Cuisine;
 import com.example.there.moviperfood.data.restaurant.Restaurant;
-import com.example.there.moviperfood.viper.restaurants.fragment.CurrentFragment;
+import com.example.there.moviperfood.viper.restaurants.fragment.RestaurantsCurrentFragment;
 import com.example.there.moviperfood.viper.restaurants.fragment.RestaurantsFragment;
+import com.example.there.moviperfood.viper.restaurants.fragment.RestaurantsFragmentInteractionListener;
 import com.example.there.moviperfood.viper.restaurants.fragment.list.RestaurantsListFragment;
 import com.example.there.moviperfood.viper.restaurants.fragment.map.RestaurantsMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -25,10 +26,10 @@ import lombok.val;
 
 public class RestaurantsActivity
         extends ViperActivity<RestaurantsContract.View, RestaurantsContract.Presenter>
-        implements RestaurantsContract.View {
+        implements RestaurantsContract.View, RestaurantsFragmentInteractionListener {
 
     private static final String KEY_CURRENT_FRAGMENT = "KEY_CURRENT_FRAGMENT";
-    private CurrentFragment currentFragment = CurrentFragment.LIST;
+    private RestaurantsCurrentFragment currentFragment = RestaurantsCurrentFragment.LIST;
 
     // EXTRAS
     private Cuisine cuisine;
@@ -57,7 +58,7 @@ public class RestaurantsActivity
 
     private void initFromSavedState(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
-            currentFragment = (CurrentFragment) savedInstanceState.getSerializable(KEY_CURRENT_FRAGMENT);
+            currentFragment = (RestaurantsCurrentFragment) savedInstanceState.getSerializable(KEY_CURRENT_FRAGMENT);
             if (savedInstanceState.containsKey(KEY_RESTAURANTS)) {
                 restaurants = savedInstanceState.getParcelableArrayList(KEY_RESTAURANTS);
             } else {
@@ -93,14 +94,14 @@ public class RestaurantsActivity
         Fragment selectedFragment = null;
         switch (item.getItemId()) {
             case R.id.navigation_list:
-                if (currentFragment == CurrentFragment.LIST) return false;
+                if (currentFragment == RestaurantsCurrentFragment.LIST) return false;
                 selectedFragment = RestaurantsListFragment.newInstance(restaurants);
-                currentFragment = CurrentFragment.LIST;
+                currentFragment = RestaurantsCurrentFragment.LIST;
                 break;
             case R.id.navigation_map:
-                if (currentFragment == CurrentFragment.MAP) return false;
+                if (currentFragment == RestaurantsCurrentFragment.MAP) return false;
                 selectedFragment = RestaurantsMapFragment.newInstance(restaurants);
-                currentFragment = CurrentFragment.MAP;
+                currentFragment = RestaurantsCurrentFragment.MAP;
                 break;
         }
 
@@ -136,6 +137,11 @@ public class RestaurantsActivity
     @Override
     public RestaurantsContract.Presenter createPresenter() {
         return (RestaurantsContract.Presenter) MoviperPresentersDispatcher.getInstance().getPresenterForView(this);
+    }
+
+    @Override
+    public void onRestaurantSelected(Restaurant restaurant) {
+        presenter.startRestaurantActivity(restaurant);
     }
 
     private static final String EXTRA_CUISINE = "EXTRA_CUISINE";

@@ -1,10 +1,10 @@
-package com.example.there.moviperfood.viper.restaurants;
+package com.example.there.moviperfood.viper.restaurant;
 
 import android.app.Activity;
+import android.app.ListActivity;
 
-import com.example.there.moviperfood.data.cuisine.Cuisine;
 import com.example.there.moviperfood.data.restaurant.Restaurant;
-import com.google.android.gms.maps.model.LatLng;
+import com.example.there.moviperfood.data.review.Review;
 import com.hannesdorfmann.mosby.mvp.MvpView;
 import com.mateuszkoslacz.moviper.iface.presenter.ViperPresenter;
 import com.mateuszkoslacz.moviper.iface.interactor.ViperRxInteractor;
@@ -14,22 +14,21 @@ import java.util.List;
 
 import io.reactivex.Observable;
 
-interface RestaurantsContract {
+interface RestaurantContract {
 
     interface Presenter extends ViperPresenter<View> {
-        void loadRestaurants(LatLng latLng, Cuisine cuisine);
-        void startRestaurantActivity(Restaurant restaurant);
+        void loadReviews(Restaurant restaurant);
     }
 
     interface View extends MvpView {
-        void updateRestaurants(List<Restaurant> restaurants);
+
     }
 
     interface Interactor extends ViperRxInteractor {
-        Observable<List<Restaurant>> loadRestaurants(LatLng latLng, Cuisine cuisine);
+        Observable<List<Review>> loadReviews(Restaurant restaurant);
     }
 
     interface Routing extends ViperRxRouting<Activity> {
-        void startRestaurantActivity(Restaurant restaurant);
+
     }
 }

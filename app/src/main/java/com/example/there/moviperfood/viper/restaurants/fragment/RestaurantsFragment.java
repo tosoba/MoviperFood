@@ -1,5 +1,6 @@
 package com.example.there.moviperfood.viper.restaurants.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -45,6 +46,22 @@ public abstract class RestaurantsFragment extends Fragment {
         if (savedInstanceState != null) {
             if (savedInstanceState.containsKey(KEY_RESTAURANTS)) restaurants = savedInstanceState.getParcelableArrayList(KEY_RESTAURANTS);
         }
+    }
+
+    protected RestaurantsFragmentInteractionListener fragmentInteractionListener;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof RestaurantsFragmentInteractionListener) {
+            fragmentInteractionListener = (RestaurantsFragmentInteractionListener) context;
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        fragmentInteractionListener = null;
     }
 
     private static final String ARG_RESTAURANTS = "ARG_RESTAURANTS";

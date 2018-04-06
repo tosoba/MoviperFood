@@ -5,6 +5,8 @@ import com.example.there.moviperfood.data.cuisine.Cuisine;
 import com.example.there.moviperfood.data.cuisine.CuisineResponse;
 import com.example.there.moviperfood.data.restaurant.Restaurant;
 import com.example.there.moviperfood.data.restaurant.RestaurantResponse;
+import com.example.there.moviperfood.data.review.Review;
+import com.example.there.moviperfood.data.review.ReviewResponse;
 import com.example.there.moviperfood.domain.BaseFoodRepository;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -30,5 +32,11 @@ public class FoodRepository implements BaseFoodRepository {
         String[] cuisines = {String.valueOf(cuisine.getCuisineId())};
         return service.loadRestaurants(String.valueOf(latLng.latitude), String.valueOf(latLng.longitude), cuisines)
                 .map(restaurantsResponse -> Stream.of(restaurantsResponse.getRestaurants()).map(RestaurantResponse::getRestaurant).toList());
+    }
+
+    @Override
+    public Observable<List<Review>> loadReviews(Restaurant restaurant) {
+        return service.loadReviews(restaurant.getId())
+                .map(reviewsResponse -> Stream.of(reviewsResponse.getUserReviews()).map(ReviewResponse::getReview).toList());
     }
 }

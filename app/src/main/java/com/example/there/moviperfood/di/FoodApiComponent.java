@@ -1,7 +1,6 @@
 package com.example.there.moviperfood.di;
 
-import com.example.there.moviperfood.viper.restaurants.RestaurantsInteractor;
-import com.example.there.moviperfood.viper.search.SearchInteractor;
+import com.example.there.moviperfood.viper.common.BaseApiInteractor;
 
 import javax.inject.Singleton;
 
@@ -17,7 +16,5 @@ public interface FoodApiComponent {
         FoodApiComponent build();
     }
 
-    void inject(SearchInteractor interactor);
-
-    void inject(RestaurantsInteractor interactor);
+    void inject(BaseApiInteractor interactor);
 }
