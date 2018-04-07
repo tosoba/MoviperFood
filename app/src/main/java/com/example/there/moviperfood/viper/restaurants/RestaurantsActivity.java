@@ -45,6 +45,7 @@ public class RestaurantsActivity
 
         initBottomNavigation();
         initExtras();
+        setTitle(cuisine.getCuisineName());
         initFromSavedState(savedInstanceState);
         showFragment();
     }

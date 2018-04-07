@@ -9,6 +9,8 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.example.there.moviperfood.R;
 import com.example.there.moviperfood.data.restaurant.Restaurant;
@@ -43,6 +45,7 @@ public class ReviewsActivity
         initTitle();
 
         initFromSavedState(savedInstanceState);
+        initToolbar();
         initReviewsRecyclerView();
     }
 
@@ -76,6 +79,12 @@ public class ReviewsActivity
         } else {
             presenter.loadReviews(restaurant);
         }
+    }
+
+    private void initToolbar() {
+        Toolbar toolbar = findViewById(R.id.restaurant_toolbar);
+        toolbar.setNavigationIcon(R.drawable.arrow_back);
+        toolbar.setNavigationOnClickListener(view -> onBackPressed());
     }
 
     private void initReviewsRecyclerView() {

@@ -4,11 +4,17 @@ import android.databinding.ObservableField;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.there.moviperfood.data.cuisine.Cuisine;
+
+import java.util.ArrayList;
+
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public class SearchViewModel implements Parcelable {
     public ObservableField<Boolean> isLoading = new ObservableField<>(false);
+
+    public ObservableField<ArrayList<Cuisine>> lastCuisines = new ObservableField<>();
 
     private SearchViewModel(Parcel in) {
         isLoading.set(in.readByte() != 0);

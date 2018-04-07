@@ -37,18 +37,19 @@ public class SearchActivity
     private static final String KEY_LAST_PLACE_LAT_LNG = "KEY_LAST_PLACE_LAT_LNG";
     private LatLng lastPlaceLatLng;
 
-    private static final String KEY_LAST_CUISINES = "KEY_LAST_CUISINES";
-    private ArrayList<Cuisine> lastCuisines;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivitySearchBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_search);
-        binding.setViewModel(searchViewModel);
 
         initFromSavedState(savedInstanceState);
+        initBinding();
         initSearchFragment();
         initCuisinesRecyclerView();
+    }
+
+    private void initBinding() {
+        ActivitySearchBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_search);
+        binding.setViewModel(searchViewModel);
     }
 
     @Override
@@ -56,14 +57,12 @@ public class SearchActivity
         super.onSaveInstanceState(outState);
         if (lastPlaceLatLng != null) outState.putParcelable(KEY_LAST_PLACE_LAT_LNG, lastPlaceLatLng);
         if (searchViewModel != null) outState.putParcelable(KEY_SEARCH_VIEW_MODEL, searchViewModel);
-        if (lastCuisines != null) outState.putParcelableArrayList(KEY_LAST_CUISINES, lastCuisines);
     }
 
     private void initFromSavedState(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             if (savedInstanceState.containsKey(KEY_LAST_PLACE_LAT_LNG)) lastPlaceLatLng = savedInstanceState.getParcelable(KEY_LAST_PLACE_LAT_LNG);
             if (savedInstanceState.containsKey(KEY_SEARCH_VIEW_MODEL)) searchViewModel = savedInstanceState.getParcelable(KEY_SEARCH_VIEW_MODEL);
-            if (savedInstanceState.containsKey(KEY_LAST_CUISINES)) lastCuisines = savedInstanceState.getParcelableArrayList(KEY_LAST_CUISINES);
 
             initSearchFromSavedState();
         }
@@ -113,10 +112,10 @@ public class SearchActivity
         RecyclerView cuisinesRecyclerView = findViewById(R.id.cuisines_recycler_view);
         val layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         cuisinesRecyclerView.setLayoutManager(layoutManager);
-        if (lastCuisines == null) {
+        if (searchViewModel.lastCuisines.get() == null) {
             cuisinesAdapter = new CuisinesAdapter(Collections.emptyList(), listener);
         } else {
-            cuisinesAdapter = new CuisinesAdapter(lastCuisines, listener);
+            cuisinesAdapter = new CuisinesAdapter(searchViewModel.lastCuisines.get(), listener);
         }
         cuisinesRecyclerView.setAdapter(cuisinesAdapter);
         cuisinesRecyclerView.addItemDecoration(new DividerItemDecoration(cuisinesRecyclerView.getContext(), layoutManager.getOrientation()));
@@ -125,7 +124,7 @@ public class SearchActivity
     @Override
     public void updateCuisines(List<Cuisine> cuisines) {
         searchViewModel.isLoading.set(false);
-        lastCuisines = new ArrayList<>(cuisines);
+        searchViewModel.lastCuisines.set(new ArrayList<>(cuisines));
         cuisinesAdapter.setCuisines(cuisines);
     }
 }

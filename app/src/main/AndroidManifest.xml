@@ -14,7 +14,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/api_key" />
 
-        <activity android:name=".viper.search.SearchActivity">
+        <activity android:name=".viper.search.SearchActivity"
+            android:label="@string/restaurants_nearby"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
