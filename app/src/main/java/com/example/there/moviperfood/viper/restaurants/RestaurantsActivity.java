@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.view.MenuItem;
 
 import com.example.there.moviperfood.R;
 import com.example.there.moviperfood.data.cuisine.Cuisine;
@@ -43,6 +44,7 @@ public class RestaurantsActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurants);
 
+        initToolbar();
         initBottomNavigation();
         initExtras();
         setTitle(cuisine.getCuisineName());
@@ -65,7 +67,6 @@ public class RestaurantsActivity
             } else {
                 presenter.loadRestaurants(latLng, cuisine);
             }
-
         } else {
             presenter.loadRestaurants(latLng, cuisine);
         }
@@ -112,6 +113,27 @@ public class RestaurantsActivity
 
         return true;
     };
+
+    private void initToolbar() {
+        val actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.arrow_back_borderless);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     private void initBottomNavigation() {
         BottomNavigationView navigationView = findViewById(R.id.bottom_navigation);

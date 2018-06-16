@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.example.there.moviperfood.R;
 import com.example.there.moviperfood.data.cuisine.Cuisine;
+import com.example.there.moviperfood.databinding.ActivitySearchBinding;
 import com.example.there.moviperfood.viper.search.cuisines.CuisinesAdapter;
 import com.example.there.moviperfood.viper.search.cuisines.OnCuisineItemClickListener;
 import com.google.android.gms.common.api.Status;
@@ -17,7 +18,6 @@ import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.maps.model.LatLng;
 import com.mateuszkoslacz.moviper.base.view.activity.ViperActivity;
-import com.example.there.moviperfood.databinding.ActivitySearchBinding;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -112,11 +112,7 @@ public class SearchActivity
         RecyclerView cuisinesRecyclerView = findViewById(R.id.cuisines_recycler_view);
         val layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         cuisinesRecyclerView.setLayoutManager(layoutManager);
-        if (searchViewModel.lastCuisines.get() == null) {
-            cuisinesAdapter = new CuisinesAdapter(Collections.emptyList(), listener);
-        } else {
-            cuisinesAdapter = new CuisinesAdapter(searchViewModel.lastCuisines.get(), listener);
-        }
+        cuisinesAdapter = new CuisinesAdapter(searchViewModel.lastCuisines.get(), listener);
         cuisinesRecyclerView.setAdapter(cuisinesAdapter);
         cuisinesRecyclerView.addItemDecoration(new DividerItemDecoration(cuisinesRecyclerView.getContext(), layoutManager.getOrientation()));
     }
@@ -126,5 +122,16 @@ public class SearchActivity
         searchViewModel.isLoading.set(false);
         searchViewModel.lastCuisines.set(new ArrayList<>(cuisines));
         cuisinesAdapter.setCuisines(cuisines);
+    }
+
+    @Override
+    public void onBackPressed() {
+        val lastCuisines = searchViewModel.lastCuisines.get();
+        if (lastCuisines != null && !lastCuisines.isEmpty()) {
+            searchViewModel.lastCuisines.set(Collections.emptyList());
+            cuisinesAdapter.setCuisines(Collections.emptyList());
+        } else {
+            super.onBackPressed();
+        }
     }
 }
