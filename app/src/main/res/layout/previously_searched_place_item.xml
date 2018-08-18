@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="place"
+            type="com.example.there.moviperfood.data.place.CachedPlace" />
+    </data>
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/previously_searched_place_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{place.name}"
+            android:textSize="16sp" />
+    </FrameLayout>
+</layout>
+

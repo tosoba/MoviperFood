@@ -2,9 +2,8 @@ package com.example.there.moviperfood.viper.search;
 
 import android.app.Activity;
 
-import com.example.there.moviperfood.data.food.cuisine.Cuisine;
-import com.example.there.moviperfood.viper.restaurants.RestaurantsActivity;
-import com.example.there.moviperfood.viper.restaurants.RestaurantsPresenter;
+import com.example.there.moviperfood.viper.cuisines.CuisinesActivity;
+import com.example.there.moviperfood.viper.cuisines.CuisinesPresenter;
 import com.google.android.gms.maps.model.LatLng;
 import com.mateuszkoslacz.moviper.base.routing.BaseRxRouting;
 import com.mateuszkoslacz.moviper.presentersdispatcher.ActivityStarter;
@@ -16,15 +15,15 @@ class SearchRouting
         extends BaseRxRouting<Activity>
         implements SearchContract.Routing {
 
-    @SuppressWarnings({"ConstantConditions", "unchecked"})
+    @SuppressWarnings({"unchecked", "ConstantConditions"})
     @Override
-    public void startRestaurantsActivity(Cuisine cuisine, LatLng latLng) {
+    public void startCuisinesActivity(LatLng latLng) {
         if (isContextAttached()) {
-            val startingIntent = RestaurantsActivity.startingIntent(getRelatedContext(), cuisine, latLng);
+            val startingIntent = CuisinesActivity.startingIntent(getRelatedContext(), latLng);
             MoviperPresentersDispatcher.getInstance().startActivity(ActivityStarter.newBuilder()
                     .withContext(getRelatedContext())
                     .withIntent(startingIntent)
-                    .withPresenter(new RestaurantsPresenter())
+                    .withPresenter(new CuisinesPresenter())
                     .build());
         }
     }

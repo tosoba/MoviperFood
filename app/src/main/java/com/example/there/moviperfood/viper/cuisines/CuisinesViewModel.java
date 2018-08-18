@@ -1,4 +1,4 @@
-package com.example.there.moviperfood.viper.search;
+package com.example.there.moviperfood.viper.cuisines;
 
 import android.databinding.ObservableField;
 import android.os.Parcel;
@@ -12,12 +12,12 @@ import java.util.List;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public class SearchViewModel implements Parcelable {
+public class CuisinesViewModel implements Parcelable {
     public ObservableField<Boolean> isLoading = new ObservableField<>(false);
 
     public ObservableField<List<Cuisine>> lastCuisines = new ObservableField<>(Collections.emptyList());
 
-    private SearchViewModel(Parcel in) {
+    private CuisinesViewModel(Parcel in) {
         isLoading.set(in.readByte() != 0);
     }
 
@@ -36,15 +36,15 @@ public class SearchViewModel implements Parcelable {
         }
     }
 
-    public static final Creator<SearchViewModel> CREATOR = new Creator<SearchViewModel>() {
+    public static final Creator<CuisinesViewModel> CREATOR = new Creator<CuisinesViewModel>() {
         @Override
-        public SearchViewModel createFromParcel(Parcel in) {
-            return new SearchViewModel(in);
+        public CuisinesViewModel createFromParcel(Parcel in) {
+            return new CuisinesViewModel(in);
         }
 
         @Override
-        public SearchViewModel[] newArray(int size) {
-            return new SearchViewModel[size];
+        public CuisinesViewModel[] newArray(int size) {
+            return new CuisinesViewModel[size];
         }
     };
 }

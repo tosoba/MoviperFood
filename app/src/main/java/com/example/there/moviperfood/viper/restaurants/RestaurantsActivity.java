@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import com.example.there.moviperfood.R;
 import com.example.there.moviperfood.data.food.cuisine.Cuisine;
 import com.example.there.moviperfood.data.food.restaurant.Restaurant;
+import com.example.there.moviperfood.util.ActivityUtils;
 import com.example.there.moviperfood.viper.restaurants.fragment.RestaurantsCurrentFragment;
 import com.example.there.moviperfood.viper.restaurants.fragment.RestaurantsFragment;
 import com.example.there.moviperfood.viper.restaurants.fragment.RestaurantsFragmentInteractionListener;
@@ -46,7 +47,7 @@ public class RestaurantsActivity
         //TODO: databinding
         setContentView(R.layout.activity_restaurants);
 
-        initToolbar();
+        ActivityUtils.setHomeButtonEnabled(this, R.drawable.arrow_back_borderless);
         initBottomNavigation();
         initExtras();
         setTitle(cuisine.getCuisineName());
@@ -115,15 +116,6 @@ public class RestaurantsActivity
 
         return true;
     };
-
-    private void initToolbar() {
-        val actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.drawable.arrow_back_borderless);
-        }
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
