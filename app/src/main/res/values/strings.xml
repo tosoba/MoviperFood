@@ -4,6 +4,6 @@
     <string name="map">Map</string>
     <string name="cuisines">Cuisines: %s</string>
     <string name="color">#%s</string>
-    <string name="restaurants_nearby">Restaurants nearby…</string>
+    <string name="restaurants_nearby">Nearby restaurants</string>
     <string name="instructions">Use the searchbar above to find restaurants nearby a given place</string>
 </resources>

@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 
 import com.example.there.moviperfood.R;
 import com.example.there.moviperfood.data.cuisine.Cuisine;
@@ -42,27 +43,34 @@ public class SearchActivity
         super.onCreate(savedInstanceState);
 
         initFromSavedState(savedInstanceState);
-        initBinding();
+        initView();
         initSearchFragment();
         initCuisinesRecyclerView();
     }
 
-    private void initBinding() {
+    private void initView() {
         ActivitySearchBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_search);
         binding.setViewModel(searchViewModel);
+        setSupportActionBar(binding.mainToolbar);
+        if (!searchViewModel.lastCuisines.get().isEmpty()) addBackNavigationToToolbar();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (lastPlaceLatLng != null) outState.putParcelable(KEY_LAST_PLACE_LAT_LNG, lastPlaceLatLng);
-        if (searchViewModel != null) outState.putParcelable(KEY_SEARCH_VIEW_MODEL, searchViewModel);
+        if (lastPlaceLatLng != null)
+            outState.putParcelable(KEY_LAST_PLACE_LAT_LNG, lastPlaceLatLng);
+        if (searchViewModel != null)
+            outState.putParcelable(KEY_SEARCH_VIEW_MODEL, searchViewModel);
     }
 
     private void initFromSavedState(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
-            if (savedInstanceState.containsKey(KEY_LAST_PLACE_LAT_LNG)) lastPlaceLatLng = savedInstanceState.getParcelable(KEY_LAST_PLACE_LAT_LNG);
-            if (savedInstanceState.containsKey(KEY_SEARCH_VIEW_MODEL)) searchViewModel = savedInstanceState.getParcelable(KEY_SEARCH_VIEW_MODEL);
+            if (savedInstanceState.containsKey(KEY_LAST_PLACE_LAT_LNG))
+                lastPlaceLatLng = savedInstanceState.getParcelable(KEY_LAST_PLACE_LAT_LNG);
+            if (savedInstanceState.containsKey(KEY_SEARCH_VIEW_MODEL)) {
+                searchViewModel = savedInstanceState.getParcelable(KEY_SEARCH_VIEW_MODEL);
+            }
 
             initSearchFromSavedState();
         }
@@ -96,7 +104,8 @@ public class SearchActivity
     };
 
     private void initSearchFragment() {
-        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.autocomplete_search_fragment);
+        PlaceAutocompleteFragment autocompleteFragment =
+                (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.autocomplete_search_fragment);
         autocompleteFragment.setOnPlaceSelectedListener(placeSelectionListener);
     }
 
@@ -120,8 +129,20 @@ public class SearchActivity
     @Override
     public void updateCuisines(List<Cuisine> cuisines) {
         searchViewModel.isLoading.set(false);
+        addBackNavigationToToolbar();
         searchViewModel.lastCuisines.set(new ArrayList<>(cuisines));
         cuisinesAdapter.setCuisines(cuisines);
+    }
+
+    private void addBackNavigationToToolbar() {
+        Toolbar mainToolbar = findViewById(R.id.main_toolbar);
+        mainToolbar.setNavigationIcon(R.drawable.arrow_back_borderless);
+        mainToolbar.setNavigationOnClickListener(v -> onBackPressed());
+    }
+
+    private void removeBackNavigationFromToolbar() {
+        Toolbar mainToolbar = findViewById(R.id.main_toolbar);
+        mainToolbar.setNavigationIcon(null);
     }
 
     @Override
@@ -130,6 +151,7 @@ public class SearchActivity
         if (lastCuisines != null && !lastCuisines.isEmpty()) {
             searchViewModel.lastCuisines.set(Collections.emptyList());
             cuisinesAdapter.setCuisines(Collections.emptyList());
+            removeBackNavigationFromToolbar();
         } else {
             super.onBackPressed();
         }

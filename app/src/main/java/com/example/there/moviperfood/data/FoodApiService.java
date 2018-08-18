@@ -4,8 +4,6 @@ import com.example.there.moviperfood.data.cuisine.CuisinesResponse;
 import com.example.there.moviperfood.data.restaurant.RestaurantsResponse;
 import com.example.there.moviperfood.data.review.ReviewsResponse;
 
-import java.util.List;
-
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -13,11 +11,11 @@ import retrofit2.http.Query;
 
 public interface FoodApiService {
     @GET("cuisines")
-    @Headers({"Accept: application/json", "user-key: " + Api.key})
+    @Headers({"Accept: application/json", "user-key: " + Api.KEY})
     Observable<CuisinesResponse> loadCuisines(@Query("lat") String lat, @Query("lon") String lon);
 
     @GET("search")
-    @Headers({"Accept: application/json", "user-key: " + Api.key})
+    @Headers({"Accept: application/json", "user-key: " + Api.KEY})
     Observable<RestaurantsResponse> loadRestaurants(@Query("lat") String lat,
                                                     @Query("lon") String lon,
                                                     @Query("cuisines") String[] cuisines,
@@ -25,7 +23,7 @@ public interface FoodApiService {
                                                     @Query("order") String order);
 
     @GET("search")
-    @Headers({"Accept: application/json", "user-key: " + Api.key})
+    @Headers({"Accept: application/json", "user-key: " + Api.KEY})
     default Observable<RestaurantsResponse> loadRestaurants(@Query("lat") String lat,
                                                             @Query("lon") String lon,
                                                             @Query("cuisines") String[] cuisines) {
@@ -33,6 +31,6 @@ public interface FoodApiService {
     }
 
     @GET("reviews")
-    @Headers({"Accept: application/json", "user-key: " + Api.key})
+    @Headers({"Accept: application/json", "user-key: " + Api.KEY})
     Observable<ReviewsResponse> loadReviews(@Query("res_id") String restaurantId);
 }

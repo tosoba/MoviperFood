@@ -14,8 +14,10 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/api_key" />
 
-        <activity android:name=".viper.search.SearchActivity"
+        <activity
+            android:name=".viper.search.SearchActivity"
             android:label="@string/restaurants_nearby"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,8 +25,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".viper.restaurants.RestaurantsActivity" />
-        <activity android:name=".viper.reviews.ReviewsActivity"
+        <activity
+            android:name=".viper.reviews.ReviewsActivity"
             android:parentActivityName=".viper.restaurants.RestaurantsActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 </manifest>
