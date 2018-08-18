@@ -3,9 +3,8 @@ package com.example.there.moviperfood.viper.reviews;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.annimon.stream.Stream;
-import com.example.there.moviperfood.data.restaurant.Restaurant;
-import com.example.there.moviperfood.data.review.Review;
+import com.example.there.moviperfood.data.food.restaurant.Restaurant;
+import com.example.there.moviperfood.data.food.review.Review;
 import com.mateuszkoslacz.moviper.base.presenter.BaseRxPresenter;
 
 import java.util.List;

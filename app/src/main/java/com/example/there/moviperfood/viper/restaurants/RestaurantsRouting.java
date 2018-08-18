@@ -2,7 +2,7 @@ package com.example.there.moviperfood.viper.restaurants;
 
 import android.app.Activity;
 
-import com.example.there.moviperfood.data.restaurant.Restaurant;
+import com.example.there.moviperfood.data.food.restaurant.Restaurant;
 import com.example.there.moviperfood.viper.reviews.ReviewsActivity;
 import com.example.there.moviperfood.viper.reviews.ReviewsPresenter;
 import com.mateuszkoslacz.moviper.base.routing.BaseRxRouting;

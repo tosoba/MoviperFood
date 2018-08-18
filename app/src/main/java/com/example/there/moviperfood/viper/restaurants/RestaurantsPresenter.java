@@ -3,8 +3,8 @@ package com.example.there.moviperfood.viper.restaurants;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.example.there.moviperfood.data.cuisine.Cuisine;
-import com.example.there.moviperfood.data.restaurant.Restaurant;
+import com.example.there.moviperfood.data.food.cuisine.Cuisine;
+import com.example.there.moviperfood.data.food.restaurant.Restaurant;
 import com.google.android.gms.maps.model.LatLng;
 import com.mateuszkoslacz.moviper.base.presenter.BaseRxPresenter;
 

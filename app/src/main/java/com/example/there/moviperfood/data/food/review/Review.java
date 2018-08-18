@@ -1,4 +1,4 @@
-package com.example.there.moviperfood.data.review;
+package com.example.there.moviperfood.data.food.review;
 
 import android.os.Parcel;
 import android.os.Parcelable;

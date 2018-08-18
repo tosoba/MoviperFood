@@ -1,8 +1,8 @@
-package com.example.there.moviperfood.data;
+package com.example.there.moviperfood.data.food.api;
 
-import com.example.there.moviperfood.data.cuisine.CuisinesResponse;
-import com.example.there.moviperfood.data.restaurant.RestaurantsResponse;
-import com.example.there.moviperfood.data.review.ReviewsResponse;
+import com.example.there.moviperfood.data.food.cuisine.CuisinesResponse;
+import com.example.there.moviperfood.data.food.restaurant.RestaurantsResponse;
+import com.example.there.moviperfood.data.food.review.ReviewsResponse;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;

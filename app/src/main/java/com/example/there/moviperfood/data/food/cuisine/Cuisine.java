@@ -1,4 +1,4 @@
-package com.example.there.moviperfood.data.cuisine;
+package com.example.there.moviperfood.data.food.cuisine;
 
 import android.os.Parcel;
 import android.os.Parcelable;

@@ -1,4 +1,4 @@
-package com.example.there.moviperfood.data.cuisine;
+package com.example.there.moviperfood.data.food.cuisine;
 
 import java.util.List;
 

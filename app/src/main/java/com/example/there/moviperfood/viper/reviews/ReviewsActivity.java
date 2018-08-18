@@ -10,11 +10,10 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import com.example.there.moviperfood.R;
-import com.example.there.moviperfood.data.restaurant.Restaurant;
-import com.example.there.moviperfood.data.review.Review;
+import com.example.there.moviperfood.data.food.restaurant.Restaurant;
+import com.example.there.moviperfood.data.food.review.Review;
 import com.example.there.moviperfood.databinding.ActivityReviewsBinding;
 import com.example.there.moviperfood.viper.reviews.list.ReviewsListAdapter;
 import com.mateuszkoslacz.moviper.base.view.activity.ViperActivity;

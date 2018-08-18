@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.example.there.moviperfood.R;
-import com.example.there.moviperfood.data.restaurant.Restaurant;
+import com.example.there.moviperfood.data.food.restaurant.Restaurant;
 import com.example.there.moviperfood.databinding.RestaurantListItemBinding;
 
 import java.util.List;

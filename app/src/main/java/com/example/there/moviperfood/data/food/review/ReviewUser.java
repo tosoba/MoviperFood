@@ -1,4 +1,4 @@
-package com.example.there.moviperfood.data.review;
+package com.example.there.moviperfood.data.food.review;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -3,7 +3,7 @@ package com.example.there.moviperfood.viper.search;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.example.there.moviperfood.data.cuisine.Cuisine;
+import com.example.there.moviperfood.data.food.cuisine.Cuisine;
 import com.google.android.gms.maps.model.LatLng;
 import com.mateuszkoslacz.moviper.base.presenter.BaseRxPresenter;
 
@@ -16,7 +16,6 @@ import lombok.val;
 public class SearchPresenter
         extends BaseRxPresenter<SearchContract.View, SearchContract.Interactor, SearchContract.Routing>
         implements SearchContract.Presenter {
-
     @Override
     public void detachView(boolean retainInstance) {
         super.detachView(true);

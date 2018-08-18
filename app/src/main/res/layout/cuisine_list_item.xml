@@ -4,7 +4,7 @@
     <data>
         <variable
             name="cuisine"
-            type="com.example.there.moviperfood.data.cuisine.Cuisine"/>
+            type="com.example.there.moviperfood.data.food.cuisine.Cuisine"/>
     </data>
 
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

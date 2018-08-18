@@ -9,8 +9,8 @@ import android.support.v4.app.Fragment;
 import android.view.MenuItem;
 
 import com.example.there.moviperfood.R;
-import com.example.there.moviperfood.data.cuisine.Cuisine;
-import com.example.there.moviperfood.data.restaurant.Restaurant;
+import com.example.there.moviperfood.data.food.cuisine.Cuisine;
+import com.example.there.moviperfood.data.food.restaurant.Restaurant;
 import com.example.there.moviperfood.viper.restaurants.fragment.RestaurantsCurrentFragment;
 import com.example.there.moviperfood.viper.restaurants.fragment.RestaurantsFragment;
 import com.example.there.moviperfood.viper.restaurants.fragment.RestaurantsFragmentInteractionListener;
@@ -42,6 +42,8 @@ public class RestaurantsActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //TODO: databinding
         setContentView(R.layout.activity_restaurants);
 
         initToolbar();

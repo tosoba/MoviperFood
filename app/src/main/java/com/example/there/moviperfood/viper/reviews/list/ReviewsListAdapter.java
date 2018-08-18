@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.example.there.moviperfood.R;
-import com.example.there.moviperfood.data.review.Review;
+import com.example.there.moviperfood.data.food.review.Review;
 import com.example.there.moviperfood.databinding.ReviewListItemBinding;
 
 import java.util.List;

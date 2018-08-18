@@ -53,13 +53,14 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:12.0.1'
     implementation 'com.google.android.gms:play-services-places:12.0.1'
 
-    // Dagger
-    implementation 'com.google.dagger:dagger:2.13'
-    implementation 'com.google.dagger:dagger-android:2.13'
-    implementation 'com.google.dagger:dagger-android-support:2.13'
-    // if you use the support libraries
-    annotationProcessor 'com.google.dagger:dagger-android-processor:2.13'
-    annotationProcessor "com.google.dagger:dagger-compiler:2.13"
+    // dagger 2
+    implementation 'com.google.dagger:dagger:2.14.1'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.14.1'
+
+    implementation 'com.google.dagger:dagger-android:2.14.1'
+    annotationProcessor 'com.google.dagger:dagger-android-processor:2.14.1'
+
+    implementation 'com.google.dagger:dagger-android-support:2.14.1'
 
     // Lombok
     compileOnly 'org.projectlombok:lombok:1.16.20'
@@ -70,6 +71,14 @@ dependencies {
 
     // Picasso
     implementation 'com.squareup.picasso:picasso:2.5.2'
+
+    // Room
+    def room_version = "1.1.1"
+    implementation "android.arch.persistence.room:runtime:$room_version"
+    annotationProcessor "android.arch.persistence.room:compiler:$room_version"
+    implementation "android.arch.persistence.room:rxjava2:$room_version"
+
+    implementation 'android.arch.lifecycle:livedata:1.1.1'
 }
 
 repositories {

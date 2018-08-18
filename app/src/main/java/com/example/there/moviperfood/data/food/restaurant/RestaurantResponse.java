@@ -1,4 +1,4 @@
-package com.example.there.moviperfood.data.restaurant;
+package com.example.there.moviperfood.data.food.restaurant;
 
 import lombok.Data;
 

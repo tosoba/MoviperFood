@@ -4,7 +4,7 @@
     <data>
         <variable
             name="review"
-            type="com.example.there.moviperfood.data.review.Review"/>
+            type="com.example.there.moviperfood.data.food.review.Review"/>
     </data>
 
     <android.support.constraint.ConstraintLayout

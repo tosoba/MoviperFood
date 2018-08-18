@@ -9,7 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import com.example.there.moviperfood.R;
-import com.example.there.moviperfood.data.cuisine.Cuisine;
+import com.example.there.moviperfood.data.food.cuisine.Cuisine;
 import com.example.there.moviperfood.databinding.ActivitySearchBinding;
 import com.example.there.moviperfood.viper.search.cuisines.CuisinesAdapter;
 import com.example.there.moviperfood.viper.search.cuisines.OnCuisineItemClickListener;

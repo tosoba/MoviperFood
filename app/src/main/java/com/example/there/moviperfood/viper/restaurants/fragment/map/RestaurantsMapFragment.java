@@ -9,9 +9,8 @@ import android.view.ViewGroup;
 
 import com.annimon.stream.Stream;
 import com.example.there.moviperfood.R;
-import com.example.there.moviperfood.data.restaurant.Restaurant;
+import com.example.there.moviperfood.data.food.restaurant.Restaurant;
 import com.example.there.moviperfood.viper.restaurants.fragment.RestaurantsFragment;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;

@@ -1,13 +1,22 @@
-package com.example.there.moviperfood.data.restaurant;
+package com.example.there.moviperfood.data.food.restaurant;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
 
-import lombok.Data;
+import java.util.Date;
 
-public @Data class Restaurant implements Parcelable {
+import lombok.Getter;
+
+@Entity(tableName = "restaurants")
+@Getter
+public class Restaurant implements Parcelable {
+
     private String cuisines;
 
     @SerializedName("photos_url")
@@ -42,6 +51,8 @@ public @Data class Restaurant implements Parcelable {
 
     private String currency;
 
+    @PrimaryKey
+    @NonNull
     private String id;
 
     @SerializedName("price_range")
@@ -49,7 +60,8 @@ public @Data class Restaurant implements Parcelable {
 
     private String name;
 
-    private String deeplink;
+    @SerializedName("deeplink")
+    private String deepLink;
 
     @SerializedName("events_url")
     private String eventsUrl;
@@ -62,10 +74,60 @@ public @Data class Restaurant implements Parcelable {
     @SerializedName("has_table_booking")
     private String hasTableBooking;
 
+    @Nullable
+    private Date lastSearched;
+
+    public Restaurant(String cuisines,
+                      String photosUrl,
+                      String hasOnlineDelivery,
+                      RestaurantLocation location,
+                      String featuredImage,
+                      String[] offers,
+                      String menuUrl,
+                      String isDeliveringNow,
+                      String[] establishmentTypes,
+                      String url,
+                      String switchToOrderMenu,
+                      RestaurantUserRating userRating,
+                      String currency,
+                      @NonNull String id,
+                      String priceRange,
+                      String name,
+                      String deepLink,
+                      String eventsUrl,
+                      String averageCostForTwo,
+                      String thumb,
+                      String hasTableBooking,
+                      @Nullable Date lastSearched) {
+        this.cuisines = cuisines;
+        this.photosUrl = photosUrl;
+        this.hasOnlineDelivery = hasOnlineDelivery;
+        this.location = location;
+        this.featuredImage = featuredImage;
+        this.offers = offers;
+        this.menuUrl = menuUrl;
+        this.isDeliveringNow = isDeliveringNow;
+        this.establishmentTypes = establishmentTypes;
+        this.url = url;
+        this.switchToOrderMenu = switchToOrderMenu;
+        this.userRating = userRating;
+        this.currency = currency;
+        this.id = id;
+        this.priceRange = priceRange;
+        this.name = name;
+        this.deepLink = deepLink;
+        this.eventsUrl = eventsUrl;
+        this.averageCostForTwo = averageCostForTwo;
+        this.thumb = thumb;
+        this.hasTableBooking = hasTableBooking;
+        this.lastSearched = lastSearched;
+    }
+
     private Restaurant(Parcel in) {
         cuisines = in.readString();
         photosUrl = in.readString();
         hasOnlineDelivery = in.readString();
+        location = in.readParcelable(RestaurantLocation.class.getClassLoader());
         featuredImage = in.readString();
         offers = in.createStringArray();
         menuUrl = in.readString();
@@ -73,15 +135,17 @@ public @Data class Restaurant implements Parcelable {
         establishmentTypes = in.createStringArray();
         url = in.readString();
         switchToOrderMenu = in.readString();
+        userRating = in.readParcelable(RestaurantUserRating.class.getClassLoader());
         currency = in.readString();
         id = in.readString();
         priceRange = in.readString();
         name = in.readString();
-        deeplink = in.readString();
+        deepLink = in.readString();
         eventsUrl = in.readString();
         averageCostForTwo = in.readString();
         thumb = in.readString();
         hasTableBooking = in.readString();
+        lastSearched = (Date) in.readSerializable();
     }
 
     public static final Creator<Restaurant> CREATOR = new Creator<Restaurant>() {
@@ -106,6 +170,7 @@ public @Data class Restaurant implements Parcelable {
         dest.writeString(cuisines);
         dest.writeString(photosUrl);
         dest.writeString(hasOnlineDelivery);
+        dest.writeParcelable(location, flags);
         dest.writeString(featuredImage);
         dest.writeStringArray(offers);
         dest.writeString(menuUrl);
@@ -113,14 +178,16 @@ public @Data class Restaurant implements Parcelable {
         dest.writeStringArray(establishmentTypes);
         dest.writeString(url);
         dest.writeString(switchToOrderMenu);
+        dest.writeParcelable(userRating, flags);
         dest.writeString(currency);
         dest.writeString(id);
         dest.writeString(priceRange);
         dest.writeString(name);
-        dest.writeString(deeplink);
+        dest.writeString(deepLink);
         dest.writeString(eventsUrl);
         dest.writeString(averageCostForTwo);
         dest.writeString(thumb);
         dest.writeString(hasTableBooking);
+        dest.writeSerializable(lastSearched);
     }
 }

@@ -1,24 +1,35 @@
-package com.example.there.moviperfood.data;
+package com.example.there.moviperfood.data.food;
 
 import com.annimon.stream.Stream;
-import com.example.there.moviperfood.data.cuisine.Cuisine;
-import com.example.there.moviperfood.data.cuisine.CuisineResponse;
-import com.example.there.moviperfood.data.restaurant.Restaurant;
-import com.example.there.moviperfood.data.restaurant.RestaurantResponse;
-import com.example.there.moviperfood.data.review.Review;
-import com.example.there.moviperfood.data.review.ReviewResponse;
+import com.example.there.moviperfood.data.food.api.FoodApiService;
+import com.example.there.moviperfood.data.food.cuisine.Cuisine;
+import com.example.there.moviperfood.data.food.cuisine.CuisineResponse;
+import com.example.there.moviperfood.data.food.db.RestaurantDao;
+import com.example.there.moviperfood.data.food.db.RestaurantsDb;
+import com.example.there.moviperfood.data.food.restaurant.Restaurant;
+import com.example.there.moviperfood.data.food.restaurant.RestaurantResponse;
+import com.example.there.moviperfood.data.food.review.Review;
+import com.example.there.moviperfood.data.food.review.ReviewResponse;
 import com.example.there.moviperfood.domain.BaseFoodRepository;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
+import io.reactivex.Completable;
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 
 public class FoodRepository implements BaseFoodRepository {
     private FoodApiService service;
 
-    public FoodRepository(FoodApiService service) {
+    private RestaurantDao restaurantDao;
+
+    @Inject
+    public FoodRepository(FoodApiService service, RestaurantsDb restaurantsDb) {
         this.service = service;
+        restaurantDao = restaurantsDb.restaurantDao();
     }
 
     @Override
@@ -38,5 +49,15 @@ public class FoodRepository implements BaseFoodRepository {
     public Observable<List<Review>> loadReviews(Restaurant restaurant) {
         return service.loadReviews(restaurant.getId())
                 .map(reviewsResponse -> Stream.of(reviewsResponse.getUserReviews()).map(ReviewResponse::getReview).toList());
+    }
+
+    @Override
+    public Completable saveRestaurant(Restaurant restaurant) {
+        return Completable.fromAction(() -> restaurantDao.insert(restaurant));
+    }
+
+    @Override
+    public Flowable<List<Restaurant>> getSavedRestaurants() {
+        return restaurantDao.getRestaurants();
     }
 }

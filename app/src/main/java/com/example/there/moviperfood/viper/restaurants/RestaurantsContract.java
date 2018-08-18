@@ -2,12 +2,12 @@ package com.example.there.moviperfood.viper.restaurants;
 
 import android.app.Activity;
 
-import com.example.there.moviperfood.data.cuisine.Cuisine;
-import com.example.there.moviperfood.data.restaurant.Restaurant;
+import com.example.there.moviperfood.data.food.cuisine.Cuisine;
+import com.example.there.moviperfood.data.food.restaurant.Restaurant;
 import com.google.android.gms.maps.model.LatLng;
 import com.hannesdorfmann.mosby.mvp.MvpView;
-import com.mateuszkoslacz.moviper.iface.presenter.ViperPresenter;
 import com.mateuszkoslacz.moviper.iface.interactor.ViperRxInteractor;
+import com.mateuszkoslacz.moviper.iface.presenter.ViperPresenter;
 import com.mateuszkoslacz.moviper.iface.routing.ViperRxRouting;
 
 import java.util.List;

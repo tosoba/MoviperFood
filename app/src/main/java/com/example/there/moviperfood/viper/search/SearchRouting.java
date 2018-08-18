@@ -2,7 +2,7 @@ package com.example.there.moviperfood.viper.search;
 
 import android.app.Activity;
 
-import com.example.there.moviperfood.data.cuisine.Cuisine;
+import com.example.there.moviperfood.data.food.cuisine.Cuisine;
 import com.example.there.moviperfood.viper.restaurants.RestaurantsActivity;
 import com.example.there.moviperfood.viper.restaurants.RestaurantsPresenter;
 import com.google.android.gms.maps.model.LatLng;
