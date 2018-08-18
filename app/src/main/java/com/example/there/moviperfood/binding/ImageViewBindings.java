@@ -6,9 +6,11 @@ import android.widget.ImageView;
 import com.example.there.moviperfood.R;
 import com.squareup.picasso.Picasso;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ImageViewBindings {
-    private ImageViewBindings() {
-    }
 
     @BindingAdapter("imageUrl")
     public static void bindImageUrl(ImageView imageView, String url) {

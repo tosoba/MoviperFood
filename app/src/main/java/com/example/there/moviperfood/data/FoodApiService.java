@@ -13,11 +13,11 @@ import retrofit2.http.Query;
 
 public interface FoodApiService {
     @GET("cuisines")
-    @Headers({"Accept: application/json", "user-key: ebe8cf93fb5e46a2c09bed310f932eb2"})
+    @Headers({"Accept: application/json", "user-key: " + Api.key})
     Observable<CuisinesResponse> loadCuisines(@Query("lat") String lat, @Query("lon") String lon);
 
     @GET("search")
-    @Headers({"Accept: application/json", "user-key: ebe8cf93fb5e46a2c09bed310f932eb2"})
+    @Headers({"Accept: application/json", "user-key: " + Api.key})
     Observable<RestaurantsResponse> loadRestaurants(@Query("lat") String lat,
                                                     @Query("lon") String lon,
                                                     @Query("cuisines") String[] cuisines,
@@ -25,7 +25,7 @@ public interface FoodApiService {
                                                     @Query("order") String order);
 
     @GET("search")
-    @Headers({"Accept: application/json", "user-key: ebe8cf93fb5e46a2c09bed310f932eb2"})
+    @Headers({"Accept: application/json", "user-key: " + Api.key})
     default Observable<RestaurantsResponse> loadRestaurants(@Query("lat") String lat,
                                                             @Query("lon") String lon,
                                                             @Query("cuisines") String[] cuisines) {
@@ -33,6 +33,6 @@ public interface FoodApiService {
     }
 
     @GET("reviews")
-    @Headers({"Accept: application/json", "user-key: ebe8cf93fb5e46a2c09bed310f932eb2"})
+    @Headers({"Accept: application/json", "user-key: " + Api.key})
     Observable<ReviewsResponse> loadReviews(@Query("res_id") String restaurantId);
 }

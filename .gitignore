@@ -1,3 +1,7 @@
+app/src/main/java/com/example/there/moviperfood/data/Api.java
+app/src/main/res/values/google_api.xml
+.idea/
+
 # Built application files
 *.apk
 *.ap_
