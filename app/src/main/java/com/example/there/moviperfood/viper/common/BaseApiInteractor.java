@@ -1,20 +1,15 @@
 package com.example.there.moviperfood.viper.common;
 
 import com.example.there.moviperfood.MoviperFoodApp;
-import com.example.there.moviperfood.di.DaggerAppComponent;
 import com.example.there.moviperfood.domain.BaseFoodRepository;
 import com.example.there.moviperfood.domain.BasePlaceRepository;
 import com.mateuszkoslacz.moviper.base.interactor.BaseRxInteractor;
 
-import javax.inject.Inject;
-
 public abstract class BaseApiInteractor extends BaseRxInteractor {
 
-    @Inject
-    BaseFoodRepository foodRepository;
+    private BaseFoodRepository foodRepository;
 
-    @Inject
-    BasePlaceRepository placeRepository;
+    private BasePlaceRepository placeRepository;
 
     protected BaseFoodRepository getFoodRepository() {
         return foodRepository;
@@ -25,9 +20,7 @@ public abstract class BaseApiInteractor extends BaseRxInteractor {
     }
 
     public BaseApiInteractor() {
-        DaggerAppComponent.builder()
-                .application(MoviperFoodApp.instance)
-                .build()
-                .inject(this);
+        foodRepository = MoviperFoodApp.getInstance().getComponent().baseFoodRepository();
+        placeRepository = MoviperFoodApp.getInstance().getComponent().basePlaceRepository();
     }
 }

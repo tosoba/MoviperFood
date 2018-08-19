@@ -1,4 +1,4 @@
-package com.example.there.moviperfood.viper.search.cuisines;
+package com.example.there.moviperfood.viper.cuisines.list;
 
 import com.example.there.moviperfood.data.food.cuisine.Cuisine;
 

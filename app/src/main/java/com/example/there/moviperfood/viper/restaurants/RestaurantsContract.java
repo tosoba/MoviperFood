@@ -12,12 +12,15 @@ import com.mateuszkoslacz.moviper.iface.routing.ViperRxRouting;
 
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 
 interface RestaurantsContract {
 
     interface Presenter extends ViperPresenter<View> {
         void loadRestaurants(LatLng latLng, Cuisine cuisine);
+        void saveRestaurant(Restaurant restaurant);
+
         void startRestaurantActivity(Restaurant restaurant);
     }
 
@@ -27,6 +30,7 @@ interface RestaurantsContract {
 
     interface Interactor extends ViperRxInteractor {
         Observable<List<Restaurant>> loadRestaurants(LatLng latLng, Cuisine cuisine);
+        Completable saveRestaurant(Restaurant restaurant);
     }
 
     interface Routing extends ViperRxRouting<Activity> {

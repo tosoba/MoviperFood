@@ -52,7 +52,7 @@ public class FoodRepository implements BaseFoodRepository {
     }
 
     @Override
-    public Completable saveRestaurant(Restaurant restaurant) {
+    public Completable insertRestaurant(Restaurant restaurant) {
         return Completable.fromAction(() -> restaurantDao.insert(restaurant));
     }
 

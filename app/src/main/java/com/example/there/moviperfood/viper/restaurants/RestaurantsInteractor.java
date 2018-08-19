@@ -7,6 +7,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 
 public class RestaurantsInteractor
@@ -16,5 +17,10 @@ public class RestaurantsInteractor
     @Override
     public Observable<List<Restaurant>> loadRestaurants(LatLng latLng, Cuisine cuisine) {
         return getFoodRepository().loadRestaurants(latLng, cuisine);
+    }
+
+    @Override
+    public Completable saveRestaurant(Restaurant restaurant) {
+        return getFoodRepository().insertRestaurant(restaurant);
     }
 }

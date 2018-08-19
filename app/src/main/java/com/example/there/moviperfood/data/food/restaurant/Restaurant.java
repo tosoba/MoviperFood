@@ -11,10 +11,14 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 
 @Entity(tableName = "restaurants")
 @Getter
+@Setter
+@EqualsAndHashCode
 public class Restaurant implements Parcelable {
 
     private String cuisines;

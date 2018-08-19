@@ -1,4 +1,4 @@
-package com.example.there.moviperfood.viper.search.cuisines;
+package com.example.there.moviperfood.viper.cuisines.list;
 
 import android.support.v7.widget.RecyclerView;
 

@@ -5,7 +5,8 @@ import com.example.there.moviperfood.di.module.ApiModule;
 import com.example.there.moviperfood.di.module.AppModule;
 import com.example.there.moviperfood.di.module.CacheModule;
 import com.example.there.moviperfood.di.module.DataModule;
-import com.example.there.moviperfood.viper.common.BaseApiInteractor;
+import com.example.there.moviperfood.domain.BaseFoodRepository;
+import com.example.there.moviperfood.domain.BasePlaceRepository;
 
 import javax.inject.Singleton;
 
@@ -28,5 +29,8 @@ public interface AppComponent {
         AppComponent build();
     }
 
-    void inject(BaseApiInteractor interactor);
+    BaseFoodRepository baseFoodRepository();
+    BasePlaceRepository basePlaceRepository();
+
+    void inject(MoviperFoodApp app);
 }

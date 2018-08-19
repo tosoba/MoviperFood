@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Completable;
 import io.reactivex.Flowable;
 
 public class PlaceRepository implements BasePlaceRepository {
@@ -18,12 +19,12 @@ public class PlaceRepository implements BasePlaceRepository {
     }
 
     @Override
-    public Flowable<List<CachedPlace>> getPlaces() {
+    public Flowable<List<CachedPlace>> getSavedPlaces() {
         return placeDao.getPlaces();
     }
 
     @Override
-    public void insertPlace(CachedPlace place) {
-        placeDao.insert(place);
+    public Completable insertPlace(CachedPlace place) {
+        return Completable.fromAction(() -> placeDao.insert(place));
     }
 }

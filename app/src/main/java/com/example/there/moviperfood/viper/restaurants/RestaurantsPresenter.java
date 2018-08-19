@@ -63,6 +63,14 @@ public class RestaurantsPresenter
     }
 
     @Override
+    public void saveRestaurant(Restaurant restaurant) {
+        addSubscription(getInteractor().saveRestaurant(restaurant)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe());
+    }
+
+    @Override
     public void startRestaurantActivity(Restaurant restaurant) {
         getRouting().startRestaurantActivity(restaurant);
     }

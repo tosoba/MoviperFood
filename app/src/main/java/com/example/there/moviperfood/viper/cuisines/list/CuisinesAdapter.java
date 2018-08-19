@@ -1,4 +1,4 @@
-package com.example.there.moviperfood.viper.search.cuisines;
+package com.example.there.moviperfood.viper.cuisines.list;
 
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;

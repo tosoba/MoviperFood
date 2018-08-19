@@ -22,6 +22,7 @@ import com.mateuszkoslacz.moviper.base.view.activity.ViperActivity;
 import com.mateuszkoslacz.moviper.presentersdispatcher.MoviperPresentersDispatcher;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import lombok.val;
@@ -159,6 +160,8 @@ public class RestaurantsActivity
     @Override
     public void onRestaurantSelected(Restaurant restaurant) {
         presenter.startRestaurantActivity(restaurant);
+        restaurant.setLastSearched(new Date());
+        presenter.saveRestaurant(restaurant);
     }
 
     private static final String EXTRA_CUISINE = "EXTRA_CUISINE";

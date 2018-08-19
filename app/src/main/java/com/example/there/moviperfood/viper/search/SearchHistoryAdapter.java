@@ -6,7 +6,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.there.moviperfood.R;
 import com.example.there.moviperfood.data.food.restaurant.Restaurant;
@@ -29,6 +28,14 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<RecyclerView.View
     private ObservableSortedList<Restaurant> restaurants;
     private ObservableSortedList<CachedPlace> places;
 
+    private RestaurantsAdapter restaurantsAdapter;
+
+    public void scrollRestaurantsToTop() {
+        if (restaurantsAdapter != null) {
+            restaurantsAdapter.scrollToTop();
+        }
+    }
+
     public SearchHistoryAdapter(ObservableSortedList<Restaurant> restaurants, ObservableSortedList<CachedPlace> places) {
         this.restaurants = restaurants;
         this.places = places;
@@ -48,8 +55,8 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<RecyclerView.View
         if (viewType == RESTAURANTS_VIEW_TYPE) {
             PreviouslySearchedRestaurantsListBinding binding =
                     DataBindingUtil.inflate(inflater, R.layout.previously_searched_restaurants_list, parent, false);
-            val adapter = new RestaurantsAdapter(restaurants);
-            return new RestaurantsViewHolder(binding, adapter);
+            restaurantsAdapter = new RestaurantsAdapter(restaurants);
+            return new RestaurantsViewHolder(binding, restaurantsAdapter);
         } else if (viewType == PLACE_VIEW_TYPE) {
             PreviouslySearchedPlaceItemBinding binding =
                     DataBindingUtil.inflate(inflater, R.layout.previously_searched_place_item, parent, false);
@@ -61,7 +68,7 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<RecyclerView.View
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof PlaceViewHolder) {
             val hold = (PlaceViewHolder) holder;
-            hold.placeNameTextView().setText(places.get(position + 1).getName());
+            hold.binding.setPlace(places.get(position - 1));
         }
     }
 
@@ -79,6 +86,20 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<RecyclerView.View
             AdapterUtils.bindAdapterToItems(this, restaurants);
         }
 
+        private RecyclerView recyclerView;
+
+        public void scrollToTop() {
+            if (this.recyclerView != null) {
+                this.recyclerView.scrollToPosition(0);
+            }
+        }
+
+        @Override
+        public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+            super.onAttachedToRecyclerView(recyclerView);
+            this.recyclerView = recyclerView;
+        }
+
         @NonNull
         @Override
         public RestaurantViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -90,7 +111,7 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         @Override
         public void onBindViewHolder(@NonNull RestaurantViewHolder holder, int position) {
-            holder.restaurantNameTextView().setText(restaurants.get(position).getName());
+            holder.binding.setRestaurant(restaurants.get(position));
         }
 
         @Override
@@ -102,8 +123,8 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<RecyclerView.View
 
             private PreviouslySearchedRestaurantItemBinding binding;
 
-            TextView restaurantNameTextView() {
-                return binding.previouslySearchedRestaurantNameText;
+            public PreviouslySearchedRestaurantItemBinding getBinding() {
+                return binding;
             }
 
             RestaurantViewHolder(PreviouslySearchedRestaurantItemBinding binding) {
@@ -116,10 +137,6 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<RecyclerView.View
     public static class PlaceViewHolder extends RecyclerView.ViewHolder {
 
         private PreviouslySearchedPlaceItemBinding binding;
-
-        TextView placeNameTextView() {
-            return binding.previouslySearchedPlaceText;
-        }
 
         PlaceViewHolder(PreviouslySearchedPlaceItemBinding binding) {
             super(binding.getRoot());

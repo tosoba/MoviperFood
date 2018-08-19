@@ -18,7 +18,7 @@ public interface BaseFoodRepository {
 
     Observable<List<Review>> loadReviews(Restaurant restaurant);
 
-    Completable saveRestaurant(Restaurant restaurant);
+    Completable insertRestaurant(Restaurant restaurant);
 
     Flowable<List<Restaurant>> getSavedRestaurants();
 }
