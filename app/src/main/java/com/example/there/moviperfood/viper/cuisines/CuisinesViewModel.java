@@ -1,24 +1,28 @@
 package com.example.there.moviperfood.viper.cuisines;
 
+import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
+import android.databinding.ObservableList;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.example.there.moviperfood.data.food.cuisine.Cuisine;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.Arrays;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
+@Getter
 public class CuisinesViewModel implements Parcelable {
     public ObservableField<Boolean> isLoading = new ObservableField<>(false);
 
-    public ObservableField<List<Cuisine>> lastCuisines = new ObservableField<>(Collections.emptyList());
+    public ObservableList<Cuisine> cuisines = new ObservableArrayList<>();
 
     private CuisinesViewModel(Parcel in) {
         isLoading.set(in.readByte() != 0);
+        cuisines.addAll(Arrays.asList(in.createTypedArray(Cuisine.CREATOR)));
     }
 
     @Override
@@ -34,6 +38,7 @@ public class CuisinesViewModel implements Parcelable {
         } else {
             dest.writeByte((byte) (isLoading.get() ? 1 : 0));
         }
+        dest.writeTypedArray(cuisines.toArray(new Cuisine[cuisines.size()]), flags);
     }
 
     public static final Creator<CuisinesViewModel> CREATOR = new Creator<CuisinesViewModel>() {

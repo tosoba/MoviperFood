@@ -3,13 +3,13 @@ package com.example.there.moviperfood.viper.reviews;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.databinding.ObservableArrayList;
+import android.databinding.ObservableField;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 
 import com.example.there.moviperfood.R;
 import com.example.there.moviperfood.data.food.restaurant.Restaurant;
@@ -19,8 +19,6 @@ import com.example.there.moviperfood.viper.reviews.list.ReviewsListAdapter;
 import com.mateuszkoslacz.moviper.base.view.activity.ViperActivity;
 import com.mateuszkoslacz.moviper.presentersdispatcher.MoviperPresentersDispatcher;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import lombok.val;
@@ -31,78 +29,55 @@ public class ReviewsActivity
 
     private Restaurant restaurant;
 
-    private static final String KEY_REVIEWS = "KEY_REVIEWS";
-    private ArrayList<Review> reviews;
-
-    private ReviewsListAdapter reviewsAdapter;
+    private static final String KEY_REVIEWS_VIEW_MODEL = "KEY_REVIEWS_VIEW_MODEL";
+    private ReviewsViewModel reviewsViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initExtras();
-        initBinding();
-        initTitle();
 
+        initViewModel();
         initFromSavedState(savedInstanceState);
-        initToolbar();
-        initReviewsRecyclerView();
+        initView();
     }
 
-    private void initExtras() {
+    private void initViewModel() {
         restaurant = getIntent().getParcelableExtra(EXTRA_RESTAURANT);
+        reviewsViewModel = new ReviewsViewModel(restaurant, new ObservableArrayList<>(), new ObservableField<>(false));
     }
 
-    private void initBinding() {
+    private void initView() {
         ActivityReviewsBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_reviews);
-        binding.setRestaurant(restaurant);
-    }
-
-    private void initTitle() {
-        CollapsingToolbarLayout toolbarLayout = findViewById(R.id.restaurant_toolbar_layout);
-        toolbarLayout.setTitle(restaurant.getName());
+        binding.setReviewsView(new ReviewsView(
+                reviewsViewModel,
+                new ReviewsListAdapter(reviewsViewModel.getReviews()),
+                new DividerItemDecoration(this, DividerItemDecoration.VERTICAL),
+                ContextCompat.getDrawable(this, R.drawable.arrow_back),
+                v -> onBackPressed()
+        ));
+        binding.restaurantReviewsRecyclerView.setLayoutManager(
+                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (reviews != null) outState.putParcelableArrayList(KEY_REVIEWS, reviews);
+        outState.putParcelable(KEY_REVIEWS_VIEW_MODEL, reviewsViewModel);
     }
 
     private void initFromSavedState(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
-            if (savedInstanceState.containsKey(KEY_REVIEWS)) {
-                reviews = savedInstanceState.getParcelableArrayList(KEY_REVIEWS);
-            } else {
-                presenter.loadReviews(restaurant);
-            }
+            reviewsViewModel = savedInstanceState.getParcelable(KEY_REVIEWS_VIEW_MODEL);
         } else {
+            reviewsViewModel.getIsLoading().set(true);
             presenter.loadReviews(restaurant);
         }
     }
 
-    private void initToolbar() {
-        Toolbar toolbar = findViewById(R.id.restaurant_toolbar);
-        toolbar.setNavigationIcon(R.drawable.arrow_back);
-        toolbar.setNavigationOnClickListener(view -> onBackPressed());
-    }
-
-    private void initReviewsRecyclerView() {
-        RecyclerView reviewsRecyclerView = findViewById(R.id.restaurant_reviews_recycler_view);
-        val layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        reviewsRecyclerView.setLayoutManager(layoutManager);
-        if (reviews == null) {
-            reviewsAdapter = new ReviewsListAdapter(Collections.emptyList());
-        } else {
-            reviewsAdapter = new ReviewsListAdapter(reviews);
-        }
-        reviewsRecyclerView.setAdapter(reviewsAdapter);
-        reviewsRecyclerView.addItemDecoration(new DividerItemDecoration(reviewsRecyclerView.getContext(), layoutManager.getOrientation()));
-    }
-
     @Override
     public void updateReviews(List<Review> reviews) {
-        this.reviews = new ArrayList<>(reviews);
-        if (reviewsAdapter != null) reviewsAdapter.setReviews(reviews);
+        reviewsViewModel.getIsLoading().set(false);
+        reviewsViewModel.getReviews().addAll(reviews);
     }
 
     @NonNull

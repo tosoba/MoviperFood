@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -21,7 +20,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.mateuszkoslacz.moviper.base.view.activity.ViperActivity;
 import com.mateuszkoslacz.moviper.presentersdispatcher.MoviperPresentersDispatcher;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import lombok.val;
@@ -29,8 +27,6 @@ import lombok.val;
 public class CuisinesActivity
         extends ViperActivity<CuisinesContract.View, CuisinesContract.Presenter>
         implements CuisinesContract.View {
-
-    private CuisinesAdapter cuisinesAdapter;
 
     private static final String KEY_CUISINES_VIEW_MODEL = "KEY_CUISINES_VIEW_MODEL";
     private CuisinesViewModel cuisinesViewModel = new CuisinesViewModel();
@@ -41,11 +37,10 @@ public class CuisinesActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        initView();
-        ActivityUtils.setHomeButtonEnabled(this, R.drawable.arrow_back_borderless);
         initExtras();
         initFromSavedState(savedInstanceState);
-        initCuisinesRecyclerView();
+        initView();
+        ActivityUtils.setHomeButtonEnabled(this, R.drawable.arrow_back_borderless);
 
         if (savedInstanceState == null) {
             cuisinesViewModel.isLoading.set(true);
@@ -55,7 +50,12 @@ public class CuisinesActivity
 
     private void initView() {
         ActivityCuisinesBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_cuisines);
-        binding.setViewModel(cuisinesViewModel);
+        binding.setCuisinesView(new CuisinesView(
+                cuisinesViewModel,
+                new CuisinesAdapter(cuisinesViewModel.cuisines, listener),
+                new DividerItemDecoration(this, DividerItemDecoration.VERTICAL)));
+        binding.cuisinesRecyclerView.setLayoutManager(
+                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
     }
 
     @Override
@@ -111,20 +111,10 @@ public class CuisinesActivity
         }
     };
 
-    private void initCuisinesRecyclerView() {
-        RecyclerView cuisinesRecyclerView = findViewById(R.id.cuisines_recycler_view);
-        val layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        cuisinesRecyclerView.setLayoutManager(layoutManager);
-        cuisinesAdapter = new CuisinesAdapter(cuisinesViewModel.lastCuisines.get(), listener);
-        cuisinesRecyclerView.setAdapter(cuisinesAdapter);
-        cuisinesRecyclerView.addItemDecoration(new DividerItemDecoration(cuisinesRecyclerView.getContext(), layoutManager.getOrientation()));
-    }
-
     @Override
     public void updateCuisines(List<Cuisine> cuisines) {
         cuisinesViewModel.isLoading.set(false);
-        cuisinesViewModel.lastCuisines.set(new ArrayList<>(cuisines));
-        cuisinesAdapter.setCuisines(cuisines);
+        cuisinesViewModel.cuisines.addAll(cuisines);
     }
 
     @Override

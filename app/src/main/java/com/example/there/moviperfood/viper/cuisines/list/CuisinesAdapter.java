@@ -1,6 +1,7 @@
 package com.example.there.moviperfood.viper.cuisines.list;
 
 import android.databinding.DataBindingUtil;
+import android.databinding.ObservableList;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,19 +10,19 @@ import android.view.ViewGroup;
 import com.example.there.moviperfood.R;
 import com.example.there.moviperfood.data.food.cuisine.Cuisine;
 import com.example.there.moviperfood.databinding.CuisineListItemBinding;
-
-import java.util.List;
+import com.example.there.moviperfood.util.AdapterUtils;
 
 import lombok.val;
 
 public class CuisinesAdapter extends RecyclerView.Adapter<CuisinesViewHolder> {
 
-    private List<Cuisine> cuisines;
+    private ObservableList<Cuisine> cuisines;
     private OnCuisineItemClickListener onClickListener;
 
-    public CuisinesAdapter(List<Cuisine> cuisines, OnCuisineItemClickListener onClickListener) {
+    public CuisinesAdapter(ObservableList<Cuisine> cuisines, OnCuisineItemClickListener onClickListener) {
         this.cuisines = cuisines;
         this.onClickListener = onClickListener;
+        AdapterUtils.bindAdapterToItems(this, cuisines);
     }
 
     @NonNull
@@ -41,10 +42,5 @@ public class CuisinesAdapter extends RecyclerView.Adapter<CuisinesViewHolder> {
     @Override
     public int getItemCount() {
         return cuisines.size();
-    }
-
-    public void setCuisines(List<Cuisine> cuisines) {
-        this.cuisines = cuisines;
-        notifyDataSetChanged();
     }
 }

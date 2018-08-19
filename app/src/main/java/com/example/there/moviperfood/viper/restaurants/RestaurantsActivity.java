@@ -2,6 +2,7 @@ package com.example.there.moviperfood.viper.restaurants;
 
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -11,6 +12,7 @@ import android.view.MenuItem;
 import com.example.there.moviperfood.R;
 import com.example.there.moviperfood.data.food.cuisine.Cuisine;
 import com.example.there.moviperfood.data.food.restaurant.Restaurant;
+import com.example.there.moviperfood.databinding.ActivityRestaurantsBinding;
 import com.example.there.moviperfood.util.ActivityUtils;
 import com.example.there.moviperfood.viper.restaurants.fragment.RestaurantsCurrentFragment;
 import com.example.there.moviperfood.viper.restaurants.fragment.RestaurantsFragment;
@@ -34,7 +36,6 @@ public class RestaurantsActivity
     private static final String KEY_CURRENT_FRAGMENT = "KEY_CURRENT_FRAGMENT";
     private RestaurantsCurrentFragment currentFragment = RestaurantsCurrentFragment.LIST;
 
-    // EXTRAS
     private Cuisine cuisine;
     private LatLng latLng;
 
@@ -45,15 +46,17 @@ public class RestaurantsActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //TODO: databinding
-        setContentView(R.layout.activity_restaurants);
-
-        ActivityUtils.setHomeButtonEnabled(this, R.drawable.arrow_back_borderless);
-        initBottomNavigation();
         initExtras();
-        setTitle(cuisine.getCuisineName());
+        initView();
         initFromSavedState(savedInstanceState);
         showFragment();
+    }
+
+    private void initView() {
+        ActivityRestaurantsBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_restaurants);
+        binding.setRestaurantsView(new RestaurantsView(onNavigationItemSelectedListener));
+        ActivityUtils.setHomeButtonEnabled(this, R.drawable.arrow_back_borderless);
+        setTitle(cuisine.getCuisineName());
     }
 
     @Override
@@ -96,7 +99,7 @@ public class RestaurantsActivity
 
     private static final String TAG_FRAGMENT_RESTAURANTS = "RESTAURANTS_FRAGMENT_TAG";
 
-    private BottomNavigationView.OnNavigationItemSelectedListener navigationListener = item -> {
+    private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener = item -> {
         Fragment selectedFragment = null;
         switch (item.getItemId()) {
             case R.id.navigation_list:
@@ -128,11 +131,6 @@ public class RestaurantsActivity
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private void initBottomNavigation() {
-        BottomNavigationView navigationView = findViewById(R.id.bottom_navigation);
-        navigationView.setOnNavigationItemSelectedListener(navigationListener);
     }
 
     private void showFragment() {

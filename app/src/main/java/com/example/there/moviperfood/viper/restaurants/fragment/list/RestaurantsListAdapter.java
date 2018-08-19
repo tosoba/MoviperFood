@@ -1,6 +1,7 @@
 package com.example.there.moviperfood.viper.restaurants.fragment.list;
 
 import android.databinding.DataBindingUtil;
+import android.databinding.ObservableList;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,18 +10,18 @@ import android.view.ViewGroup;
 import com.example.there.moviperfood.R;
 import com.example.there.moviperfood.data.food.restaurant.Restaurant;
 import com.example.there.moviperfood.databinding.RestaurantListItemBinding;
-
-import java.util.List;
+import com.example.there.moviperfood.util.AdapterUtils;
 
 import lombok.val;
 
 public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsListViewHolder> {
-    private List<Restaurant> restaurants;
+    private ObservableList<Restaurant> restaurants;
     private OnRestaurantItemClickListener onClickListener;
 
-    RestaurantsListAdapter(List<Restaurant> restaurants, OnRestaurantItemClickListener onClickListener) {
+    RestaurantsListAdapter(ObservableList<Restaurant> restaurants, OnRestaurantItemClickListener onClickListener) {
         this.restaurants = restaurants;
         this.onClickListener = onClickListener;
+        AdapterUtils.bindAdapterToItems(this, restaurants);
     }
 
     @NonNull
@@ -40,10 +41,5 @@ public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsList
     @Override
     public int getItemCount() {
         return restaurants.size();
-    }
-
-    public void setRestaurants(List<Restaurant> restaurants) {
-        this.restaurants = restaurants;
-        notifyDataSetChanged();
     }
 }

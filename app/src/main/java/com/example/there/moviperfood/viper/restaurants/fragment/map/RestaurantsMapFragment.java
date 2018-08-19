@@ -50,13 +50,13 @@ public class RestaurantsMapFragment extends RestaurantsFragment {
     };
 
     private boolean canRestaurantsBeAdded() {
-        return restaurants != null && !restaurants.isEmpty() && map != null;
+        return viewModel != null && !viewModel.getRestaurants().isEmpty() && map != null;
     }
 
     private void addRestaurantsToMap() {
         if (canRestaurantsBeAdded()) {
             val boundsBuilder = new LatLngBounds.Builder();
-            Stream.of(restaurants).forEach(restaurant -> {
+            Stream.of(viewModel.getRestaurants()).forEach(restaurant -> {
                 val position = restaurant.getLocation().getLatLng();
                 map.addMarker(new MarkerOptions().position(position).title(restaurant.getName()));
                 boundsBuilder.include(position);

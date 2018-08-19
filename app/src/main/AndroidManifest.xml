@@ -27,7 +27,6 @@
         <activity android:name=".viper.restaurants.RestaurantsActivity" />
         <activity
             android:name=".viper.reviews.ReviewsActivity"
-            android:parentActivityName=".viper.restaurants.RestaurantsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".viper.cuisines.CuisinesActivity" />
     </application>

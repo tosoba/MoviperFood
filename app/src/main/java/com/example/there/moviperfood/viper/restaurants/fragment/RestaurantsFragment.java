@@ -13,27 +13,27 @@ import java.util.List;
 import lombok.val;
 
 public abstract class RestaurantsFragment extends Fragment {
-    protected ArrayList<Restaurant> restaurants;
+    protected RestaurantsFragmentViewModel viewModel = new RestaurantsFragmentViewModel();
 
     public void setRestaurants(List<Restaurant> restaurants) {
-        if (this.restaurants != null || restaurants == null) return;
-        this.restaurants = new ArrayList<>(restaurants);
+        if (!viewModel.getRestaurants().isEmpty()) return;
+        viewModel.getRestaurants().addAll(restaurants);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initArguments();
+        initFromArguments();
         initFromSavedState(savedInstanceState);
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (restaurants != null) outState.putParcelableArrayList(KEY_RESTAURANTS, restaurants);
+        if (viewModel != null) outState.putParcelable(KEY_RESTAURANTS_VIEW_MODEL, viewModel);
     }
 
-    private void initArguments() {
+    private void initFromArguments() {
         val args = getArguments();
         if (args != null) {
             if (args.containsKey(ARG_RESTAURANTS)) {
@@ -43,8 +43,8 @@ public abstract class RestaurantsFragment extends Fragment {
     }
 
     private void initFromSavedState(Bundle savedInstanceState) {
-        if (savedInstanceState != null) {
-            if (savedInstanceState.containsKey(KEY_RESTAURANTS)) setRestaurants(savedInstanceState.getParcelableArrayList(KEY_RESTAURANTS));
+        if (savedInstanceState != null && savedInstanceState.containsKey(KEY_RESTAURANTS_VIEW_MODEL)) {
+            viewModel = savedInstanceState.getParcelable(KEY_RESTAURANTS_VIEW_MODEL);
         }
     }
 
@@ -74,5 +74,5 @@ public abstract class RestaurantsFragment extends Fragment {
         }
     }
 
-    private static final String KEY_RESTAURANTS = "KEY_RESTAURANTS";
+    private static final String KEY_RESTAURANTS_VIEW_MODEL = "KEY_RESTAURANTS_VIEW_MODEL";
 }
