@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 
+import com.annimon.stream.Stream;
 import com.example.there.moviperfood.R;
 import com.example.there.moviperfood.data.food.restaurant.Restaurant;
 import com.example.there.moviperfood.data.place.CachedPlace;
@@ -17,6 +18,8 @@ import com.mateuszkoslacz.moviper.base.view.activity.ViperActivity;
 
 import java.util.Date;
 import java.util.List;
+
+import lombok.val;
 
 public class SearchActivity
         extends ViperActivity<SearchContract.View, SearchContract.Presenter>
@@ -83,6 +86,13 @@ public class SearchActivity
 
     @Override
     public void updatePreviouslySearchedPlaces(List<CachedPlace> places) {
-        searchViewModel.getPlaces().addAll(places);
+        if (places.size() < searchViewModel.getPlaces().size()) {
+            val toRemove = Stream.of(searchViewModel.getPlaces())
+                    .filter((displayedPlace) -> !places.contains(displayedPlace))
+                    .toList();
+            searchViewModel.getPlaces().removeAll(toRemove);
+        } else {
+            searchViewModel.getPlaces().addAll(places);
+        }
     }
 }

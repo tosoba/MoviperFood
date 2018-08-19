@@ -6,6 +6,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 
 public class CuisinesInteractor
@@ -15,5 +16,10 @@ public class CuisinesInteractor
     @Override
     public Observable<List<Cuisine>> loadCuisines(LatLng latLng) {
         return getFoodRepository().loadCuisines(latLng);
+    }
+
+    @Override
+    public Completable deleteMostRecentlyAddedPlace() {
+        return getPlaceRepository().deleteMostRecentlyAddedPlace();
     }
 }

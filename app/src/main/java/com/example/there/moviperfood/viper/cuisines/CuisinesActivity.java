@@ -9,6 +9,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.there.moviperfood.R;
 import com.example.there.moviperfood.data.food.cuisine.Cuisine;
@@ -124,6 +125,13 @@ public class CuisinesActivity
         cuisinesViewModel.isLoading.set(false);
         cuisinesViewModel.lastCuisines.set(new ArrayList<>(cuisines));
         cuisinesAdapter.setCuisines(cuisines);
+    }
+
+    @Override
+    public void noDataRetrieved() {
+        presenter.deleteMostRecentlyAddedPlace();
+        Toast.makeText(this, getString(R.string.no_restaurants_found), Toast.LENGTH_LONG).show();
+        finish();
     }
 
     private static final String EXTRA_LAT_LNG = "EXTRA_LAT_LNG";

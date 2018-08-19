@@ -22,7 +22,7 @@ public class AdapterUtils {
 
             @Override
             public void onItemRangeInserted(ObservableList<T> sender, int positionStart, int itemCount) {
-                adapter.notifyItemRangeInserted(positionStart, itemCount);
+                adapter.notifyItemRangeInserted(positionStart + offset, itemCount);
             }
 
             @Override

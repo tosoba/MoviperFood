@@ -50,7 +50,10 @@ public class CuisinesPresenter
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doFinally(() -> cuisinesLoadingInProgress = false)
-                    .subscribe(this::updateCuisines, error -> Log.e("Error", error.getMessage())));
+                    .subscribe(this::updateCuisines, error -> {
+                        Log.e("Error", error.getMessage());
+                        if (getView() != null) getView().noDataRetrieved();
+                    }));
         } else {
             updateCuisines(cuisinesToUpdate);
         }
@@ -59,5 +62,13 @@ public class CuisinesPresenter
     @Override
     public void startRestaurantsActivity(Cuisine cuisine, LatLng latLng) {
         getRouting().startRestaurantsActivity(cuisine, latLng);
+    }
+
+    @Override
+    public void deleteMostRecentlyAddedPlace() {
+        addSubscription(getInteractor().deleteMostRecentlyAddedPlace()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe());
     }
 }

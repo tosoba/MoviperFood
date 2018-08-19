@@ -11,19 +11,26 @@ import com.mateuszkoslacz.moviper.iface.routing.ViperRxRouting;
 
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 
 public interface CuisinesContract {
     interface Interactor extends ViperRxInteractor {
         Observable<List<Cuisine>> loadCuisines(LatLng latLng);
+
+        Completable deleteMostRecentlyAddedPlace();
     }
 
     interface View extends MvpView {
         void updateCuisines(List<Cuisine> cuisines);
+
+        void noDataRetrieved();
     }
 
     interface Presenter extends ViperPresenter<CuisinesContract.View> {
         void loadCuisines(LatLng latLng);
+
+        void deleteMostRecentlyAddedPlace();
 
         void startRestaurantsActivity(Cuisine cuisine, LatLng latLng);
     }

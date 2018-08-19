@@ -10,4 +10,5 @@ import io.reactivex.Flowable;
 public interface BasePlaceRepository {
     Flowable<List<CachedPlace>> getSavedPlaces();
     Completable insertPlace(CachedPlace place);
+    Completable deleteMostRecentlyAddedPlace();
 }

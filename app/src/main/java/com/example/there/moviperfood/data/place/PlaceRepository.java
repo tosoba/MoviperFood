@@ -27,4 +27,9 @@ public class PlaceRepository implements BasePlaceRepository {
     public Completable insertPlace(CachedPlace place) {
         return Completable.fromAction(() -> placeDao.insert(place));
     }
+
+    @Override
+    public Completable deleteMostRecentlyAddedPlace() {
+        return Completable.fromAction(() -> placeDao.deleteMostRecentlyAddedPlace());
+    }
 }

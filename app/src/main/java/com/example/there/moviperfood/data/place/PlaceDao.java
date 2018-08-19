@@ -13,4 +13,7 @@ import io.reactivex.Flowable;
 public interface PlaceDao extends BaseDao<CachedPlace> {
     @Query("SELECT * FROM places")
     Flowable<List<CachedPlace>> getPlaces();
+
+    @Query("DELETE FROM places WHERE lastSearched=(SELECT MAX(lastSearched) FROM places)")
+    void deleteMostRecentlyAddedPlace();
 }
