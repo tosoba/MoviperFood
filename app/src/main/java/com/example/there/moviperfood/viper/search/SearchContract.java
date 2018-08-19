@@ -18,7 +18,7 @@ import io.reactivex.Flowable;
 public interface SearchContract {
 
     interface Presenter extends ViperPresenter<View> {
-        void startCuisinesActivity(LatLng latLng);
+        void startCuisinesActivity(String placeName, LatLng placeLatLng);
 
         void loadPreviouslySearchedRestaurants();
         void loadPreviouslySearchedPlaces();
@@ -39,6 +39,6 @@ public interface SearchContract {
     }
 
     interface Routing extends ViperRxRouting<Activity> {
-        void startCuisinesActivity(LatLng latLng);
+        void startCuisinesActivity(String placeName, LatLng latLng);
     }
 }

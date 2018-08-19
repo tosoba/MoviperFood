@@ -36,8 +36,8 @@ public class SearchPresenter
     }
 
     @Override
-    public void startCuisinesActivity(LatLng latLng) {
-        getRouting().startCuisinesActivity(latLng);
+    public void startCuisinesActivity(String placeName, LatLng placeLatLng) {
+        getRouting().startCuisinesActivity(placeName, placeLatLng);
     }
 
     private List<Restaurant> restaurantsToUpdate;

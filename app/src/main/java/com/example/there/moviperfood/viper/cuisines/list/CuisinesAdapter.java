@@ -10,37 +10,65 @@ import android.view.ViewGroup;
 import com.example.there.moviperfood.R;
 import com.example.there.moviperfood.data.food.cuisine.Cuisine;
 import com.example.there.moviperfood.databinding.CuisineListItemBinding;
+import com.example.there.moviperfood.databinding.CuisinesListHeaderBinding;
 import com.example.there.moviperfood.util.AdapterUtils;
 
 import lombok.val;
 
-public class CuisinesAdapter extends RecyclerView.Adapter<CuisinesViewHolder> {
+public class CuisinesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private ObservableList<Cuisine> cuisines;
     private OnCuisineItemClickListener onClickListener;
+    private String placeName;
 
-    public CuisinesAdapter(ObservableList<Cuisine> cuisines, OnCuisineItemClickListener onClickListener) {
+    public CuisinesAdapter(String placeName, ObservableList<Cuisine> cuisines, OnCuisineItemClickListener onClickListener) {
+        this.placeName = placeName;
         this.cuisines = cuisines;
         this.onClickListener = onClickListener;
-        AdapterUtils.bindAdapterToItems(this, cuisines);
+        AdapterUtils.bindAdapterToItems(this, cuisines, 1);
+    }
+
+    private final int HEADER_VIEW_TYPE = 0;
+    private final int CUISINE_VIEW_TYPE = 1;
+
+    @Override
+    public int getItemViewType(int position) {
+        if (position == 0) return HEADER_VIEW_TYPE;
+        else return CUISINE_VIEW_TYPE;
     }
 
     @NonNull
     @Override
-    public CuisinesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         val inflater = LayoutInflater.from(parent.getContext());
-        CuisineListItemBinding binding = DataBindingUtil.inflate(inflater, R.layout.cuisine_list_item, parent, false);
-        return new CuisinesViewHolder(binding, onClickListener);
+        if (viewType == CUISINE_VIEW_TYPE) {
+            CuisineListItemBinding binding = DataBindingUtil.inflate(inflater, R.layout.cuisine_list_item, parent, false);
+            return new CuisinesViewHolder(binding, onClickListener);
+        } else {
+            CuisinesListHeaderBinding binding = DataBindingUtil.inflate(inflater, R.layout.cuisines_list_header, parent, false);
+            binding.setPlaceName(placeName);
+            return new CuisinesHeaderViewHolder(binding);
+        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CuisinesViewHolder holder, int position) {
-        val cuisine = cuisines.get(position);
-        holder.getBinding().setCuisine(cuisine);
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof CuisinesViewHolder) {
+            val hold = (CuisinesViewHolder) holder;
+            val cuisine = cuisines.get(position - 1);
+            hold.getBinding().setCuisine(cuisine);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return cuisines.size();
+        return cuisines.size() + 1;
+    }
+
+    private static class CuisinesHeaderViewHolder extends RecyclerView.ViewHolder {
+
+        CuisinesHeaderViewHolder(CuisinesListHeaderBinding binding) {
+            super(binding.getRoot());
+        }
     }
 }

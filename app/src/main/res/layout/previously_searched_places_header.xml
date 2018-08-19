@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.there.moviperfood.viper.search.list.PlacesHeaderViewModel" />
+    </data>
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@{viewModel.places.isEmpty() ? `No recently searched places. Use the searchbar above to search for restaurants nearby given location.` : `Recent places:`}"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </FrameLayout>
+</layout>
+

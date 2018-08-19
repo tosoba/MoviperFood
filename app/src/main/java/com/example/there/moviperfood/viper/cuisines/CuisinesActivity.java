@@ -31,7 +31,8 @@ public class CuisinesActivity
     private static final String KEY_CUISINES_VIEW_MODEL = "KEY_CUISINES_VIEW_MODEL";
     private CuisinesViewModel cuisinesViewModel = new CuisinesViewModel();
 
-    private LatLng latLng;
+    private LatLng placeLatLng;
+    private String placeName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class CuisinesActivity
 
         if (savedInstanceState == null) {
             cuisinesViewModel.isLoading.set(true);
-            presenter.loadCuisines(latLng);
+            presenter.loadCuisines(placeLatLng);
         }
     }
 
@@ -52,7 +53,7 @@ public class CuisinesActivity
         ActivityCuisinesBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_cuisines);
         binding.setCuisinesView(new CuisinesView(
                 cuisinesViewModel,
-                new CuisinesAdapter(cuisinesViewModel.cuisines, listener),
+                new CuisinesAdapter(placeName, cuisinesViewModel.cuisines, listener),
                 new DividerItemDecoration(this, DividerItemDecoration.VERTICAL)));
         binding.cuisinesRecyclerView.setLayoutManager(
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -71,7 +72,9 @@ public class CuisinesActivity
     }
 
     private void initExtras() {
-        latLng = getIntent().getParcelableExtra(EXTRA_LAT_LNG);
+        val intent = getIntent();
+        placeLatLng = intent.getParcelableExtra(EXTRA_PLACE_LAT_LNG);
+        placeName = intent.getStringExtra(EXTRA_PLACE_NAME);
     }
 
     @NonNull
@@ -100,14 +103,14 @@ public class CuisinesActivity
     @SuppressWarnings("ConstantConditions")
     private void initSearchFromSavedState() {
         if (cuisinesViewModel.isLoading != null && cuisinesViewModel.isLoading.get()) {
-            presenter.loadCuisines(latLng);
+            presenter.loadCuisines(placeLatLng);
         }
     }
 
     private OnCuisineItemClickListener listener = new OnCuisineItemClickListener() {
         @Override
         public void onClick(Cuisine cuisine) {
-            presenter.startRestaurantsActivity(cuisine, latLng);
+            presenter.startRestaurantsActivity(cuisine, placeLatLng);
         }
     };
 
@@ -124,11 +127,13 @@ public class CuisinesActivity
         finish();
     }
 
-    private static final String EXTRA_LAT_LNG = "EXTRA_LAT_LNG";
+    private static final String EXTRA_PLACE_LAT_LNG = "EXTRA_PLACE_LAT_LNG";
+    private static final String EXTRA_PLACE_NAME = "EXTRA_PLACE_NAME";
 
-    public static Intent startingIntent(Context context, LatLng latLng) {
+    public static Intent startingIntent(Context context, LatLng placeLatLng, String placeName) {
         val intent = new Intent(context, CuisinesActivity.class);
-        intent.putExtra(EXTRA_LAT_LNG, latLng);
+        intent.putExtra(EXTRA_PLACE_LAT_LNG, placeLatLng);
+        intent.putExtra(EXTRA_PLACE_NAME, placeName);
         return intent;
     }
 }

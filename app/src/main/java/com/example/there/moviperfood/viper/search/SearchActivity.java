@@ -10,6 +10,7 @@ import com.example.there.moviperfood.R;
 import com.example.there.moviperfood.data.food.restaurant.Restaurant;
 import com.example.there.moviperfood.data.place.CachedPlace;
 import com.example.there.moviperfood.databinding.ActivitySearchBinding;
+import com.example.there.moviperfood.viper.search.list.SearchHistoryAdapter;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
@@ -57,7 +58,7 @@ public class SearchActivity
     private PlaceSelectionListener placeSelectionListener = new PlaceSelectionListener() {
         @Override
         public void onPlaceSelected(Place place) {
-            presenter.startCuisinesActivity(place.getLatLng());
+            presenter.startCuisinesActivity(place.getName().toString(), place.getLatLng());
             presenter.savePlace(new CachedPlace(
                     place.getId(),
                     place.getName().toString(),

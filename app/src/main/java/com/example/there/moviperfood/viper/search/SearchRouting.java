@@ -17,9 +17,9 @@ class SearchRouting
 
     @SuppressWarnings({"unchecked", "ConstantConditions"})
     @Override
-    public void startCuisinesActivity(LatLng latLng) {
+    public void startCuisinesActivity(String placeName, LatLng placeLatLng) {
         if (isContextAttached()) {
-            val startingIntent = CuisinesActivity.startingIntent(getRelatedContext(), latLng);
+            val startingIntent = CuisinesActivity.startingIntent(getRelatedContext(), placeLatLng, placeName);
             MoviperPresentersDispatcher.getInstance().startActivity(ActivityStarter.newBuilder()
                     .withContext(getRelatedContext())
                     .withIntent(startingIntent)

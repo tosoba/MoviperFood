@@ -4,19 +4,21 @@
     <data>
 
         <variable
-            name="adapter"
-            type="com.example.there.moviperfood.viper.search.list.SearchHistoryAdapter.RestaurantsAdapter" />
+            name="viewModel"
+            type="com.example.there.moviperfood.viper.search.list.RestaurantsHeaderViewModel" />
     </data>
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/previously_searched_restaurants_recycler_view"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:adapter="@{adapter}" />
+            android:layout_margin="10dp"
+            android:text="@{viewModel.restaurants.isEmpty() ? `No recently viewed restaurants.` : `Recent restaurants:`}"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
     </FrameLayout>
 </layout>
