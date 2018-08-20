@@ -33,12 +33,14 @@ public class ReviewsPresenter
     private boolean reviewsLoadingInProgress = false;
 
     private void updateReviews(List<Review> reviews) {
-        if (reviews == null || reviews.isEmpty()) return;
-
         val view = getView();
         if (view != null) {
-            view.updateReviews(reviews);
-            reviewsToUpdate = null;
+            if (!reviews.isEmpty()) {
+                view.updateReviews(reviews);
+                reviewsToUpdate = null;
+            } else {
+                view.onNoReviewsFound();
+            }
         } else reviewsToUpdate = reviews;
     }
 

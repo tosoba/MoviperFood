@@ -52,7 +52,7 @@ public class CuisinesPresenter
                     .doFinally(() -> cuisinesLoadingInProgress = false)
                     .subscribe(this::updateCuisines, error -> {
                         Log.e("Error", error.getMessage());
-                        if (getView() != null) getView().noDataRetrieved();
+                        if (getView() != null) getView().onNoRestaurantsFound();
                     }));
         } else {
             updateCuisines(cuisinesToUpdate);

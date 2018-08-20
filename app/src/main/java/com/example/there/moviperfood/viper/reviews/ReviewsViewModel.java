@@ -1,7 +1,7 @@
 package com.example.there.moviperfood.viper.reviews;
 
-import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
+import android.databinding.ObservableList;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -17,7 +17,7 @@ import lombok.Getter;
 @Getter
 public class ReviewsViewModel implements Parcelable {
     private Restaurant restaurant;
-    private ObservableArrayList<Review> reviews;
+    private ObservableList<Review> reviews;
     private ObservableField<Boolean> isLoading;
 
     private ReviewsViewModel(Parcel in) {

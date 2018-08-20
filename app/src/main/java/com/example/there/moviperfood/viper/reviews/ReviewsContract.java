@@ -21,6 +21,7 @@ interface ReviewsContract {
 
     interface View extends MvpView {
         void updateReviews(List<Review> reviews);
+        void onNoReviewsFound();
     }
 
     interface Interactor extends ViperRxInteractor {

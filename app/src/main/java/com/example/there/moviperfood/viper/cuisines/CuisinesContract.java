@@ -3,6 +3,7 @@ package com.example.there.moviperfood.viper.cuisines;
 import android.app.Activity;
 
 import com.example.there.moviperfood.data.food.cuisine.Cuisine;
+import com.example.there.moviperfood.viper.common.BaseRouting;
 import com.google.android.gms.maps.model.LatLng;
 import com.hannesdorfmann.mosby.mvp.MvpView;
 import com.mateuszkoslacz.moviper.iface.interactor.ViperRxInteractor;
@@ -24,7 +25,7 @@ public interface CuisinesContract {
     interface View extends MvpView {
         void updateCuisines(List<Cuisine> cuisines);
 
-        void noDataRetrieved();
+        void onNoRestaurantsFound();
     }
 
     interface Presenter extends ViperPresenter<CuisinesContract.View> {
@@ -35,7 +36,7 @@ public interface CuisinesContract {
         void startRestaurantsActivity(Cuisine cuisine, LatLng latLng);
     }
 
-    interface Routing extends ViperRxRouting<Activity> {
+    interface Routing extends ViperRxRouting<Activity>, BaseRouting.StartsRestaurantsActivity {
         void startRestaurantsActivity(Cuisine cuisine, LatLng latLng);
     }
 }

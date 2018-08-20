@@ -117,7 +117,7 @@ public class CuisinesActivity
     }
 
     @Override
-    public void noDataRetrieved() {
+    public void onNoRestaurantsFound() {
         presenter.deleteMostRecentlyAddedPlace();
         Toast.makeText(this, getString(R.string.no_restaurants_found), Toast.LENGTH_LONG).show();
         finish();

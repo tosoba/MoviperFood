@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.example.there.moviperfood.data.food.cuisine.Cuisine;
 import com.example.there.moviperfood.data.food.restaurant.Restaurant;
+import com.example.there.moviperfood.viper.common.BaseRouting;
 import com.google.android.gms.maps.model.LatLng;
 import com.hannesdorfmann.mosby.mvp.MvpView;
 import com.mateuszkoslacz.moviper.iface.interactor.ViperRxInteractor;
@@ -33,7 +34,7 @@ interface RestaurantsContract {
         Completable saveRestaurant(Restaurant restaurant);
     }
 
-    interface Routing extends ViperRxRouting<Activity> {
+    interface Routing extends ViperRxRouting<Activity>, BaseRouting.StartsReviewsActivity {
         void startReviewsActivity(Restaurant restaurant);
     }
 }

@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
+import android.widget.Toast;
 
 import com.example.there.moviperfood.R;
 import com.example.there.moviperfood.data.food.restaurant.Restaurant;
@@ -78,6 +79,12 @@ public class ReviewsActivity
     public void updateReviews(List<Review> reviews) {
         reviewsViewModel.getIsLoading().set(false);
         reviewsViewModel.getReviews().addAll(reviews);
+    }
+
+    @Override
+    public void onNoReviewsFound() {
+        Toast.makeText(this, getString(R.string.no_reviews_found), Toast.LENGTH_LONG).show();
+        finish();
     }
 
     @NonNull
