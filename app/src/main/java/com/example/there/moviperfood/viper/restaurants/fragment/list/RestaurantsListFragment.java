@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.example.there.moviperfood.R;
 import com.example.there.moviperfood.data.food.restaurant.Restaurant;
 import com.example.there.moviperfood.databinding.FragmentListBinding;
+import com.example.there.moviperfood.viper.common.OnListItemClickListener;
 import com.example.there.moviperfood.viper.restaurants.fragment.RestaurantsFragment;
 
 import java.util.ArrayList;
@@ -30,9 +31,9 @@ public class RestaurantsListFragment extends RestaurantsFragment {
         return binding.getRoot();
     }
 
-    private OnRestaurantItemClickListener onRestaurantClickListener = restaurant -> {
+    private OnListItemClickListener<Restaurant> onRestaurantClickListener = item -> {
         if (fragmentInteractionListener != null)
-            fragmentInteractionListener.onRestaurantSelected(restaurant);
+            fragmentInteractionListener.onRestaurantSelected(item);
     };
 
     public static RestaurantsListFragment newInstance(ArrayList<Restaurant> restaurants) {

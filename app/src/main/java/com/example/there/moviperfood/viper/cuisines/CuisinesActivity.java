@@ -14,8 +14,8 @@ import com.example.there.moviperfood.R;
 import com.example.there.moviperfood.data.food.cuisine.Cuisine;
 import com.example.there.moviperfood.databinding.ActivityCuisinesBinding;
 import com.example.there.moviperfood.util.ActivityUtils;
+import com.example.there.moviperfood.viper.common.OnListItemClickListener;
 import com.example.there.moviperfood.viper.cuisines.list.CuisinesAdapter;
-import com.example.there.moviperfood.viper.cuisines.list.OnCuisineItemClickListener;
 import com.google.android.gms.maps.model.LatLng;
 import com.mateuszkoslacz.moviper.base.view.activity.ViperActivity;
 import com.mateuszkoslacz.moviper.presentersdispatcher.MoviperPresentersDispatcher;
@@ -53,7 +53,7 @@ public class CuisinesActivity
         ActivityCuisinesBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_cuisines);
         binding.setCuisinesView(new CuisinesView(
                 cuisinesViewModel,
-                new CuisinesAdapter(placeName, cuisinesViewModel.cuisines, listener),
+                new CuisinesAdapter(placeName, cuisinesViewModel.cuisines, onCuisineSelectedListener),
                 new DividerItemDecoration(this, DividerItemDecoration.VERTICAL)));
         binding.cuisinesRecyclerView.setLayoutManager(
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -107,12 +107,8 @@ public class CuisinesActivity
         }
     }
 
-    private OnCuisineItemClickListener listener = new OnCuisineItemClickListener() {
-        @Override
-        public void onClick(Cuisine cuisine) {
-            presenter.startRestaurantsActivity(cuisine, placeLatLng);
-        }
-    };
+    private OnListItemClickListener<Cuisine> onCuisineSelectedListener = (Cuisine item) ->
+            presenter.startRestaurantsActivity(item, placeLatLng);
 
     @Override
     public void updateCuisines(List<Cuisine> cuisines) {

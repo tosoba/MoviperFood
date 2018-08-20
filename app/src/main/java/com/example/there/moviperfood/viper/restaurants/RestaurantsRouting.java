@@ -17,7 +17,7 @@ class RestaurantsRouting
 
     @SuppressWarnings({"unchecked", "ConstantConditions"})
     @Override
-    public void startRestaurantActivity(Restaurant restaurant) {
+    public void startReviewsActivity(Restaurant restaurant) {
         if (isContextAttached()) {
             val startingIntent = ReviewsActivity.startingIntent(getRelatedContext(), restaurant);
             MoviperPresentersDispatcher.getInstance().startActivity(ActivityStarter.newBuilder()

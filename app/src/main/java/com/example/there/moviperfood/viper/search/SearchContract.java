@@ -19,6 +19,7 @@ public interface SearchContract {
 
     interface Presenter extends ViperPresenter<View> {
         void startCuisinesActivity(String placeName, LatLng placeLatLng);
+        void startReviewsActivity(Restaurant restaurant);
 
         void loadPreviouslySearchedRestaurants();
         void loadPreviouslySearchedPlaces();
@@ -40,5 +41,6 @@ public interface SearchContract {
 
     interface Routing extends ViperRxRouting<Activity> {
         void startCuisinesActivity(String placeName, LatLng latLng);
+        void startReviewsActivity(Restaurant restaurant);
     }
 }

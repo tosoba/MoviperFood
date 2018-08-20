@@ -12,24 +12,25 @@ import com.example.there.moviperfood.data.food.cuisine.Cuisine;
 import com.example.there.moviperfood.databinding.CuisineListItemBinding;
 import com.example.there.moviperfood.databinding.CuisinesListHeaderBinding;
 import com.example.there.moviperfood.util.AdapterUtils;
+import com.example.there.moviperfood.viper.common.OnListItemClickListener;
 
 import lombok.val;
 
 public class CuisinesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private ObservableList<Cuisine> cuisines;
-    private OnCuisineItemClickListener onClickListener;
-    private String placeName;
+    private final OnListItemClickListener<Cuisine> onClickListener;
+    private final String placeName;
 
-    public CuisinesAdapter(String placeName, ObservableList<Cuisine> cuisines, OnCuisineItemClickListener onClickListener) {
+    public CuisinesAdapter(String placeName, ObservableList<Cuisine> cuisines, OnListItemClickListener<Cuisine> onClickListener) {
         this.placeName = placeName;
         this.cuisines = cuisines;
         this.onClickListener = onClickListener;
         AdapterUtils.bindAdapterToItems(this, cuisines, 1);
     }
 
-    private final int HEADER_VIEW_TYPE = 0;
-    private final int CUISINE_VIEW_TYPE = 1;
+    private static final int HEADER_VIEW_TYPE = 0;
+    private static final int CUISINE_VIEW_TYPE = 1;
 
     @Override
     public int getItemViewType(int position) {

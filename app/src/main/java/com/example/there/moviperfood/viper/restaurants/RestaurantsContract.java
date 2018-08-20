@@ -34,6 +34,6 @@ interface RestaurantsContract {
     }
 
     interface Routing extends ViperRxRouting<Activity> {
-        void startRestaurantActivity(Restaurant restaurant);
+        void startReviewsActivity(Restaurant restaurant);
     }
 }

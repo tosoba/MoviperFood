@@ -40,6 +40,11 @@ public class SearchPresenter
         getRouting().startCuisinesActivity(placeName, placeLatLng);
     }
 
+    @Override
+    public void startReviewsActivity(Restaurant restaurant) {
+        getRouting().startReviewsActivity(restaurant);
+    }
+
     private List<Restaurant> restaurantsToUpdate;
     private boolean restaurantsLoadingInProgress = false;
 

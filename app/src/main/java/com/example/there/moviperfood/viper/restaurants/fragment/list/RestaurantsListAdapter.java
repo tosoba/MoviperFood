@@ -11,14 +11,15 @@ import com.example.there.moviperfood.R;
 import com.example.there.moviperfood.data.food.restaurant.Restaurant;
 import com.example.there.moviperfood.databinding.RestaurantListItemBinding;
 import com.example.there.moviperfood.util.AdapterUtils;
+import com.example.there.moviperfood.viper.common.OnListItemClickListener;
 
 import lombok.val;
 
 public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsListViewHolder> {
     private ObservableList<Restaurant> restaurants;
-    private OnRestaurantItemClickListener onClickListener;
+    private final OnListItemClickListener<Restaurant> onClickListener;
 
-    RestaurantsListAdapter(ObservableList<Restaurant> restaurants, OnRestaurantItemClickListener onClickListener) {
+    RestaurantsListAdapter(ObservableList<Restaurant> restaurants, OnListItemClickListener<Restaurant> onClickListener) {
         this.restaurants = restaurants;
         this.onClickListener = onClickListener;
         AdapterUtils.bindAdapterToItems(this, restaurants);

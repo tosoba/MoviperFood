@@ -6,6 +6,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.Date;
 
 import lombok.EqualsAndHashCode;
@@ -33,6 +35,10 @@ public class CachedPlace implements Parcelable {
         this.lat = lat;
         this.lng = lng;
         this.lastSearched = lastSearched;
+    }
+
+    public LatLng getLatLng() {
+        return new LatLng(lat, lng);
     }
 
     protected CachedPlace(Parcel in) {

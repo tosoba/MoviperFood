@@ -2,7 +2,9 @@ package com.example.there.moviperfood.viper.restaurants.fragment.list;
 
 import android.support.v7.widget.RecyclerView;
 
+import com.example.there.moviperfood.data.food.restaurant.Restaurant;
 import com.example.there.moviperfood.databinding.RestaurantListItemBinding;
+import com.example.there.moviperfood.viper.common.OnListItemClickListener;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -14,7 +16,7 @@ class RestaurantsListViewHolder extends RecyclerView.ViewHolder {
     @Getter
     private RestaurantListItemBinding binding;
 
-    RestaurantsListViewHolder(RestaurantListItemBinding binding, OnRestaurantItemClickListener listener) {
+    RestaurantsListViewHolder(RestaurantListItemBinding binding, OnListItemClickListener<Restaurant> listener) {
         super(binding.getRoot());
         this.binding = binding;
 

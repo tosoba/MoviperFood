@@ -17,6 +17,7 @@ import com.example.there.moviperfood.databinding.PreviouslySearchedRestaurantsHe
 import com.example.there.moviperfood.databinding.PreviouslySearchedRestaurantsListBinding;
 import com.example.there.moviperfood.util.AdapterUtils;
 import com.example.there.moviperfood.util.ObservableSortedList;
+import com.example.there.moviperfood.viper.common.OnListItemClickListener;
 
 import java.security.InvalidParameterException;
 
@@ -31,6 +32,8 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     private ObservableSortedList<Restaurant> restaurants;
     private ObservableSortedList<CachedPlace> places;
+    private final OnListItemClickListener<Restaurant> onRestaurantSelectedListener;
+    private final OnListItemClickListener<CachedPlace> onPlaceSelectedListener;
 
     private RestaurantsAdapter restaurantsAdapter;
 
@@ -40,9 +43,14 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
     }
 
-    public SearchHistoryAdapter(ObservableSortedList<Restaurant> restaurants, ObservableSortedList<CachedPlace> places) {
+    public SearchHistoryAdapter(ObservableSortedList<Restaurant> restaurants,
+                                ObservableSortedList<CachedPlace> places,
+                                OnListItemClickListener<Restaurant> onRestaurantSelectedListener,
+                                OnListItemClickListener<CachedPlace> onPlaceSelectedListener) {
         this.restaurants = restaurants;
         this.places = places;
+        this.onRestaurantSelectedListener = onRestaurantSelectedListener;
+        this.onPlaceSelectedListener = onPlaceSelectedListener;
         AdapterUtils.bindAdapterToItems(this, places, 3);
     }
 
@@ -66,24 +74,24 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<RecyclerView.View
         val inflater = LayoutInflater.from(parent.getContext());
         switch (viewType) {
             case RESTAURANTS_VIEW_TYPE:
-                PreviouslySearchedRestaurantsListBinding binding1 =
+                PreviouslySearchedRestaurantsListBinding searchedRestaurantsListBinding =
                         DataBindingUtil.inflate(inflater, R.layout.previously_searched_restaurants_list, parent, false);
-                restaurantsAdapter = new RestaurantsAdapter(restaurants);
-                return new RestaurantsViewHolder(binding1, restaurantsAdapter);
+                restaurantsAdapter = new RestaurantsAdapter(restaurants, onRestaurantSelectedListener);
+                return new RestaurantsViewHolder(searchedRestaurantsListBinding, restaurantsAdapter);
             case PLACE_VIEW_TYPE:
-                PreviouslySearchedPlaceItemBinding binding2 =
+                PreviouslySearchedPlaceItemBinding searchedPlaceItemBinding =
                         DataBindingUtil.inflate(inflater, R.layout.previously_searched_place_item, parent, false);
-                return new PlaceViewHolder(binding2);
+                return new PlaceViewHolder(searchedPlaceItemBinding, onPlaceSelectedListener);
             case PLACES_HEADER_VIEW_TYPE:
-                PreviouslySearchedPlacesHeaderBinding binding3 =
+                PreviouslySearchedPlacesHeaderBinding searchedPlacesHeaderBinding =
                         DataBindingUtil.inflate(inflater, R.layout.previously_searched_places_header, parent, false);
-                binding3.setViewModel(new PlacesHeaderViewModel(places));
-                return new PlacesHeaderViewHolder(binding3);
+                searchedPlacesHeaderBinding.setViewModel(new PlacesHeaderViewModel(places));
+                return new PlacesHeaderViewHolder(searchedPlacesHeaderBinding);
             case RESTAURANTS_HEADER_VIEW_TYPE:
-                PreviouslySearchedRestaurantsHeaderBinding binding4 =
+                PreviouslySearchedRestaurantsHeaderBinding searchedRestaurantsHeaderBinding =
                         DataBindingUtil.inflate(inflater, R.layout.previously_searched_restaurants_header, parent, false);
-                binding4.setViewModel(new RestaurantsHeaderViewModel(restaurants));
-                return new RestaurantsHeaderViewHolder(binding4);
+                searchedRestaurantsHeaderBinding.setViewModel(new RestaurantsHeaderViewModel(restaurants));
+                return new RestaurantsHeaderViewHolder(searchedRestaurantsHeaderBinding);
         }
 
         throw new InvalidParameterException("Invalid viewType.");
@@ -105,9 +113,12 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<RecyclerView.View
     public static class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.RestaurantViewHolder> {
 
         private ObservableSortedList<Restaurant> restaurants;
+        private final OnListItemClickListener<Restaurant> onRestaurantSelectedListener;
 
-        RestaurantsAdapter(ObservableSortedList<Restaurant> restaurants) {
+        RestaurantsAdapter(ObservableSortedList<Restaurant> restaurants,
+                           OnListItemClickListener<Restaurant> onRestaurantSelectedListener) {
             this.restaurants = restaurants;
+            this.onRestaurantSelectedListener = onRestaurantSelectedListener;
             AdapterUtils.bindAdapterToItems(this, restaurants);
         }
 
@@ -131,12 +142,14 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<RecyclerView.View
             val inflater = LayoutInflater.from(parent.getContext());
             PreviouslySearchedRestaurantItemBinding binding =
                     DataBindingUtil.inflate(inflater, R.layout.previously_searched_restaurant_item, parent, false);
-            return new RestaurantViewHolder(binding);
+            return new RestaurantViewHolder(binding, onRestaurantSelectedListener);
         }
 
         @Override
         public void onBindViewHolder(@NonNull RestaurantViewHolder holder, int position) {
-            holder.binding.setRestaurant(restaurants.get(position));
+            val restaurant = restaurants.get(position);
+            holder.binding.setRestaurant(restaurant);
+            holder.binding.getRoot().setOnClickListener(v -> onRestaurantSelectedListener.onClick(restaurant));
         }
 
         @Override
@@ -152,9 +165,17 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<RecyclerView.View
                 return binding;
             }
 
-            RestaurantViewHolder(PreviouslySearchedRestaurantItemBinding binding) {
+            RestaurantViewHolder(PreviouslySearchedRestaurantItemBinding binding,
+                                 OnListItemClickListener<Restaurant> onRestaurantSelectedListener) {
                 super(binding.getRoot());
                 this.binding = binding;
+
+                binding.getRoot().setOnClickListener(v -> {
+                    val restaurant = binding.getRestaurant();
+                    if (restaurant != null) {
+                        onRestaurantSelectedListener.onClick(restaurant);
+                    }
+                });
             }
         }
     }
@@ -163,9 +184,16 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         private PreviouslySearchedPlaceItemBinding binding;
 
-        PlaceViewHolder(PreviouslySearchedPlaceItemBinding binding) {
+        PlaceViewHolder(PreviouslySearchedPlaceItemBinding binding,
+                        OnListItemClickListener<CachedPlace> onPlaceSelectedListener) {
             super(binding.getRoot());
             this.binding = binding;
+            binding.getRoot().setOnClickListener(v -> {
+                val place = binding.getPlace();
+                if (place != null) {
+                    onPlaceSelectedListener.onClick(place);
+                }
+            });
         }
     }
 

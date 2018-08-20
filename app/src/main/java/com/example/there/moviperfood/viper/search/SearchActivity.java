@@ -43,7 +43,12 @@ public class SearchActivity
 
     private void initView() {
         ActivitySearchBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_search);
-        searchHistoryAdapter = new SearchHistoryAdapter(searchViewModel.getRestaurants(), searchViewModel.getPlaces());
+        searchHistoryAdapter = new SearchHistoryAdapter(
+                searchViewModel.getRestaurants(),
+                searchViewModel.getPlaces(),
+                (Restaurant item) -> presenter.startReviewsActivity(item),
+                (CachedPlace item) -> presenter.startCuisinesActivity(item.getName(), item.getLatLng())
+        );
         binding.setSearchView(new SearchView(searchHistoryAdapter));
         binding.searchHistoryRecyclerView.setLayoutManager(
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
