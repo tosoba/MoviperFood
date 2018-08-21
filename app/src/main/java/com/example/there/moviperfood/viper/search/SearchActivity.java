@@ -3,6 +3,7 @@ package com.example.there.moviperfood.viper.search;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.annimon.stream.Stream;
@@ -49,7 +50,7 @@ public class SearchActivity
                 (Restaurant item) -> presenter.startReviewsActivity(item),
                 (CachedPlace item) -> presenter.startCuisinesActivity(item.getName(), item.getLatLng())
         );
-        binding.setSearchView(new SearchView(searchHistoryAdapter));
+        binding.setSearchView(new SearchView(searchHistoryAdapter, new DividerItemDecoration(this, DividerItemDecoration.VERTICAL)));
         binding.searchHistoryRecyclerView.setLayoutManager(
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
     }

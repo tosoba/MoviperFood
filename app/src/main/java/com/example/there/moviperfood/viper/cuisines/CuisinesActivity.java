@@ -44,8 +44,7 @@ public class CuisinesActivity
         ActivityUtils.setHomeButtonEnabled(this, R.drawable.arrow_back_borderless);
 
         if (savedInstanceState == null) {
-            cuisinesViewModel.isLoading.set(true);
-            presenter.loadCuisines(placeLatLng);
+            loadCuisines();
         }
     }
 
@@ -90,21 +89,22 @@ public class CuisinesActivity
             outState.putParcelable(KEY_CUISINES_VIEW_MODEL, cuisinesViewModel);
     }
 
+    @SuppressWarnings("ConstantConditions")
     private void initFromSavedState(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             if (savedInstanceState.containsKey(KEY_CUISINES_VIEW_MODEL)) {
                 cuisinesViewModel = savedInstanceState.getParcelable(KEY_CUISINES_VIEW_MODEL);
             }
 
-            initSearchFromSavedState();
+            if (cuisinesViewModel.cuisines.isEmpty()) {
+                loadCuisines();
+            }
         }
     }
 
-    @SuppressWarnings("ConstantConditions")
-    private void initSearchFromSavedState() {
-        if (cuisinesViewModel.isLoading != null && cuisinesViewModel.isLoading.get()) {
-            presenter.loadCuisines(placeLatLng);
-        }
+    private void loadCuisines() {
+        cuisinesViewModel.isLoading.set(true);
+        presenter.loadCuisines(placeLatLng);
     }
 
     private OnListItemClickListener<Cuisine> onCuisineSelectedListener = (Cuisine item) ->

@@ -17,6 +17,7 @@
         <activity
             android:name=".viper.search.SearchActivity"
             android:label="@string/restaurants_nearby"
+            android:theme="@style/SplashTheme"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

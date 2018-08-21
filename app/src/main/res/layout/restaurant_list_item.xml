@@ -12,17 +12,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        app:cardElevation="10dp">
+        app:cardElevation="5dp"
+        app:cardCornerRadius="3dp">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground">
 
             <ImageView
                 android:id="@+id/restaurant_thumbnail_image_view"
                 imageUrl="@{restaurant.featuredImage}"
                 android:layout_width="0dp"
-                android:layout_height="180dp"
+                android:layout_height="170dp"
                 android:layout_marginBottom="10dp"
                 android:scaleType="fitXY"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -32,7 +34,7 @@
             <View
                 android:id="@+id/bottom_gradient_view"
                 android:layout_width="0dp"
-                android:layout_height="200dp"
+                android:layout_height="170dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/bottom_dark_gradient"
                 app:layout_constraintLeft_toLeftOf="parent"

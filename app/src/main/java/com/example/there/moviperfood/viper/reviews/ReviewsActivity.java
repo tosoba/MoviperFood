@@ -8,7 +8,6 @@ import android.databinding.ObservableField;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.widget.Toast;
 
@@ -52,7 +51,6 @@ public class ReviewsActivity
         binding.setReviewsView(new ReviewsView(
                 reviewsViewModel,
                 new ReviewsListAdapter(reviewsViewModel.getReviews()),
-                new DividerItemDecoration(this, DividerItemDecoration.VERTICAL),
                 ContextCompat.getDrawable(this, R.drawable.arrow_back),
                 v -> onBackPressed()
         ));
@@ -66,13 +64,21 @@ public class ReviewsActivity
         outState.putParcelable(KEY_REVIEWS_VIEW_MODEL, reviewsViewModel);
     }
 
+    @SuppressWarnings("ConstantConditions")
     private void initFromSavedState(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             reviewsViewModel = savedInstanceState.getParcelable(KEY_REVIEWS_VIEW_MODEL);
+            if (reviewsViewModel.getReviews().isEmpty()) {
+                loadReviews();
+            }
         } else {
-            reviewsViewModel.getIsLoading().set(true);
-            presenter.loadReviews(restaurant);
+            loadReviews();
         }
+    }
+
+    private void loadReviews() {
+        reviewsViewModel.getIsLoading().set(true);
+        presenter.loadReviews(restaurant);
     }
 
     @Override

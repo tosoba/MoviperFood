@@ -81,7 +81,6 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/restaurant_reviews_recycler_view"
-            itemDecoration="@{reviewsView.itemDecoration}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:adapter="@{reviewsView.adapter}"
