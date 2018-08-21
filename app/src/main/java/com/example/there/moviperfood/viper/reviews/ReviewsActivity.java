@@ -15,6 +15,7 @@ import com.example.there.moviperfood.R;
 import com.example.there.moviperfood.data.food.restaurant.Restaurant;
 import com.example.there.moviperfood.data.food.review.Review;
 import com.example.there.moviperfood.databinding.ActivityReviewsBinding;
+import com.example.there.moviperfood.lifecycle.ConnectivityComponent;
 import com.example.there.moviperfood.viper.reviews.list.ReviewsListAdapter;
 import com.mateuszkoslacz.moviper.base.view.activity.ViperActivity;
 import com.mateuszkoslacz.moviper.presentersdispatcher.MoviperPresentersDispatcher;
@@ -39,6 +40,13 @@ public class ReviewsActivity
         initViewModel();
         initFromSavedState(savedInstanceState);
         initView();
+
+        ConnectivityComponent connectivityComponent = new ConnectivityComponent(
+                this,
+                !reviewsViewModel.getReviews().isEmpty(),
+                findViewById(R.id.reviews_root_layout),
+                this::loadReviews);
+        getLifecycle().addObserver(connectivityComponent);
     }
 
     private void initViewModel() {

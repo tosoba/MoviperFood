@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.there.moviperfood.R;
 import com.example.there.moviperfood.data.food.cuisine.Cuisine;
 import com.example.there.moviperfood.databinding.ActivityCuisinesBinding;
+import com.example.there.moviperfood.lifecycle.ConnectivityComponent;
 import com.example.there.moviperfood.util.ActivityUtils;
 import com.example.there.moviperfood.viper.common.OnListItemClickListener;
 import com.example.there.moviperfood.viper.cuisines.list.CuisinesAdapter;
@@ -34,6 +35,8 @@ public class CuisinesActivity
     private LatLng placeLatLng;
     private String placeName;
 
+    private ConnectivityComponent connectivityComponent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +45,13 @@ public class CuisinesActivity
         initFromSavedState(savedInstanceState);
         initView();
         ActivityUtils.setHomeButtonEnabled(this, R.drawable.arrow_back_borderless);
+
+        connectivityComponent = new ConnectivityComponent(
+                this,
+                !cuisinesViewModel.cuisines.isEmpty(),
+                findViewById(R.id.cuisines_root_layout),
+                this::loadCuisines);
+        getLifecycle().addObserver(connectivityComponent);
 
         if (savedInstanceState == null) {
             loadCuisines();
@@ -107,8 +117,13 @@ public class CuisinesActivity
         presenter.loadCuisines(placeLatLng);
     }
 
-    private OnListItemClickListener<Cuisine> onCuisineSelectedListener = (Cuisine item) ->
+    private OnListItemClickListener<Cuisine> onCuisineSelectedListener = (Cuisine item) -> {
+        if (connectivityComponent.getLastConnectionStatus()) {
             presenter.startRestaurantsActivity(item, placeLatLng);
+        } else {
+            Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+        }
+    };
 
     @Override
     public void updateCuisines(List<Cuisine> cuisines) {

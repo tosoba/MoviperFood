@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
+import android.widget.Toast;
 
 import com.annimon.stream.Stream;
 import com.example.there.moviperfood.R;
 import com.example.there.moviperfood.data.food.restaurant.Restaurant;
 import com.example.there.moviperfood.data.place.CachedPlace;
 import com.example.there.moviperfood.databinding.ActivitySearchBinding;
+import com.example.there.moviperfood.lifecycle.ConnectivityComponent;
 import com.example.there.moviperfood.viper.search.list.SearchHistoryAdapter;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
@@ -28,6 +30,7 @@ public class SearchActivity
         implements SearchContract.View {
 
     private SearchViewModel searchViewModel = new SearchViewModel();
+    private ConnectivityComponent connectivityComponent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,9 @@ public class SearchActivity
 
         initView();
         initSearchFragment();
+
+        connectivityComponent = new ConnectivityComponent(this, true, findViewById(R.id.search_root_layout), null);
+        getLifecycle().addObserver(connectivityComponent);
 
         presenter.loadPreviouslySearchedPlaces();
         presenter.loadPreviouslySearchedRestaurants();
@@ -47,8 +53,20 @@ public class SearchActivity
         searchHistoryAdapter = new SearchHistoryAdapter(
                 searchViewModel.getRestaurants(),
                 searchViewModel.getPlaces(),
-                (Restaurant item) -> presenter.startReviewsActivity(item),
-                (CachedPlace item) -> presenter.startCuisinesActivity(item.getName(), item.getLatLng())
+                (Restaurant item) -> {
+                    if (connectivityComponent.getLastConnectionStatus()) {
+                        presenter.startReviewsActivity(item);
+                    } else {
+                        Toast.makeText(this, "No internet connection", Toast.LENGTH_SHORT).show();
+                    }
+                },
+                (CachedPlace item) -> {
+                    if (connectivityComponent.getLastConnectionStatus()) {
+                        presenter.startCuisinesActivity(item.getName(), item.getLatLng());
+                    } else {
+                        Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+                    }
+                }
         );
         binding.setSearchView(new SearchView(searchHistoryAdapter, new DividerItemDecoration(this, DividerItemDecoration.VERTICAL)));
         binding.searchHistoryRecyclerView.setLayoutManager(

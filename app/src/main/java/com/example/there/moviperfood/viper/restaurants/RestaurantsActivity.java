@@ -8,11 +8,13 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.there.moviperfood.R;
 import com.example.there.moviperfood.data.food.cuisine.Cuisine;
 import com.example.there.moviperfood.data.food.restaurant.Restaurant;
 import com.example.there.moviperfood.databinding.ActivityRestaurantsBinding;
+import com.example.there.moviperfood.lifecycle.ConnectivityComponent;
 import com.example.there.moviperfood.util.ActivityUtils;
 import com.example.there.moviperfood.viper.restaurants.fragment.RestaurantsCurrentFragment;
 import com.example.there.moviperfood.viper.restaurants.fragment.RestaurantsFragment;
@@ -42,12 +44,23 @@ public class RestaurantsActivity
     private static final String KEY_RESTAURANTS = "KEY_RESTAURANTS";
     private ArrayList<Restaurant> restaurants;
 
+    private ConnectivityComponent connectivityComponent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         initExtras();
         initView();
+
+        connectivityComponent = new ConnectivityComponent(
+                this,
+                restaurants != null && !restaurants.isEmpty(),
+                findViewById(R.id.restaurants_root_layout),
+                () -> presenter.loadRestaurants(latLng, cuisine),
+                true);
+        getLifecycle().addObserver(connectivityComponent);
+
         initFromSavedState(savedInstanceState);
         showFragment();
     }
@@ -157,7 +170,11 @@ public class RestaurantsActivity
 
     @Override
     public void onRestaurantSelected(Restaurant restaurant) {
-        presenter.startRestaurantActivity(restaurant);
+        if (connectivityComponent.getLastConnectionStatus()) {
+            presenter.startReviewsActivity(restaurant);
+        } else {
+            Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+        }
         restaurant.setLastSearched(new Date());
         presenter.saveRestaurant(restaurant);
     }

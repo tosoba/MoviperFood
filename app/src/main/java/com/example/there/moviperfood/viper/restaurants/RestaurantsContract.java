@@ -22,7 +22,7 @@ interface RestaurantsContract {
         void loadRestaurants(LatLng latLng, Cuisine cuisine);
         void saveRestaurant(Restaurant restaurant);
 
-        void startRestaurantActivity(Restaurant restaurant);
+        void startReviewsActivity(Restaurant restaurant);
     }
 
     interface View extends MvpView {
