@@ -29,7 +29,7 @@ task clean(type: Delete) {
 }
 
 ext {
-    supportVersion = '27.1.0'
+    supportVersion = '27.1.1'
     mosbyVersion = '2.0.1'
     rxJavaVersion = '2.0.8'
     rxAndroidVersion = '2.0.1'

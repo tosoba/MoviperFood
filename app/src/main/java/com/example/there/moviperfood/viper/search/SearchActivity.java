@@ -1,8 +1,14 @@
 package com.example.there.moviperfood.viper.search;
 
+import android.Manifest;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.widget.Toast;
@@ -13,16 +19,25 @@ import com.example.there.moviperfood.data.food.restaurant.Restaurant;
 import com.example.there.moviperfood.data.place.CachedPlace;
 import com.example.there.moviperfood.databinding.ActivitySearchBinding;
 import com.example.there.moviperfood.lifecycle.ConnectivityComponent;
+import com.example.there.moviperfood.util.LocationUtils;
 import com.example.there.moviperfood.viper.search.list.SearchHistoryAdapter;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.android.gms.maps.model.LatLng;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 import com.mateuszkoslacz.moviper.base.view.activity.ViperActivity;
 
 import java.util.Date;
 import java.util.List;
 
+import io.nlopez.smartlocation.SmartLocation;
 import lombok.val;
 
 public class SearchActivity
@@ -68,9 +83,68 @@ public class SearchActivity
                     }
                 }
         );
-        binding.setSearchView(new SearchView(searchHistoryAdapter, new DividerItemDecoration(this, DividerItemDecoration.VERTICAL)));
+        binding.setSearchView(new SearchView(
+                searchHistoryAdapter,
+                new DividerItemDecoration(this, DividerItemDecoration.VERTICAL),
+                v -> handleOnNearbyClick()
+        ));
         binding.searchHistoryRecyclerView.setLayoutManager(
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+    }
+
+    private void handleOnNearbyClick() {
+        Dexter.withActivity(this).withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+                .withListener(new PermissionListener() {
+                    private void showLocationSnackbar(String message) {
+                        val snackbar = Snackbar.make(findViewById(R.id.search_root_layout), message, Snackbar.LENGTH_LONG)
+                                .setAction(getString(R.string.settings), v -> {
+                                    val settingsIntent = new Intent(Settings.ACTION_SETTINGS);
+                                    startActivity(settingsIntent);
+                                })
+                                .setActionTextColor(Color.RED);
+                        snackbar.setDuration(Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                    }
+
+                    private void showEnableLocationDialog() {
+                        new AlertDialog.Builder(SearchActivity.this)
+                                .setMessage(getString(R.string.location_not_enabled))
+                                .setPositiveButton(getString(R.string.settings), (dialog, which) -> {
+                                    val settingsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                                    SearchActivity.this.startActivity(settingsIntent);
+                                })
+                                .show();
+                    }
+
+                    private void onLocationEnabled() {
+                        SmartLocation.with(SearchActivity.this).location()
+                                .oneFix()
+                                .start(location -> presenter.startCuisinesActivity(
+                                        "your location",
+                                        new LatLng(location.getLatitude(), location.getLongitude())
+                                ));
+                    }
+
+                    @Override
+                    public void onPermissionGranted(PermissionGrantedResponse response) {
+                        if (LocationUtils.isLocationEnabled(SearchActivity.this)) {
+                            onLocationEnabled();
+                        } else {
+                            showEnableLocationDialog();
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionDenied(PermissionDeniedResponse response) {
+                        showLocationSnackbar(getString(R.string.location_permission_needed));
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+                })
+                .check();
     }
 
     @NonNull

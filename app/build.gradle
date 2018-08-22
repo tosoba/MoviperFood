@@ -31,11 +31,11 @@ dependencies {
     implementation 'com.android.support:design:' + rootProject.ext.supportVersion
     implementation 'com.android.support:support-v4:' + rootProject.ext.supportVersion
     implementation 'com.android.support:cardview-v7:' + rootProject.ext.supportVersion
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    implementation 'com.android.support:support-v4:27.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    implementation 'com.android.support:support-v4:27.1.1'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     implementation 'com.github.bumptech.glide:glide:' + rootProject.ext.glideVersion
 
@@ -50,17 +50,17 @@ dependencies {
     implementation 'com.mateuszkoslacz.moviper:moviper-rx:2.0.4'
 
     // Google
-    implementation 'com.google.android.gms:play-services-maps:12.0.1'
-    implementation 'com.google.android.gms:play-services-places:12.0.1'
+    implementation 'com.google.android.gms:play-services-maps:15.0.1'
+    implementation 'com.google.android.gms:play-services-places:15.0.1'
 
     // dagger 2
-    implementation 'com.google.dagger:dagger:2.14.1'
+    implementation 'com.google.dagger:dagger:2.15'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.14.1'
 
-    implementation 'com.google.dagger:dagger-android:2.14.1'
+    implementation 'com.google.dagger:dagger-android:2.15'
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.14.1'
 
-    implementation 'com.google.dagger:dagger-android-support:2.14.1'
+    implementation 'com.google.dagger:dagger-android-support:2.15'
 
     // Lombok
     compileOnly 'org.projectlombok:lombok:1.16.20'
@@ -72,7 +72,7 @@ dependencies {
     // Picasso
     implementation 'com.squareup.picasso:picasso:2.5.2'
 
-    implementation "com.github.bumptech.glide:glide:4.0.0"
+    implementation "com.github.bumptech.glide:glide:4.7.1"
 
     // Room
     def room_version = "1.1.1"
@@ -80,9 +80,18 @@ dependencies {
     annotationProcessor "android.arch.persistence.room:compiler:$room_version"
     implementation "android.arch.persistence.room:rxjava2:$room_version"
 
-    implementation 'android.arch.lifecycle:livedata:1.1.1'
-
+    // Reactive network
     implementation 'com.github.pwittchen:reactivenetwork-rx2:2.1.0'
+
+    // Dexter
+    implementation 'com.karumi:dexter:5.0.0'
+
+    // SmartLocation
+    implementation ('io.nlopez.smartlocation:library:3.3.3') {
+        transitive = false
+    }
+
+    implementation 'com.google.android.gms:play-services-location:15.0.1'
 }
 
 repositories {
