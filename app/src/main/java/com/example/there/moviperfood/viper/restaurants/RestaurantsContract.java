@@ -23,6 +23,7 @@ interface RestaurantsContract {
         void saveRestaurant(Restaurant restaurant);
 
         void startReviewsActivity(Restaurant restaurant);
+        void startMapActivity(Restaurant restaurant);
     }
 
     interface View extends MvpView {
@@ -34,7 +35,8 @@ interface RestaurantsContract {
         Completable saveRestaurant(Restaurant restaurant);
     }
 
-    interface Routing extends ViperRxRouting<Activity>, BaseRouting.StartsReviewsActivity {
+    interface Routing extends ViperRxRouting<Activity>, BaseRouting.StartsReviewsActivity, BaseRouting.StartsMapActivity {
         void startReviewsActivity(Restaurant restaurant);
+        void startMapActivity(Restaurant restaurant);
     }
 }

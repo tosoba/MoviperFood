@@ -74,4 +74,9 @@ public class RestaurantsPresenter
     public void startReviewsActivity(Restaurant restaurant) {
         getRouting().startReviewsActivity(restaurant);
     }
+
+    @Override
+    public void startMapActivity(Restaurant restaurant) {
+        getRouting().startMapActivity(restaurant);
+    }
 }

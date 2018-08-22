@@ -57,4 +57,9 @@ public class ReviewsPresenter
             updateReviews(reviewsToUpdate);
         }
     }
+
+    @Override
+    public void startMapActivity(Restaurant restaurant) {
+        getRouting().startMapActivity(restaurant);
+    }
 }

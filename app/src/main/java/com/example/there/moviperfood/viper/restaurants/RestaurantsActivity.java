@@ -179,6 +179,15 @@ public class RestaurantsActivity
         presenter.saveRestaurant(restaurant);
     }
 
+    @Override
+    public void onShowOnMapClicked(Restaurant restaurant) {
+        presenter.startMapActivity(restaurant);
+    }
+
+    public interface ShowsOnMap {
+        void onShowOnMapClicked(Restaurant restaurant);
+    }
+
     private static final String EXTRA_CUISINE = "EXTRA_CUISINE";
     private static final String EXTRA_LAT_LNG = "EXTRA_LAT_LNG";
 

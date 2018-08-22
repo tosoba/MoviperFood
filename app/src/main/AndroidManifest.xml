@@ -14,11 +14,10 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/api_key" />
-
         <meta-data
-            tools:replace="android:value"
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            android:value="@integer/google_play_services_version"
+            tools:replace="android:value" />
 
         <activity
             android:name=".viper.search.SearchActivity"
@@ -36,6 +35,7 @@
             android:name=".viper.reviews.ReviewsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".viper.cuisines.CuisinesActivity" />
+        <activity android:name=".viper.map.MapActivity"></activity>
     </application>
 
 </manifest>

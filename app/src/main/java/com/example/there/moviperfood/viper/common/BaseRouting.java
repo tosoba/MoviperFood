@@ -6,6 +6,7 @@ import com.example.there.moviperfood.data.food.cuisine.Cuisine;
 import com.example.there.moviperfood.data.food.restaurant.Restaurant;
 import com.example.there.moviperfood.viper.cuisines.CuisinesActivity;
 import com.example.there.moviperfood.viper.cuisines.CuisinesPresenter;
+import com.example.there.moviperfood.viper.map.MapActivity;
 import com.example.there.moviperfood.viper.restaurants.RestaurantsActivity;
 import com.example.there.moviperfood.viper.restaurants.RestaurantsPresenter;
 import com.example.there.moviperfood.viper.reviews.ReviewsActivity;
@@ -53,6 +54,15 @@ public interface BaseRouting {
                         .withIntent(startingIntent)
                         .withPresenter(new ReviewsPresenter())
                         .build());
+            }
+        }
+    }
+
+    interface StartsMapActivity {
+        default void startMapActivity(boolean isContextAttached, Context relatedContext, Restaurant restaurant) {
+            if (isContextAttached) {
+                val startingIntent = MapActivity.startingIntent(relatedContext, restaurant);
+                relatedContext.startActivity(startingIntent);
             }
         }
     }

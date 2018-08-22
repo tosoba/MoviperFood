@@ -87,7 +87,7 @@ dependencies {
     implementation 'com.karumi:dexter:5.0.0'
 
     // SmartLocation
-    implementation ('io.nlopez.smartlocation:library:3.3.3') {
+    implementation('io.nlopez.smartlocation:library:3.3.3') {
         transitive = false
     }
 

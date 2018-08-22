@@ -72,7 +72,7 @@ public class SearchActivity
                     if (connectivityComponent.getLastConnectionStatus()) {
                         presenter.startReviewsActivity(item);
                     } else {
-                        Toast.makeText(this, "No internet connection", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
                     }
                 },
                 (CachedPlace item) -> {

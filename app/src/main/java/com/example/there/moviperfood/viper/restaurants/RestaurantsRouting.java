@@ -9,9 +9,13 @@ class RestaurantsRouting
         extends BaseRxRouting<Activity>
         implements RestaurantsContract.Routing {
 
-    @SuppressWarnings({"unchecked", "ConstantConditions"})
     @Override
     public void startReviewsActivity(Restaurant restaurant) {
         startReviewsActivity(isContextAttached(), getRelatedContext(), restaurant);
+    }
+
+    @Override
+    public void startMapActivity(Restaurant restaurant) {
+        startMapActivity(isContextAttached(), getRelatedContext(), restaurant);
     }
 }

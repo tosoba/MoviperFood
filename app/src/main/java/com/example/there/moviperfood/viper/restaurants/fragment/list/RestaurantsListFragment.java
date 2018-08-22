@@ -25,7 +25,10 @@ public class RestaurantsListFragment extends RestaurantsFragment {
         FragmentListBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_list, container, false);
         binding.setRestaurantsListView(new RestaurantsListView(
                 viewModel,
-                new RestaurantsListAdapter(viewModel.getRestaurants(), onRestaurantClickListener)));
+                new RestaurantsListAdapter(viewModel.getRestaurants(), onRestaurantClickListener, restaurant -> {
+                    if (fragmentInteractionListener != null)
+                        fragmentInteractionListener.onShowOnMapClicked(restaurant);
+                })));
         binding.restaurantsRecyclerView.setLayoutManager(
                 new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         return binding.getRoot();

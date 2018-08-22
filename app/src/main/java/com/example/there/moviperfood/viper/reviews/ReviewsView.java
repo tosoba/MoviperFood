@@ -15,4 +15,5 @@ public class ReviewsView {
     private ReviewsListAdapter adapter;
     private Drawable navigationIcon;
     private View.OnClickListener navigationOnClickListener;
+    private View.OnClickListener showOnMapOnClickListener;
 }

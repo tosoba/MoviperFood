@@ -4,4 +4,5 @@ import com.example.there.moviperfood.data.food.restaurant.Restaurant;
 
 public interface RestaurantsFragmentInteractionListener {
     void onRestaurantSelected(Restaurant restaurant);
+    void onShowOnMapClicked(Restaurant restaurant);
 }

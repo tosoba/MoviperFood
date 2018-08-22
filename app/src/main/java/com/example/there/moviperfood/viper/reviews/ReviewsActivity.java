@@ -60,7 +60,8 @@ public class ReviewsActivity
                 reviewsViewModel,
                 new ReviewsListAdapter(reviewsViewModel.getReviews()),
                 ContextCompat.getDrawable(this, R.drawable.arrow_back),
-                v -> onBackPressed()
+                v -> onBackPressed(),
+                v -> presenter.startMapActivity(restaurant)
         ));
         binding.restaurantReviewsRecyclerView.setLayoutManager(
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
