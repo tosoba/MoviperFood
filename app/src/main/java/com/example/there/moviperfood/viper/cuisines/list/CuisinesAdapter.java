@@ -6,7 +6,10 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 
+import com.annimon.stream.Stream;
 import com.example.there.moviperfood.R;
 import com.example.there.moviperfood.data.food.cuisine.Cuisine;
 import com.example.there.moviperfood.databinding.CuisineListItemBinding;
@@ -14,9 +17,11 @@ import com.example.there.moviperfood.databinding.CuisinesListHeaderBinding;
 import com.example.there.moviperfood.util.AdapterUtils;
 import com.example.there.moviperfood.viper.common.OnListItemClickListener;
 
+import java.util.HashSet;
+
 import lombok.val;
 
-public class CuisinesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class CuisinesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
 
     private ObservableList<Cuisine> cuisines;
     private final OnListItemClickListener<Cuisine> onClickListener;
@@ -64,6 +69,59 @@ public class CuisinesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public int getItemCount() {
         return cuisines.size() + 1;
+    }
+
+    private HashSet<Cuisine> removedItems = new HashSet<>();
+
+    public HashSet<Cuisine> getRemovedItems() {
+        return removedItems;
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                FilterResults results = new FilterResults();
+                val constraintStr = constraint.toString();
+                HashSet<Cuisine> values = new HashSet<>();
+
+                if (constraint.length() == 0) {
+                    values.addAll(cuisines);
+                    values.addAll(removedItems);
+                } else {
+                    val fromCuisines = Stream.of(cuisines)
+                            .filter(c -> c.getCuisineName().toLowerCase().contains(constraintStr.toLowerCase()))
+                            .toList();
+                    val fromRemoved = Stream.of(removedItems)
+                            .filter(c -> c.getCuisineName().toLowerCase().contains(constraintStr.toLowerCase()))
+                            .toList();
+
+                    values.addAll(fromCuisines);
+                    values.addAll(fromRemoved);
+                }
+
+                results.values = values;
+
+                return results;
+            }
+
+            @SuppressWarnings("unchecked")
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                val resultsSet = (HashSet<Cuisine>) results.values;
+                if (resultsSet != null) {
+                    val toRemove = Stream.of(cuisines).filter(c -> !resultsSet.contains(c)).toList();
+                    val toAdd = Stream.of(removedItems).filter(resultsSet::contains).toList();
+
+                    cuisines.removeAll(toRemove);
+                    removedItems.addAll(toRemove);
+
+                    cuisines.addAll(toAdd);
+                    removedItems.removeAll(toAdd);
+                }
+            }
+        };
     }
 
     private static class CuisinesHeaderViewHolder extends RecyclerView.ViewHolder {

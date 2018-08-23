@@ -22,6 +22,7 @@ import com.mateuszkoslacz.moviper.base.view.activity.ViperActivity;
 import com.mateuszkoslacz.moviper.presentersdispatcher.MoviperPresentersDispatcher;
 
 import java.util.List;
+import java.util.Objects;
 
 import lombok.val;
 
@@ -48,7 +49,7 @@ public class CuisinesActivity
 
         connectivityComponent = new ConnectivityComponent(
                 this,
-                !cuisinesViewModel.cuisines.isEmpty(),
+                !cuisinesViewModel.getCuisines().isEmpty(),
                 findViewById(R.id.cuisines_root_layout),
                 this::loadCuisines);
         getLifecycle().addObserver(connectivityComponent);
@@ -58,14 +59,22 @@ public class CuisinesActivity
         }
     }
 
+    private CuisinesAdapter adapter;
+
     private void initView() {
+        adapter = new CuisinesAdapter(placeName, cuisinesViewModel.getCuisines(), onCuisineSelectedListener);
         ActivityCuisinesBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_cuisines);
         binding.setCuisinesView(new CuisinesView(
                 cuisinesViewModel,
-                new CuisinesAdapter(placeName, cuisinesViewModel.cuisines, onCuisineSelectedListener),
+                adapter,
                 new DividerItemDecoration(this, DividerItemDecoration.VERTICAL)));
         binding.cuisinesRecyclerView.setLayoutManager(
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+
+        val filterText = cuisinesViewModel.getFilterText().get();
+        if (!Objects.requireNonNull(filterText).isEmpty()) {
+            adapter.getFilter().filter(filterText);
+        }
     }
 
     @Override
@@ -95,8 +104,18 @@ public class CuisinesActivity
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (cuisinesViewModel != null)
+        if (cuisinesViewModel != null) {
+            cuisinesViewModel.getCuisines().addAll(adapter.getRemovedItems());
             outState.putParcelable(KEY_CUISINES_VIEW_MODEL, cuisinesViewModel);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (adapter != null) {
+            adapter.getFilter().filter(cuisinesViewModel.getFilterText().get());
+        }
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -106,14 +125,14 @@ public class CuisinesActivity
                 cuisinesViewModel = savedInstanceState.getParcelable(KEY_CUISINES_VIEW_MODEL);
             }
 
-            if (cuisinesViewModel.cuisines.isEmpty()) {
+            if (cuisinesViewModel.getCuisines().isEmpty()) {
                 loadCuisines();
             }
         }
     }
 
     private void loadCuisines() {
-        cuisinesViewModel.isLoading.set(true);
+        cuisinesViewModel.getIsLoading().set(true);
         presenter.loadCuisines(placeLatLng);
     }
 
@@ -127,8 +146,8 @@ public class CuisinesActivity
 
     @Override
     public void updateCuisines(List<Cuisine> cuisines) {
-        cuisinesViewModel.isLoading.set(false);
-        cuisinesViewModel.cuisines.addAll(cuisines);
+        cuisinesViewModel.getIsLoading().set(false);
+        cuisinesViewModel.getCuisines().addAll(cuisines);
     }
 
     @Override

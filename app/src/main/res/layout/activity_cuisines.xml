@@ -17,6 +17,18 @@
         android:layout_height="match_parent"
         tools:context=".viper.cuisines.CuisinesActivity">
 
+        <EditText
+            android:id="@+id/cuisines_filter_edit_text"
+            textWatcher="@{cuisinesView.textWatcher}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:hint="@string/filter_cuisines"
+            android:text="@={cuisinesView.viewModel.filterText}"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,8 +48,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
+            app:layout_constraintTop_toBottomOf="@id/cuisines_filter_edit_text" />
 
     </android.support.constraint.ConstraintLayout>
 
