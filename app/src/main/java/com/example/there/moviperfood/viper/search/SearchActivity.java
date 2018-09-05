@@ -8,9 +8,12 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.annimon.stream.Stream;
@@ -85,7 +88,6 @@ public class SearchActivity
         );
         binding.setSearchView(new SearchView(
                 searchHistoryAdapter,
-                new DividerItemDecoration(this, DividerItemDecoration.VERTICAL),
                 v -> handleOnNearbyClick()
         ));
         binding.searchHistoryRecyclerView.setLayoutManager(
@@ -175,6 +177,19 @@ public class SearchActivity
         PlaceAutocompleteFragment autocompleteFragment =
                 (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.autocomplete_search_fragment);
         autocompleteFragment.setOnPlaceSelectedListener(placeSelectionListener);
+
+        val view = autocompleteFragment.getView();
+        if (view != null) {
+            val fragmentBackgroundColor = ContextCompat.getColor(this, R.color.semiTransparentWhite);
+
+            EditText autoCompleteEditText = view.findViewById(R.id.place_autocomplete_search_input);
+            autoCompleteEditText.setBackgroundColor(fragmentBackgroundColor);
+            autoCompleteEditText.setHintTextColor(Color.BLACK);
+
+            ImageButton searchButton = view.findViewById(R.id.place_autocomplete_search_button);
+            searchButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.search));
+            searchButton.setBackgroundColor(fragmentBackgroundColor);
+        }
     }
 
     @Override

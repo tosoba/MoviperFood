@@ -12,6 +12,5 @@ import lombok.Getter;
 @Getter
 public class SearchView {
     private SearchHistoryAdapter adapter;
-    private RecyclerView.ItemDecoration itemDecoration;
     private View.OnClickListener onNearMeClickListener;
 }

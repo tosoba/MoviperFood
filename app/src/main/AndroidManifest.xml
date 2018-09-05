@@ -35,7 +35,7 @@
             android:name=".viper.reviews.ReviewsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".viper.cuisines.CuisinesActivity" />
-        <activity android:name=".viper.map.MapActivity"></activity>
+        <activity android:name=".viper.map.MapActivity" />
     </application>
 
 </manifest>

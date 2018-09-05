@@ -12,61 +12,68 @@
         android:id="@+id/search_root_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white">
+        android:background="@android:color/transparent">
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/toolbar_card_view"
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/main_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/app_title_txt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
-            app:cardCornerRadius="0dp"
-            app:elevation="10dp"
+            android:padding="10dp"
+            android:text="@string/app_name"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+        <fragment
+            android:id="@+id/autocomplete_search_fragment"
+            android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/app_title_txt" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorPrimary"
-                    android:padding="10dp"
-                    android:text="@string/app_name"
-                    android:textColor="@android:color/white"
-                    android:textSize="20sp" />
-
-                <fragment
-                    android:id="@+id/autocomplete_search_fragment"
-                    android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorPrimary" />
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
+        <View
+            android:id="@+id/bottom_shadow"
+            android:layout_width="0dp"
+            android:layout_height="8dp"
+            android:background="@drawable/shadow_gradient"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/autocomplete_search_fragment" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/search_history_recycler_view"
-            itemDecoration="@{searchView.itemDecoration}"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:adapter="@{searchView.adapter}"
             app:layout_constraintBottom_toTopOf="@id/near_me_btn"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar_card_view" />
+            app:layout_constraintTop_toBottomOf="@id/bottom_shadow" />
 
         <Button
             android:id="@+id/near_me_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/button_border_background"
+            android:foreground="@drawable/custom_ripple"
             android:onClick="@{searchView.onNearMeClickListener}"
             android:text="@string/near_me"
+            android:layout_margin="5dp"
             android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

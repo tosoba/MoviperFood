@@ -10,13 +10,17 @@
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:foreground="@drawable/list_item_border_foreground"
+        android:background="@color/semiTransparentBlack"
+        android:layout_margin="5dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text="@{viewModel.places.isEmpty() ? `No recently searched places. Use the searchbar above to search for restaurants nearby given location.` : `Recent places:`}"
+            android:textColor="@android:color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
 

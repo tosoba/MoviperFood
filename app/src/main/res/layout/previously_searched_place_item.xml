@@ -11,7 +11,8 @@
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground">
+        android:background="@color/semiTransparentBlack"
+        android:foreground="?android:attr/selectableItemBackground">
 
         <TextView
             android:id="@+id/previously_searched_place_text"
@@ -19,7 +20,9 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="@{place.name}"
+            android:textColor="@android:color/white"
             android:textSize="18sp" />
+
     </FrameLayout>
 </layout>
 
