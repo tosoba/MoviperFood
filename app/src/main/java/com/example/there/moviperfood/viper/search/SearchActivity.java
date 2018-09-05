@@ -11,6 +11,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -23,6 +24,8 @@ import com.example.there.moviperfood.data.place.CachedPlace;
 import com.example.there.moviperfood.databinding.ActivitySearchBinding;
 import com.example.there.moviperfood.lifecycle.ConnectivityComponent;
 import com.example.there.moviperfood.util.LocationUtils;
+import com.example.there.moviperfood.util.MeasurementUtils;
+import com.example.there.moviperfood.util.ViewUtils;
 import com.example.there.moviperfood.viper.search.list.SearchHistoryAdapter;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
@@ -92,6 +95,17 @@ public class SearchActivity
         ));
         binding.searchHistoryRecyclerView.setLayoutManager(
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+
+        val buttonViewTreeObserver = binding.nearMeBtn.getViewTreeObserver();
+        buttonViewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                binding.nearMeBtn.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                int btnHeight = binding.nearMeBtn.getMeasuredHeight();
+                val recyclerViewMarginBottom = btnHeight + MeasurementUtils.convertDpToPixel(10, SearchActivity.this);
+                ViewUtils.setMargins(binding.searchHistoryRecyclerView, 0, 0, 0, (int) recyclerViewMarginBottom);
+            }
+        });
     }
 
     private void handleOnNearbyClick() {
@@ -103,7 +117,7 @@ public class SearchActivity
                                     val settingsIntent = new Intent(Settings.ACTION_SETTINGS);
                                     startActivity(settingsIntent);
                                 })
-                                .setActionTextColor(Color.RED);
+                                .setActionTextColor(ContextCompat.getColor(SearchActivity.this, R.color.colorAccent));
                         snackbar.setDuration(Snackbar.LENGTH_LONG);
                         snackbar.show();
                     }

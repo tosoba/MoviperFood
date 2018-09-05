@@ -5,12 +5,13 @@ import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.OnLifecycleEvent;
 import android.content.Intent;
-import android.graphics.Color;
 import android.provider.Settings;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.there.moviperfood.R;
 import com.example.there.moviperfood.util.MeasurementUtils;
 import com.example.there.moviperfood.util.SnackbarUtils;
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork;
@@ -96,6 +97,7 @@ public class ConnectivityComponent implements LifecycleObserver {
     }
 
     private void showNoConnectionDialog() {
+        val color = ContextCompat.getColor(activity, R.color.colorAccent);
         snackbar = Snackbar
                 .make(parentView, "No internet connection.", Snackbar.LENGTH_LONG)
                 .setAction("SETTINGS", v -> {
@@ -110,10 +112,10 @@ public class ConnectivityComponent implements LifecycleObserver {
                         }
                     }
                 })
-                .setActionTextColor(Color.RED);
+                .setActionTextColor(color);
 
         TextView textView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.RED);
+        textView.setTextColor(color);
         snackbar.setDuration(Snackbar.LENGTH_INDEFINITE);
 
         if (!shouldShowSnackbarWithBottomMargin) {

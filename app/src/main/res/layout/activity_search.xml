@@ -7,66 +7,72 @@
             type="com.example.there.moviperfood.viper.search.SearchView" />
     </data>
 
-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/search_root_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/transparent">
+        android:layout_height="match_parent">
 
         <ImageView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:scaleType="fitXY"
-            android:src="@drawable/main_background"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:src="@drawable/main_background" />
 
-        <fragment
-            android:id="@+id/autocomplete_search_fragment"
-            android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <android.support.design.widget.CoordinatorLayout
+            android:id="@+id/search_root_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true">
 
-        <View
-            android:id="@+id/bottom_shadow"
-            android:layout_width="0dp"
-            android:layout_height="8dp"
-            android:background="@drawable/shadow_gradient"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/autocomplete_search_fragment" />
+            <android.support.design.widget.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                app:elevation="0dp">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/search_history_recycler_view"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:adapter="@{searchView.adapter}"
-            app:layout_constraintBottom_toTopOf="@id/near_me_btn"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/bottom_shadow" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-        <Button
-            android:id="@+id/near_me_btn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@drawable/button_border_background"
-            android:foreground="@drawable/button_ripple"
-            android:onClick="@{searchView.onNearMeClickListener}"
-            android:text="@string/near_me"
-            android:textColor="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/search_history_recycler_view" />
+                    <fragment
+                        android:id="@+id/autocomplete_search_fragment"
+                        android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
-    </android.support.constraint.ConstraintLayout>
+                    <View
+                        android:id="@+id/bottom_shadow"
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"
+                        android:background="@drawable/shadow_gradient" />
+
+                </LinearLayout>
+
+            </android.support.design.widget.AppBarLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/search_history_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adapter="@{searchView.adapter}"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+            <Button
+                android:id="@+id/near_me_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_margin="5dp"
+                android:background="@drawable/button_border_background"
+                android:foreground="@drawable/button_ripple"
+                android:onClick="@{searchView.onNearMeClickListener}"
+                android:text="@string/near_me"
+                android:textColor="@android:color/white"
+                app:layout_behavior="com.example.there.moviperfood.viper.common.ButtonCoordinatorBehavior" />
+
+        </android.support.design.widget.CoordinatorLayout>
+
+    </FrameLayout>
 
 </layout>
