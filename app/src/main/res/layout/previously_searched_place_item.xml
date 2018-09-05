@@ -11,8 +11,9 @@
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/semiTransparentBlack"
-        android:foreground="?android:attr/selectableItemBackground">
+        android:layout_margin="5dp"
+        android:background="@drawable/list_item_border_foreground"
+        android:foreground="@drawable/list_item_ripple">
 
         <TextView
             android:id="@+id/previously_searched_place_text"

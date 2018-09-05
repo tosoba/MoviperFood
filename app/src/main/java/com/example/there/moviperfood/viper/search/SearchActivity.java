@@ -10,12 +10,12 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.annimon.stream.Stream;
 import com.example.there.moviperfood.R;
 import com.example.there.moviperfood.data.food.restaurant.Restaurant;
@@ -119,14 +119,26 @@ public class SearchActivity
                     }
 
                     private void onLocationEnabled() {
-                        //TODO: show loading dialog with info fetching location and if no response for some time move around or something
-                        // dialog should have a cancel btn which calls locationControl.stop()
                         val locationControl = SmartLocation.with(SearchActivity.this).location().oneFix();
 
-                        locationControl.start(location -> presenter.startCuisinesActivity(
-                                "your location",
-                                new LatLng(location.getLatitude(), location.getLongitude())
-                        ));
+                        val progressDialog = new MaterialDialog.Builder(SearchActivity.this)
+                                .title(R.string.fetching_location)
+                                .negativeText("Cancel")
+                                .onNegative((dialog, which) -> {
+                                    locationControl.stop();
+                                    dialog.dismiss();
+                                })
+                                .content(R.string.please_wait)
+                                .progress(true, 0)
+                                .show();
+
+                        locationControl.start(location -> {
+                            presenter.startCuisinesActivity(
+                                    "your location",
+                                    new LatLng(location.getLatitude(), location.getLongitude())
+                            );
+                            progressDialog.dismiss();
+                        });
                     }
 
                     @Override
