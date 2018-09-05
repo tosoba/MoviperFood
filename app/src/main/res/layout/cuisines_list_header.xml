@@ -10,13 +10,17 @@
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/semiTransparentBlack"
+        android:foreground="@drawable/list_item_border_transparent_foreground"
+        android:layout_margin="5dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text="@{`Restaurant types nearby ` + placeName + `:`}"
+            android:textColor="@android:color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
 

@@ -12,13 +12,16 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground">
+        android:layout_margin="5dp"
+        android:background="@drawable/list_item_border_foreground"
+        android:foreground="@drawable/list_item_ripple">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="@{cuisine.cuisineName}"
+            android:textColor="@android:color/white"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

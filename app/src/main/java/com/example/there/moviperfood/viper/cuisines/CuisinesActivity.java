@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -64,10 +63,7 @@ public class CuisinesActivity
     private void initView() {
         adapter = new CuisinesAdapter(placeName, cuisinesViewModel.getCuisines(), onCuisineSelectedListener);
         ActivityCuisinesBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_cuisines);
-        binding.setCuisinesView(new CuisinesView(
-                cuisinesViewModel,
-                adapter,
-                new DividerItemDecoration(this, DividerItemDecoration.VERTICAL)));
+        binding.setCuisinesView(new CuisinesView(cuisinesViewModel, adapter));
         binding.cuisinesRecyclerView.setLayoutManager(
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 

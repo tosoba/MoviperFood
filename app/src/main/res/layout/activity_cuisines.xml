@@ -17,17 +17,40 @@
         android:layout_height="match_parent"
         tools:context=".viper.cuisines.CuisinesActivity">
 
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/main_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <EditText
             android:id="@+id/cuisines_filter_edit_text"
             textWatcher="@{cuisinesView.textWatcher}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:background="@color/semiTransparentWhite"
             android:hint="@string/filter_cuisines"
+            android:padding="10dp"
             android:text="@={cuisinesView.viewModel.filterText}"
+            android:textColor="@android:color/black"
+            android:textColorHint="@color/colorPrimary"
+            android:textSize="20sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/bottom_shadow_cuisines"
+            android:layout_width="0dp"
+            android:layout_height="8dp"
+            android:background="@drawable/shadow_gradient"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cuisines_filter_edit_text" />
 
         <ProgressBar
             android:layout_width="wrap_content"
@@ -40,7 +63,6 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/cuisines_recycler_view"
-            itemDecoration="@{cuisinesView.itemDecoration}"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:adapter="@{cuisinesView.adapter}"
@@ -48,7 +70,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cuisines_filter_edit_text" />
+            app:layout_constraintTop_toBottomOf="@id/bottom_shadow_cuisines" />
 
     </android.support.constraint.ConstraintLayout>
 

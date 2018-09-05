@@ -12,7 +12,6 @@ import lombok.Getter;
 public class CuisinesView {
     private CuisinesViewModel viewModel;
     private CuisinesAdapter adapter;
-    private RecyclerView.ItemDecoration itemDecoration;
     private TextWatcher textWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -30,9 +29,8 @@ public class CuisinesView {
         }
     };
 
-    CuisinesView(CuisinesViewModel viewModel, CuisinesAdapter adapter, RecyclerView.ItemDecoration itemDecoration) {
+    CuisinesView(CuisinesViewModel viewModel, CuisinesAdapter adapter) {
         this.viewModel = viewModel;
         this.adapter = adapter;
-        this.itemDecoration = itemDecoration;
     }
 }

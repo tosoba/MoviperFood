@@ -119,12 +119,14 @@ public class SearchActivity
                     }
 
                     private void onLocationEnabled() {
-                        SmartLocation.with(SearchActivity.this).location()
-                                .oneFix()
-                                .start(location -> presenter.startCuisinesActivity(
-                                        "your location",
-                                        new LatLng(location.getLatitude(), location.getLongitude())
-                                ));
+                        //TODO: show loading dialog with info fetching location and if no response for some time move around or something
+                        // dialog should have a cancel btn which calls locationControl.stop()
+                        val locationControl = SmartLocation.with(SearchActivity.this).location().oneFix();
+
+                        locationControl.start(location -> presenter.startCuisinesActivity(
+                                "your location",
+                                new LatLng(location.getLatitude(), location.getLongitude())
+                        ));
                     }
 
                     @Override
@@ -185,6 +187,8 @@ public class SearchActivity
             EditText autoCompleteEditText = view.findViewById(R.id.place_autocomplete_search_input);
             autoCompleteEditText.setBackgroundColor(fragmentBackgroundColor);
             autoCompleteEditText.setHintTextColor(Color.BLACK);
+            autoCompleteEditText.setHint("Nearby restaurants search...");
+            autoCompleteEditText.setTextSize(18);
 
             ImageButton searchButton = view.findViewById(R.id.place_autocomplete_search_button);
             searchButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.search));

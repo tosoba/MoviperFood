@@ -11,7 +11,7 @@
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:foreground="@drawable/list_item_border_foreground"
+        android:foreground="@drawable/list_item_border_transparent_foreground"
         android:background="@color/semiTransparentBlack"
         android:layout_margin="5dp">
 
