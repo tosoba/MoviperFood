@@ -229,6 +229,9 @@ public class SearchActivity
             ImageButton searchButton = view.findViewById(R.id.place_autocomplete_search_button);
             searchButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.search));
             searchButton.setBackgroundColor(fragmentBackgroundColor);
+
+            ImageButton clearButton = view.findViewById(R.id.place_autocomplete_clear_button);
+            clearButton.setBackgroundColor(fragmentBackgroundColor);
         }
     }
 }
