@@ -5,7 +5,6 @@ import android.databinding.ObservableList;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.there.moviperfood.R;
@@ -43,7 +42,7 @@ public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsList
     public void onBindViewHolder(@NonNull RestaurantsListViewHolder holder, int position) {
         val restaurant = restaurants.get(position);
         holder.getBinding().setRestaurant(restaurant);
-        holder.getBinding().setShowOnMapListener((View.OnClickListener) v -> showsOnMap.onShowOnMapClicked(restaurant));
+        holder.getBinding().setShowOnMapListener(v -> showsOnMap.onShowOnMapClicked(restaurant));
     }
 
     @Override

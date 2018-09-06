@@ -1,6 +1,5 @@
 package com.example.there.moviperfood.viper.reviews;
 
-import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -8,21 +7,17 @@ import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.widget.Toast;
 
 import com.example.there.moviperfood.R;
 import com.example.there.moviperfood.data.food.restaurant.Restaurant;
-import com.example.there.moviperfood.data.food.review.Review;
 import com.example.there.moviperfood.databinding.ActivityReviewsBinding;
 import com.example.there.moviperfood.lifecycle.ConnectivityComponent;
 import com.example.there.moviperfood.viper.reviews.list.ReviewsListAdapter;
 import com.mateuszkoslacz.moviper.base.view.activity.ViperActivity;
 import com.mateuszkoslacz.moviper.presentersdispatcher.MoviperPresentersDispatcher;
-
-import java.util.List;
 
 import lombok.val;
 

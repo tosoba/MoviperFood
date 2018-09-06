@@ -14,7 +14,6 @@ import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import lombok.val;
 
 public class RestaurantsPresenter
         extends BaseRxPresenter<RestaurantsContract.View, RestaurantsContract.Interactor, RestaurantsContract.Routing>

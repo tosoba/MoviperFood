@@ -1,12 +1,10 @@
 package com.example.there.moviperfood.viper.cuisines;
 
-import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -22,7 +20,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.mateuszkoslacz.moviper.base.view.activity.ViperActivity;
 import com.mateuszkoslacz.moviper.presentersdispatcher.MoviperPresentersDispatcher;
 
-import java.util.List;
 import java.util.Objects;
 
 import lombok.val;

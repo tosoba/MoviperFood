@@ -1,6 +1,5 @@
 package com.example.there.moviperfood.viper.cuisines;
 
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 
