@@ -1,6 +1,7 @@
 package com.example.there.moviperfood.viper.cuisines;
 
 import android.app.Activity;
+import android.arch.lifecycle.LiveData;
 
 import com.example.there.moviperfood.data.food.cuisine.Cuisine;
 import com.example.there.moviperfood.viper.common.BaseRouting;
@@ -23,9 +24,6 @@ public interface CuisinesContract {
     }
 
     interface View extends MvpView {
-        void updateCuisines(List<Cuisine> cuisines);
-
-        void onNoRestaurantsFound();
     }
 
     interface Presenter extends ViperPresenter<CuisinesContract.View> {
@@ -34,6 +32,8 @@ public interface CuisinesContract {
         void deleteMostRecentlyAddedPlace();
 
         void startRestaurantsActivity(Cuisine cuisine, LatLng latLng);
+
+        LiveData<List<Cuisine>> getCuisines();
     }
 
     interface Routing extends ViperRxRouting<Activity>, BaseRouting.StartsRestaurantsActivity {

@@ -1,5 +1,6 @@
 package com.example.there.moviperfood.viper.reviews;
 
+import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -29,32 +30,23 @@ public class ReviewsPresenter
         return new ReviewsInteractor();
     }
 
-    private List<Review> reviewsToUpdate;
     private boolean reviewsLoadingInProgress = false;
+    private MutableLiveData<List<Review>> reviews = new MutableLiveData<>();
 
-    private void updateReviews(List<Review> reviews) {
-        val view = getView();
-        if (view != null) {
-            if (!reviews.isEmpty()) {
-                view.updateReviews(reviews);
-                reviewsToUpdate = null;
-            } else {
-                view.onNoReviewsFound();
-            }
-        } else reviewsToUpdate = reviews;
+    @Override
+    public MutableLiveData<List<Review>> getReviews() {
+        return reviews;
     }
 
     @Override
     public void loadReviews(Restaurant restaurant) {
-        if (reviewsToUpdate == null && !reviewsLoadingInProgress) {
+        if (!reviewsLoadingInProgress) {
             reviewsLoadingInProgress = true;
             addSubscription(getInteractor().loadReviews(restaurant)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doFinally(() -> reviewsLoadingInProgress = false)
-                    .subscribe(this::updateReviews, error -> Log.e("ERROR", error.getMessage())));
-        } else {
-            updateReviews(reviewsToUpdate);
+                    .subscribe((reviews) -> this.reviews.setValue(reviews), error -> Log.e("ERROR", error.getMessage())));
         }
     }
 

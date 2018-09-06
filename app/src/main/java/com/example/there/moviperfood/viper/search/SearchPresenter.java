@@ -1,5 +1,7 @@
 package com.example.there.moviperfood.viper.search;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -45,57 +47,44 @@ public class SearchPresenter
         getRouting().startReviewsActivity(restaurant);
     }
 
-    private List<Restaurant> restaurantsToUpdate;
     private boolean restaurantsLoadingInProgress = false;
+    private MutableLiveData<List<Restaurant>> restaurants = new MutableLiveData<>();
 
-    private void updateRestaurants(List<Restaurant> restaurants) {
-        if (restaurants == null || restaurants.isEmpty()) return;
-
-        val view = getView();
-        if (view != null) {
-            view.updatePreviouslySearchedRestaurants(restaurants);
-            restaurantsToUpdate = null;
-        } else restaurantsToUpdate = restaurants;
+    @Override
+    public LiveData<List<Restaurant>> getRestaurants() {
+        return restaurants;
     }
 
     @Override
     public void loadPreviouslySearchedRestaurants() {
-        if (restaurantsToUpdate == null && !restaurantsLoadingInProgress) {
+        if (!restaurantsLoadingInProgress) {
             restaurantsLoadingInProgress = true;
             addSubscription(getInteractor().loadPreviouslySearchedRestaurants()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doFinally(() -> restaurantsLoadingInProgress = false)
-                    .subscribe(this::updateRestaurants, error -> Log.e("Error", error.getMessage())));
-        } else {
-            updateRestaurants(restaurantsToUpdate);
+                    .subscribe((restaurants) -> this.restaurants.setValue(restaurants), error -> Log.e("Error", error.getMessage())));
         }
     }
 
-    private List<CachedPlace> placesToUpdate;
     private boolean placesLoadingInProgress = false;
 
-    private void updatePlaces(List<CachedPlace> places) {
-        if (places == null || places.isEmpty()) return;
+    private MutableLiveData<List<CachedPlace>> places = new MutableLiveData<>();
 
-        val view = getView();
-        if (view != null) {
-            view.updatePreviouslySearchedPlaces(places);
-            placesToUpdate = null;
-        } else placesToUpdate = places;
+    @Override
+    public LiveData<List<CachedPlace>> getPlaces() {
+        return places;
     }
 
     @Override
     public void loadPreviouslySearchedPlaces() {
-        if (placesToUpdate == null && !placesLoadingInProgress) {
+        if (!placesLoadingInProgress) {
             placesLoadingInProgress = true;
             addSubscription(getInteractor().loadPreviouslySearchedPlaces()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doFinally(() -> placesLoadingInProgress = false)
-                    .subscribe(this::updatePlaces, error -> Log.e("Error", error.getMessage())));
-        } else {
-            updatePlaces(placesToUpdate);
+                    .subscribe((places) -> this.places.setValue(places), error -> Log.e("Error", error.getMessage())));
         }
     }
 

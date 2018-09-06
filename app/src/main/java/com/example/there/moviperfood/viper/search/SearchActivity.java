@@ -1,12 +1,14 @@
 package com.example.there.moviperfood.viper.search;
 
 import android.Manifest;
+import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -63,8 +65,32 @@ public class SearchActivity
         connectivityComponent = new ConnectivityComponent(this, true, findViewById(R.id.search_root_layout), null);
         getLifecycle().addObserver(connectivityComponent);
 
+        setupObservers();
+
         presenter.loadPreviouslySearchedPlaces();
         presenter.loadPreviouslySearchedRestaurants();
+    }
+
+    private void setupObservers() {
+        presenter.getPlaces().observe(this, cachedPlaces -> {
+            if (cachedPlaces != null) {
+                if (cachedPlaces.size() < searchViewModel.getPlaces().size()) {
+                    val toRemove = Stream.of(searchViewModel.getPlaces())
+                            .filter((displayedPlace) -> !cachedPlaces.contains(displayedPlace))
+                            .toList();
+                    searchViewModel.getPlaces().removeAll(toRemove);
+                } else {
+                    searchViewModel.getPlaces().addAll(cachedPlaces);
+                }
+            }
+        });
+
+        presenter.getRestaurants().observe(this, restaurants -> {
+            if (restaurants != null) {
+                searchViewModel.getRestaurants().addAll(restaurants);
+                searchHistoryAdapter.scrollRestaurantsToTop();
+            }
+        });
     }
 
     private SearchHistoryAdapter searchHistoryAdapter;
@@ -207,24 +233,6 @@ public class SearchActivity
             ImageButton searchButton = view.findViewById(R.id.place_autocomplete_search_button);
             searchButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.search));
             searchButton.setBackgroundColor(fragmentBackgroundColor);
-        }
-    }
-
-    @Override
-    public void updatePreviouslySearchedRestaurants(List<Restaurant> restaurants) {
-        searchViewModel.getRestaurants().addAll(restaurants);
-        searchHistoryAdapter.scrollRestaurantsToTop();
-    }
-
-    @Override
-    public void updatePreviouslySearchedPlaces(List<CachedPlace> places) {
-        if (places.size() < searchViewModel.getPlaces().size()) {
-            val toRemove = Stream.of(searchViewModel.getPlaces())
-                    .filter((displayedPlace) -> !places.contains(displayedPlace))
-                    .toList();
-            searchViewModel.getPlaces().removeAll(toRemove);
-        } else {
-            searchViewModel.getPlaces().addAll(places);
         }
     }
 }

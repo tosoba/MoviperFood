@@ -1,10 +1,12 @@
 package com.example.there.moviperfood.viper.restaurants;
 
+import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.view.MenuItem;
@@ -61,6 +63,8 @@ public class RestaurantsActivity
                 true);
         getLifecycle().addObserver(connectivityComponent);
 
+        setupObservers();
+
         initFromSavedState(savedInstanceState);
         showFragment();
     }
@@ -70,6 +74,15 @@ public class RestaurantsActivity
         binding.setRestaurantsView(new RestaurantsView(onNavigationItemSelectedListener));
         ActivityUtils.setHomeButtonEnabled(this, R.drawable.arrow_back_borderless);
         setTitle(cuisine.getCuisineName());
+    }
+
+    private void setupObservers() {
+        presenter.getRestaurants().observe(this, restaurants -> {
+            if (restaurants != null) {
+                this.restaurants = new ArrayList<>(restaurants);
+                passRestaurantsToFragment(restaurants);
+            }
+        });
     }
 
     @Override
@@ -95,12 +108,6 @@ public class RestaurantsActivity
     private void initExtras() {
         cuisine = getIntent().getParcelableExtra(EXTRA_CUISINE);
         latLng = getIntent().getParcelableExtra(EXTRA_LAT_LNG);
-    }
-
-    @Override
-    public void updateRestaurants(List<Restaurant> restaurants) {
-        this.restaurants = new ArrayList<>(restaurants);
-        passRestaurantsToFragment(restaurants);
     }
 
     private void passRestaurantsToFragment(List<Restaurant> restaurants) {

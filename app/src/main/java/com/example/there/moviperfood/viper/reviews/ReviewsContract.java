@@ -1,6 +1,7 @@
 package com.example.there.moviperfood.viper.reviews;
 
 import android.app.Activity;
+import android.arch.lifecycle.LiveData;
 
 import com.example.there.moviperfood.data.food.restaurant.Restaurant;
 import com.example.there.moviperfood.data.food.review.Review;
@@ -20,11 +21,11 @@ interface ReviewsContract {
         void loadReviews(Restaurant restaurant);
 
         void startMapActivity(Restaurant restaurant);
+
+        LiveData<List<Review>> getReviews();
     }
 
     interface View extends MvpView {
-        void updateReviews(List<Review> reviews);
-        void onNoReviewsFound();
     }
 
     interface Interactor extends ViperRxInteractor {

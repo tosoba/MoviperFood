@@ -1,5 +1,6 @@
 package com.example.there.moviperfood.viper.reviews;
 
+import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -7,6 +8,7 @@ import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.widget.Toast;
@@ -38,6 +40,7 @@ public class ReviewsActivity
         super.onCreate(savedInstanceState);
 
         initViewModel();
+        setupObservers();
         initFromSavedState(savedInstanceState);
         initView();
 
@@ -52,6 +55,19 @@ public class ReviewsActivity
     private void initViewModel() {
         restaurant = getIntent().getParcelableExtra(EXTRA_RESTAURANT);
         reviewsViewModel = new ReviewsViewModel(restaurant, new ObservableArrayList<>(), new ObservableField<>(false));
+    }
+
+    private void setupObservers() {
+        presenter.getReviews().observe(this, reviews -> {
+            if (reviews != null) {
+                if (reviews.size() > 0) {
+                    reviewsViewModel.getIsLoading().set(false);
+                    reviewsViewModel.getReviews().addAll(reviews);
+                } else {
+                    onNoReviewsFound();
+                }
+            }
+        });
     }
 
     private void initView() {
@@ -90,14 +106,7 @@ public class ReviewsActivity
         presenter.loadReviews(restaurant);
     }
 
-    @Override
-    public void updateReviews(List<Review> reviews) {
-        reviewsViewModel.getIsLoading().set(false);
-        reviewsViewModel.getReviews().addAll(reviews);
-    }
-
-    @Override
-    public void onNoReviewsFound() {
+    private void onNoReviewsFound() {
         Toast.makeText(this, getString(R.string.no_reviews_found), Toast.LENGTH_LONG).show();
         finish();
     }

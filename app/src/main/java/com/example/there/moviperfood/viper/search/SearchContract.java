@@ -1,6 +1,7 @@
 package com.example.there.moviperfood.viper.search;
 
 import android.app.Activity;
+import android.arch.lifecycle.LiveData;
 
 import com.example.there.moviperfood.data.food.restaurant.Restaurant;
 import com.example.there.moviperfood.data.place.CachedPlace;
@@ -28,12 +29,12 @@ public interface SearchContract {
         void loadPreviouslySearchedPlaces();
 
         void savePlace(CachedPlace place);
+
+        LiveData<List<CachedPlace>> getPlaces();
+        LiveData<List<Restaurant>> getRestaurants();
     }
 
     interface View extends MvpView {
-        void updatePreviouslySearchedRestaurants(List<Restaurant> restaurants);
-
-        void updatePreviouslySearchedPlaces(List<CachedPlace> places);
     }
 
     interface Interactor extends ViperRxInteractor {

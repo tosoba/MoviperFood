@@ -1,5 +1,7 @@
 package com.example.there.moviperfood.viper.restaurants;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -35,30 +37,23 @@ public class RestaurantsPresenter
         return new RestaurantsInteractor();
     }
 
-    private List<Restaurant> restaurantsToUpdate;
     private boolean restaurantsLoadingInProgress = false;
+    private MutableLiveData<List<Restaurant>> restaurants = new MutableLiveData<>();
 
-    private void updateRestaurants(List<Restaurant> restaurants) {
-        if (restaurants == null || restaurants.isEmpty()) return;
-
-        val view = getView();
-        if (view != null) {
-            view.updateRestaurants(restaurants);
-            restaurantsToUpdate = null;
-        } else restaurantsToUpdate = restaurants;
+    @Override
+    public LiveData<List<Restaurant>> getRestaurants() {
+        return restaurants;
     }
 
     @Override
     public void loadRestaurants(LatLng latLng, Cuisine cuisine) {
-        if (restaurantsToUpdate == null && !restaurantsLoadingInProgress) {
+        if (!restaurantsLoadingInProgress) {
             restaurantsLoadingInProgress = true;
             addSubscription(getInteractor().loadRestaurants(latLng, cuisine)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doFinally(() -> restaurantsLoadingInProgress = false)
-                    .subscribe(this::updateRestaurants, error -> Log.e("Error", error.getMessage())));
-        } else {
-            updateRestaurants(restaurantsToUpdate);
+                    .subscribe((restaurants) -> this.restaurants.setValue(restaurants), error -> Log.e("Error", error.getMessage())));
         }
     }
 

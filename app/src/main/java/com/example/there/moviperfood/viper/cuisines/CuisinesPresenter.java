@@ -1,5 +1,7 @@
 package com.example.there.moviperfood.viper.cuisines;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -7,6 +9,7 @@ import com.example.there.moviperfood.data.food.cuisine.Cuisine;
 import com.google.android.gms.maps.model.LatLng;
 import com.mateuszkoslacz.moviper.base.presenter.BaseRxPresenter;
 
+import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -29,33 +32,26 @@ public class CuisinesPresenter
         return new CuisinesRouting();
     }
 
-    private List<Cuisine> cuisinesToUpdate;
     private boolean cuisinesLoadingInProgress = false;
+    private MutableLiveData<List<Cuisine>> cuisines = new MutableLiveData<>();
 
-    private void updateCuisines(List<Cuisine> cuisines) {
-        if (cuisines == null || cuisines.isEmpty()) return;
-
-        val view = getView();
-        if (view != null) {
-            view.updateCuisines(cuisines);
-            cuisinesToUpdate = null;
-        } else cuisinesToUpdate = cuisines;
+    @Override
+    public LiveData<List<Cuisine>> getCuisines() {
+        return cuisines;
     }
 
     @Override
     public void loadCuisines(LatLng latLng) {
-        if (cuisinesToUpdate == null && !cuisinesLoadingInProgress) {
+        if (!cuisinesLoadingInProgress) {
             cuisinesLoadingInProgress = true;
             addSubscription(getInteractor().loadCuisines(latLng)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doFinally(() -> cuisinesLoadingInProgress = false)
-                    .subscribe(this::updateCuisines, error -> {
+                    .subscribe((cuisines) -> this.cuisines.setValue(cuisines), error -> {
                         Log.e("Error", error.getMessage());
-                        if (getView() != null) getView().onNoRestaurantsFound();
+                        this.cuisines.setValue(Collections.emptyList());
                     }));
-        } else {
-            updateCuisines(cuisinesToUpdate);
         }
     }
 

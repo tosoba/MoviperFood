@@ -1,10 +1,12 @@
 package com.example.there.moviperfood.viper.cuisines;
 
+import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -53,9 +55,24 @@ public class CuisinesActivity
                 this::loadCuisines);
         getLifecycle().addObserver(connectivityComponent);
 
+        setupObservers();
+
         if (savedInstanceState == null) {
             loadCuisines();
         }
+    }
+
+    private void setupObservers() {
+        presenter.getCuisines().observe(this, cuisines -> {
+            if (cuisines != null) {
+                if (cuisines.size() > 0) {
+                    cuisinesViewModel.getIsLoading().set(false);
+                    cuisinesViewModel.getCuisines().addAll(cuisines);
+                } else {
+                    onNoRestaurantsFound();
+                }
+            }
+        });
     }
 
     private CuisinesAdapter adapter;
@@ -136,14 +153,7 @@ public class CuisinesActivity
         connectivityComponent.checkConnectivityStatusAndRun(() -> presenter.startRestaurantsActivity(item, placeLatLng));
     };
 
-    @Override
-    public void updateCuisines(List<Cuisine> cuisines) {
-        cuisinesViewModel.getIsLoading().set(false);
-        cuisinesViewModel.getCuisines().addAll(cuisines);
-    }
-
-    @Override
-    public void onNoRestaurantsFound() {
+    private void onNoRestaurantsFound() {
         presenter.deleteMostRecentlyAddedPlace();
         Toast.makeText(this, getString(R.string.no_restaurants_found), Toast.LENGTH_LONG).show();
         finish();
