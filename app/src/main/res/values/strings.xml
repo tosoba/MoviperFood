@@ -16,4 +16,5 @@
     <string name="filter_cuisines">Filter cuisines…</string>
     <string name="fetching_location">Fetching location</string>
     <string name="please_wait">Please wait… If this takes too long go outside or move around a little.</string>
+    <string name="your_location">Your location</string>
 </resources>

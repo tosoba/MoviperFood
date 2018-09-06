@@ -74,20 +74,8 @@ public class SearchActivity
         searchHistoryAdapter = new SearchHistoryAdapter(
                 searchViewModel.getRestaurants(),
                 searchViewModel.getPlaces(),
-                (Restaurant item) -> {
-                    if (connectivityComponent.getLastConnectionStatus()) {
-                        presenter.startReviewsActivity(item);
-                    } else {
-                        Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
-                    }
-                },
-                (CachedPlace item) -> {
-                    if (connectivityComponent.getLastConnectionStatus()) {
-                        presenter.startCuisinesActivity(item.getName(), item.getLatLng());
-                    } else {
-                        Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
-                    }
-                }
+                (Restaurant item) -> connectivityComponent.checkConnectivityStatusAndRun(() -> presenter.startReviewsActivity(item)),
+                (CachedPlace item) -> connectivityComponent.checkConnectivityStatusAndRun(() -> presenter.startCuisinesActivity(item.getName(), item.getLatLng()))
         );
         binding.setSearchView(new SearchView(
                 searchHistoryAdapter,
@@ -147,10 +135,10 @@ public class SearchActivity
                                 .show();
 
                         locationControl.start(location -> {
-                            presenter.startCuisinesActivity(
-                                    "your location",
+                            connectivityComponent.checkConnectivityStatusAndRun(() -> presenter.startCuisinesActivity(
+                                    getString(R.string.your_location),
                                     new LatLng(location.getLatitude(), location.getLongitude())
-                            );
+                            ));
                             progressDialog.dismiss();
                         });
                     }

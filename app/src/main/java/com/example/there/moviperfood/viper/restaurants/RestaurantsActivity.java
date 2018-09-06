@@ -170,11 +170,7 @@ public class RestaurantsActivity
 
     @Override
     public void onRestaurantSelected(Restaurant restaurant) {
-        if (connectivityComponent.getLastConnectionStatus()) {
-            presenter.startReviewsActivity(restaurant);
-        } else {
-            Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
-        }
+        connectivityComponent.checkConnectivityStatusAndRun(() -> presenter.startReviewsActivity(restaurant));
         restaurant.setLastSearched(new Date());
         presenter.saveRestaurant(restaurant);
     }

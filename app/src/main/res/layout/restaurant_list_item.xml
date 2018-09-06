@@ -19,13 +19,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        app:cardBackgroundColor="@android:color/transparent"
         app:cardCornerRadius="3dp"
         app:cardElevation="5dp">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground">
+            android:background="@drawable/list_item_border_foreground"
+            android:foreground="@drawable/list_item_ripple">
 
             <ImageView
                 android:id="@+id/restaurant_thumbnail_image_view"
@@ -33,6 +35,9 @@
                 android:layout_width="0dp"
                 android:layout_height="170dp"
                 android:layout_marginBottom="10dp"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:layout_marginTop="1dp"
                 android:scaleType="fitXY"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -57,7 +62,7 @@
                 android:maxLines="2"
                 android:text="@{restaurant.name}"
                 android:textColor="@android:color/white"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/bottom_gradient_view"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -71,7 +76,8 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:text="@{restaurant.location.address}"
-                android:textSize="16sp"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toTopOf="@id/restaurant_cuisines_txt"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -81,9 +87,12 @@
                 android:id="@+id/restaurant_cuisines_txt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:maxLines="2"
                 android:text="@{@string/cuisines(restaurant.cuisines)}"
+                android:textColor="@android:color/white"
                 app:layout_constraintBottom_toTopOf="@id/restaurant_rating_bar"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -91,7 +100,8 @@
 
             <RatingBar
                 android:id="@+id/restaurant_rating_bar"
-                style="?android:attr/ratingBarStyleSmall"
+                style="?android:attr/ratingBarStyleIndicator"
+                fullySelectedStarColor="@{restaurant.userRating.ratingColor}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"

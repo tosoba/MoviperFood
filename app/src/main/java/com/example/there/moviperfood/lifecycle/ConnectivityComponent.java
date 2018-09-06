@@ -10,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.there.moviperfood.R;
 import com.example.there.moviperfood.util.MeasurementUtils;
@@ -123,6 +124,26 @@ public class ConnectivityComponent implements LifecycleObserver {
         } else {
             SnackbarUtils.showSnackbarWithBottomMargin(snackbar, (int) MeasurementUtils.convertDpToPixel(48.0f, activity));
         }
+    }
+
+    public void checkConnectivityStatusAndRun(RunsWhenStatus onConnected, RunsWhenStatus onDisconnected) {
+        if (lastConnectionStatus) {
+            onConnected.run();
+        } else {
+            onDisconnected.run();
+        }
+    }
+
+    public void checkConnectivityStatusAndRun(RunsWhenStatus onConnected) {
+        if (lastConnectionStatus) {
+            onConnected.run();
+        } else {
+            Toast.makeText(activity, activity.getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public interface RunsWhenStatus {
+        void run();
     }
 
     public interface ReloadsData {

@@ -13,18 +13,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        app:cardBackgroundColor="@android:color/transparent"
         app:cardCornerRadius="3dp"
         app:elevation="5dp">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@drawable/list_item_border_foreground"
+            android:foreground="@drawable/list_item_ripple">
 
             <ImageView
                 android:id="@+id/review_user_thumbnail"
                 imageUrl="@{review.user.profileImage}"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
+                android:layout_marginBottom="1dp"
+                android:layout_marginLeft="1dp"
+                android:layout_marginTop="1dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/review_user_name"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -35,8 +41,9 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:padding="5dp"
+                android:padding="3dp"
                 android:text="@{review.user.name}"
+                android:textColor="@android:color/white"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@id/review_date"
@@ -50,8 +57,9 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:padding="5dp"
+                android:padding="3dp"
                 android:text="@{review.reviewTimeFriendly}"
+                android:textColor="@android:color/white"
                 app:layout_constraintBottom_toBottomOf="@id/review_user_thumbnail"
                 app:layout_constraintLeft_toRightOf="@id/review_user_thumbnail"
                 app:layout_constraintRight_toLeftOf="@id/review_rating"
@@ -79,6 +87,7 @@
                 android:maxLines="5"
                 android:padding="5dp"
                 android:text="@{review.reviewText}"
+                android:textColor="@android:color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"

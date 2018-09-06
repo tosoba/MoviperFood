@@ -133,11 +133,7 @@ public class CuisinesActivity
     }
 
     private OnListItemClickListener<Cuisine> onCuisineSelectedListener = (Cuisine item) -> {
-        if (connectivityComponent.getLastConnectionStatus()) {
-            presenter.startRestaurantsActivity(item, placeLatLng);
-        } else {
-            Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
-        }
+        connectivityComponent.checkConnectivityStatusAndRun(() -> presenter.startRestaurantsActivity(item, placeLatLng));
     };
 
     @Override

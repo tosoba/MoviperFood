@@ -20,7 +20,7 @@ public class ImageViewBindings {
                     .load(url)
                     .apply(new RequestOptions()
                             .centerCrop()
-                            .placeholder(R.drawable.thumbnail_placeholder)
+                            .placeholder(R.drawable.loading_placeholder)
                             .error(R.drawable.thumbnail_placeholder))
                     .into(imageView);
         } else {

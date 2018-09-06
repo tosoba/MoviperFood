@@ -12,7 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:foreground="?android:attr/selectableItemBackground"
+        android:background="@drawable/list_item_border_foreground"
+        android:foreground="@drawable/list_item_ripple"
         app:cardCornerRadius="3dp"
         app:cardElevation="5dp">
 
