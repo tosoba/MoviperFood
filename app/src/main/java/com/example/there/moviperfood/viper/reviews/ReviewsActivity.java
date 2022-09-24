@@ -2,20 +2,22 @@ package com.example.there.moviperfood.viper.reviews;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ObservableField;
-import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import android.widget.Toast;
 
 import com.example.there.moviperfood.R;
 import com.example.there.moviperfood.data.food.restaurant.Restaurant;
 import com.example.there.moviperfood.databinding.ActivityReviewsBinding;
 import com.example.there.moviperfood.lifecycle.ConnectivityComponent;
 import com.example.there.moviperfood.viper.reviews.list.ReviewsListAdapter;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.mateuszkoslacz.moviper.base.view.activity.ViperActivity;
 import com.mateuszkoslacz.moviper.presentersdispatcher.MoviperPresentersDispatcher;
 
@@ -84,7 +86,6 @@ public class ReviewsActivity
         outState.putParcelable(KEY_REVIEWS_VIEW_MODEL, reviewsViewModel);
     }
 
-    @SuppressWarnings("ConstantConditions")
     private void initFromSavedState(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             reviewsViewModel = savedInstanceState.getParcelable(KEY_REVIEWS_VIEW_MODEL);
@@ -102,8 +103,11 @@ public class ReviewsActivity
     }
 
     private void onNoReviewsFound() {
-        Toast.makeText(this, getString(R.string.no_reviews_found), Toast.LENGTH_LONG).show();
-        finish();
+        reviewsViewModel.getIsLoading().set(false);
+        val snackbar = Snackbar
+                .make(findViewById(R.id.reviews_root_layout), getString(R.string.no_reviews_found), Snackbar.LENGTH_LONG);
+        snackbar.setDuration(BaseTransientBottomBar.LENGTH_INDEFINITE);
+        snackbar.show();
     }
 
     @NonNull

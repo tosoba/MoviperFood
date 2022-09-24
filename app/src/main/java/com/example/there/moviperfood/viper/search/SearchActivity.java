@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.Settings;
 import androidx.annotation.NonNull;
+
+import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AlertDialog;
@@ -128,7 +130,7 @@ public class SearchActivity
                                     startActivity(settingsIntent);
                                 })
                                 .setActionTextColor(ContextCompat.getColor(SearchActivity.this, R.color.colorAccent));
-                        snackbar.setDuration(Snackbar.LENGTH_LONG);
+                        snackbar.setDuration(BaseTransientBottomBar.LENGTH_LONG);
                         snackbar.show();
                     }
 
