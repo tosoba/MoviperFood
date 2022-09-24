@@ -62,7 +62,7 @@ public class SearchPresenter
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doFinally(() -> restaurantsLoadingInProgress = false)
-                    .subscribe((restaurants) -> this.restaurants.setValue(restaurants), error -> Log.e("Error", error.getMessage())));
+                    .subscribe((restaurants) -> this.restaurants.setValue(restaurants), error -> Log.e("Error", "Error", error)));
         }
     }
 
@@ -83,7 +83,7 @@ public class SearchPresenter
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doFinally(() -> placesLoadingInProgress = false)
-                    .subscribe((places) -> this.places.setValue(places), error -> Log.e("Error", error.getMessage())));
+                    .subscribe((places) -> this.places.setValue(places), error -> Log.e("Error", "Error", error)));
         }
     }
 

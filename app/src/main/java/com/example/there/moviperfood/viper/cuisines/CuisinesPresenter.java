@@ -48,7 +48,7 @@ public class CuisinesPresenter
                     .observeOn(AndroidSchedulers.mainThread())
                     .doFinally(() -> cuisinesLoadingInProgress = false)
                     .subscribe((cuisines) -> this.cuisines.setValue(cuisines), error -> {
-                        Log.e("Error", error.getMessage());
+                        Log.w("Error", "Error", error);
                         this.cuisines.setValue(Collections.emptyList());
                     }));
         }

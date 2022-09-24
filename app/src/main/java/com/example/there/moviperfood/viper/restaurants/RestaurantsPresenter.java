@@ -52,7 +52,7 @@ public class RestaurantsPresenter
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doFinally(() -> restaurantsLoadingInProgress = false)
-                    .subscribe((restaurants) -> this.restaurants.setValue(restaurants), error -> Log.e("Error", error.getMessage())));
+                    .subscribe((restaurants) -> this.restaurants.setValue(restaurants), error -> Log.e("Error", "Error", error)));
         }
     }
 

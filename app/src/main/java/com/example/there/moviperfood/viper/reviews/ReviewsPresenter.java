@@ -45,7 +45,7 @@ public class ReviewsPresenter
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doFinally(() -> reviewsLoadingInProgress = false)
-                    .subscribe((reviews) -> this.reviews.setValue(reviews), error -> Log.e("ERROR", error.getMessage())));
+                    .subscribe((reviews) -> this.reviews.setValue(reviews), error -> Log.e("ERROR", "Error", error)));
         }
     }
 

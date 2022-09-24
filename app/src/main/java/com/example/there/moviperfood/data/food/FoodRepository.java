@@ -13,6 +13,7 @@ import com.example.there.moviperfood.data.food.review.ReviewResponse;
 import com.example.there.moviperfood.domain.BaseFoodRepository;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -35,20 +36,32 @@ public class FoodRepository implements BaseFoodRepository {
     @Override
     public Observable<List<Cuisine>> loadCuisines(LatLng latLng) {
         return service.loadCuisines(String.valueOf(latLng.latitude), String.valueOf(latLng.longitude))
-                .map(response -> Stream.of(response.getCuisines()).map(CuisineResponse::getCuisine).toList());
+                .map(response -> {
+                    List<CuisineResponse> cuisines = response.getCuisines();
+                    if (cuisines == null) cuisines = Collections.emptyList();
+                    return Stream.of(cuisines).map(CuisineResponse::getCuisine).toList();
+                });
     }
 
     @Override
     public Observable<List<Restaurant>> loadRestaurants(LatLng latLng, Cuisine cuisine) {
         String[] cuisines = {String.valueOf(cuisine.getCuisineId())};
         return service.loadRestaurants(String.valueOf(latLng.latitude), String.valueOf(latLng.longitude), cuisines)
-                .map(restaurantsResponse -> Stream.of(restaurantsResponse.getRestaurants()).map(RestaurantResponse::getRestaurant).toList());
+                .map(restaurantsResponse -> {
+                    RestaurantResponse[] restaurants = restaurantsResponse.getRestaurants();
+                    if (restaurants == null) restaurants = new RestaurantResponse[]{};
+                    return Stream.of(restaurants).map(RestaurantResponse::getRestaurant).toList();
+                });
     }
 
     @Override
     public Observable<List<Review>> loadReviews(Restaurant restaurant) {
         return service.loadReviews(restaurant.getId())
-                .map(reviewsResponse -> Stream.of(reviewsResponse.getUserReviews()).map(ReviewResponse::getReview).toList());
+                .map(reviewsResponse -> {
+                    ReviewResponse[] userReviews = reviewsResponse.getUserReviews();
+                    if (userReviews == null) userReviews = new ReviewResponse[]{};
+                    return Stream.of(userReviews).map(ReviewResponse::getReview).toList();
+                });
     }
 
     @Override
