@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.example.there.moviperfood.di.AppComponent;
 import com.example.there.moviperfood.di.DaggerAppComponent;
+import com.google.android.libraries.places.api.Places;
 
 public class MoviperFoodApp extends Application {
 
@@ -17,6 +18,8 @@ public class MoviperFoodApp extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+
+        Places.initialize(this, getString(R.string.api_key));
 
         component = DaggerAppComponent.builder()
                 .application(MoviperFoodApp.instance)

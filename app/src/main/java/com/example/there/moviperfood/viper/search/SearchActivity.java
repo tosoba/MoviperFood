@@ -2,20 +2,18 @@ package com.example.there.moviperfood.viper.search;
 
 import android.Manifest;
 import android.content.Intent;
-import androidx.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.Settings;
-import androidx.annotation.NonNull;
-
-import com.google.android.material.snackbar.BaseTransientBottomBar;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AlertDialog;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageButton;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.annimon.stream.Stream;
@@ -29,10 +27,12 @@ import com.example.there.moviperfood.util.MeasurementUtils;
 import com.example.there.moviperfood.util.ViewUtils;
 import com.example.there.moviperfood.viper.search.list.SearchHistoryAdapter;
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
-import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -197,42 +197,49 @@ public class SearchActivity
 
     private PlaceSelectionListener placeSelectionListener = new PlaceSelectionListener() {
         @Override
-        public void onPlaceSelected(Place place) {
-            presenter.startCuisinesActivity(place.getName().toString(), place.getLatLng());
-            presenter.savePlace(new CachedPlace(
-                    place.getId(),
-                    place.getName().toString(),
-                    place.getLatLng().latitude,
-                    place.getLatLng().longitude,
-                    new Date())
+        public void onPlaceSelected(@NonNull Place place) {
+            if (place.getId() == null || place.getLatLng() == null) {
+                return;
+            }
+
+            presenter.startCuisinesActivity(place.getName(), place.getLatLng());
+            presenter.savePlace(
+                    new CachedPlace(
+                            place.getId(),
+                            place.getName(),
+                            place.getLatLng().latitude,
+                            place.getLatLng().longitude,
+                            new Date()
+                    )
             );
         }
 
         @Override
-        public void onError(Status status) {
+        public void onError(@NonNull Status status) {
+
         }
     };
 
     private void initSearchFragment() {
-        PlaceAutocompleteFragment autocompleteFragment =
-                (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.autocomplete_search_fragment);
+        AutocompleteSupportFragment autocompleteFragment =
+                (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.autocomplete_search_fragment);
         autocompleteFragment.setOnPlaceSelectedListener(placeSelectionListener);
 
         val view = autocompleteFragment.getView();
         if (view != null) {
             val fragmentBackgroundColor = ContextCompat.getColor(this, R.color.semiTransparentWhite);
 
-            EditText autoCompleteEditText = view.findViewById(R.id.place_autocomplete_search_input);
+            EditText autoCompleteEditText = view.findViewById(R.id.places_autocomplete_search_input);
             autoCompleteEditText.setBackgroundColor(fragmentBackgroundColor);
             autoCompleteEditText.setHintTextColor(Color.BLACK);
             autoCompleteEditText.setHint("Nearby restaurants search...");
             autoCompleteEditText.setTextSize(18);
 
-            ImageButton searchButton = view.findViewById(R.id.place_autocomplete_search_button);
+            ImageButton searchButton = view.findViewById(R.id.places_autocomplete_search_button);
             searchButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.search));
             searchButton.setBackgroundColor(fragmentBackgroundColor);
 
-            ImageButton clearButton = view.findViewById(R.id.place_autocomplete_clear_button);
+            ImageButton clearButton = view.findViewById(R.id.places_autocomplete_clear_button);
             clearButton.setBackgroundColor(fragmentBackgroundColor);
         }
     }
