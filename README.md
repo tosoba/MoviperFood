@@ -3,9 +3,9 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-<img src="https://raw.githubusercontent.com/tosoba/MoviperFood/master/Logo.png" alt="Logo" width="80" height="80">
+<img src="https://raw.githubusercontent.com/tosoba/MoviperFood/master/Logo.png" alt="Logo" width="150" height="150">
 
-<h3 align="center">MoviperFood</h3>
+<h2 align="center">MoviperFood</h2>
 </div>
 
 
@@ -31,7 +31,7 @@
 
 <img src="https://raw.githubusercontent.com/tosoba/MoviperFood/master/Screenshot.png" alt="Logo" width="270" height="570">
 
-A simple restaurant search app (project from 2018).
+A simple restaurant search app. It's an old project from 2018 so various issues are to be expected.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
