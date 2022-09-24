@@ -8,8 +8,6 @@ import com.mateuszkoslacz.moviper.base.routing.BaseRxRouting;
 
 public class CuisinesRouting extends BaseRxRouting<Activity>
         implements CuisinesContract.Routing {
-
-    @SuppressWarnings({"ConstantConditions", "unchecked"})
     @Override
     public void startRestaurantsActivity(Cuisine cuisine, LatLng latLng) {
         startRestaurantsActivity(isContextAttached(), getRelatedContext(), cuisine, latLng);

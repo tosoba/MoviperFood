@@ -1,25 +1,28 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 32
     defaultConfig {
         applicationId "com.example.there.moviperfood"
-        minSdkVersion 16
-        targetSdkVersion 28
+        minSdkVersion 23
+        targetSdkVersion 32
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     dataBinding {
         enabled = true
     }
@@ -63,8 +66,8 @@ dependencies {
     implementation 'com.google.dagger:dagger-android-support:2.15'
 
     // Lombok
-    compileOnly 'org.projectlombok:lombok:1.16.20'
-    annotationProcessor 'org.projectlombok:lombok:1.16.20'
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
 
     // Stream
     implementation 'com.annimon:stream:1.1.9'
@@ -81,7 +84,7 @@ dependencies {
     implementation "android.arch.persistence.room:rxjava2:$room_version"
 
     // Reactive network
-    implementation 'com.github.pwittchen:reactivenetwork-rx2:2.1.0'
+    implementation 'com.github.pwittchen:reactivenetwork-rx2:3.0.2'
 
     // Dexter
     implementation 'com.karumi:dexter:5.0.0'

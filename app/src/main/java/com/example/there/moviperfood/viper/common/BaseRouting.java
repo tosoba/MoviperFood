@@ -17,7 +17,7 @@ import com.mateuszkoslacz.moviper.presentersdispatcher.MoviperPresentersDispatch
 
 import lombok.val;
 
-@SuppressWarnings({"ConstantConditions", "unchecked"})
+@SuppressWarnings({"unchecked"})
 public interface BaseRouting {
     interface StartsRestaurantsActivity {
         default void startRestaurantsActivity(boolean isContextAttached, Context relatedContext, Cuisine cuisine, LatLng latLng) {
