@@ -1,6 +1,6 @@
 package com.example.there.moviperfood.viper.reviews.list;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.there.moviperfood.databinding.ReviewListItemBinding;
 

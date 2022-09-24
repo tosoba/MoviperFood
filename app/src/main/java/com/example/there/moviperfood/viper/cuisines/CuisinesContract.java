@@ -1,7 +1,7 @@
 package com.example.there.moviperfood.viper.cuisines;
 
 import android.app.Activity;
-import android.arch.lifecycle.LiveData;
+import androidx.lifecycle.LiveData;
 
 import com.example.there.moviperfood.data.food.cuisine.Cuisine;
 import com.example.there.moviperfood.viper.common.BaseRouting;

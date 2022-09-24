@@ -1,6 +1,6 @@
 package com.example.there.moviperfood.di.module;
 
-import android.arch.persistence.room.Room;
+import androidx.room.Room;
 import android.content.Context;
 
 import com.example.there.moviperfood.data.food.db.RestaurantsDb;

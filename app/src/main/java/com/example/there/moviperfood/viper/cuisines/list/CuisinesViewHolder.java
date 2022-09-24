@@ -1,6 +1,6 @@
 package com.example.there.moviperfood.viper.cuisines.list;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.there.moviperfood.data.food.cuisine.Cuisine;
 import com.example.there.moviperfood.databinding.CuisineListItemBinding;

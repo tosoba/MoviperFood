@@ -1,6 +1,6 @@
 package com.example.there.moviperfood.data.food.db.converter;
 
-import android.arch.persistence.room.TypeConverter;
+import androidx.room.TypeConverter;
 
 import com.example.there.moviperfood.data.food.restaurant.RestaurantLocation;
 import com.google.gson.Gson;

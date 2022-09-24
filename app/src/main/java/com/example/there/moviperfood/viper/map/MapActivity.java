@@ -3,7 +3,7 @@ package com.example.there.moviperfood.viper.map;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.example.there.moviperfood.R;

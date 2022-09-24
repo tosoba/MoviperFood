@@ -1,6 +1,6 @@
 package com.example.there.moviperfood.util;
 
-import android.support.design.widget.Snackbar;
+import com.google.android.material.snackbar.Snackbar;
 import android.view.View;
 import android.widget.FrameLayout;
 

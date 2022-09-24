@@ -1,7 +1,7 @@
 package com.example.there.moviperfood.binding;
 
-import android.databinding.BindingAdapter;
-import android.support.v7.widget.RecyclerView;
+import androidx.databinding.BindingAdapter;
+import androidx.recyclerview.widget.RecyclerView;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

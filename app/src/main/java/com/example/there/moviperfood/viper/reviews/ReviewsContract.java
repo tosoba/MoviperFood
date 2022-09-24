@@ -1,7 +1,7 @@
 package com.example.there.moviperfood.viper.reviews;
 
 import android.app.Activity;
-import android.arch.lifecycle.LiveData;
+import androidx.lifecycle.LiveData;
 
 import com.example.there.moviperfood.data.food.restaurant.Restaurant;
 import com.example.there.moviperfood.data.food.review.Review;

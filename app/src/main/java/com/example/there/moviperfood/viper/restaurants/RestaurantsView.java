@@ -1,6 +1,6 @@
 package com.example.there.moviperfood.viper.restaurants;
 
-import android.support.design.widget.BottomNavigationView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

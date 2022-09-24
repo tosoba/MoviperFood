@@ -18,13 +18,13 @@
             android:scaleType="fitXY"
             android:src="@drawable/main_background" />
 
-        <android.support.design.widget.CoordinatorLayout
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/search_root_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true">
 
-            <android.support.design.widget.AppBarLayout
+            <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
@@ -49,9 +49,9 @@
 
                 </LinearLayout>
 
-            </android.support.design.widget.AppBarLayout>
+            </com.google.android.material.appbar.AppBarLayout>
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/search_history_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -71,7 +71,7 @@
                 android:textColor="@android:color/white"
                 app:layout_behavior="com.example.there.moviperfood.viper.common.ButtonCoordinatorBehavior" />
 
-        </android.support.design.widget.CoordinatorLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     </FrameLayout>
 

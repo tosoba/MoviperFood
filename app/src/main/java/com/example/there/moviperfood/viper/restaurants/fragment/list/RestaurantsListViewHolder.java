@@ -1,6 +1,6 @@
 package com.example.there.moviperfood.viper.restaurants.fragment.list;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.there.moviperfood.data.food.restaurant.Restaurant;
 import com.example.there.moviperfood.databinding.RestaurantListItemBinding;

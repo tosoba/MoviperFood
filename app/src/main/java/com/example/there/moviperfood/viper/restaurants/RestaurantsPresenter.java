@@ -1,8 +1,8 @@
 package com.example.there.moviperfood.viper.restaurants;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
-import android.support.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.annotation.NonNull;
 import android.util.Log;
 
 import com.example.there.moviperfood.data.food.cuisine.Cuisine;

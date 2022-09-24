@@ -11,7 +11,7 @@
             type="com.example.there.moviperfood.viper.reviews.ReviewsView" />
     </data>
 
-    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/reviews_root_layout"
@@ -21,14 +21,14 @@
         android:fitsSystemWindows="true"
         tools:context=".viper.reviews.ReviewsActivity">
 
-        <android.support.design.widget.AppBarLayout
+        <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/restaurant_app_bar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/app_bar_height_horizontal"
             android:fitsSystemWindows="true"
             android:theme="@style/AppTheme.AppBarOverlay">
 
-            <android.support.design.widget.CollapsingToolbarLayout
+            <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/restaurant_toolbar_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -59,7 +59,7 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/bottom_dark_gradient" />
 
-                <android.support.v7.widget.Toolbar
+                <androidx.appcompat.widget.Toolbar
                     android:id="@+id/restaurant_toolbar"
                     navigationOnClickListener="@{reviewsView.navigationOnClickListener}"
                     android:layout_width="match_parent"
@@ -69,11 +69,11 @@
                     app:navigationIcon="@{reviewsView.navigationIcon}"
                     app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-            </android.support.design.widget.CollapsingToolbarLayout>
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-        </android.support.design.widget.AppBarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
 
-        <android.support.design.widget.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -93,13 +93,13 @@
             android:visibility="@{safeUnbox(reviewsView.viewModel.isLoading) ? View.VISIBLE : View.GONE}"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/restaurant_reviews_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:adapter="@{reviewsView.adapter}"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    </android.support.design.widget.CoordinatorLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

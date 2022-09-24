@@ -1,7 +1,7 @@
 package com.example.there.moviperfood.binding;
 
-import android.databinding.BindingAdapter;
-import android.support.v7.widget.Toolbar;
+import androidx.databinding.BindingAdapter;
+import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 
 import lombok.AccessLevel;

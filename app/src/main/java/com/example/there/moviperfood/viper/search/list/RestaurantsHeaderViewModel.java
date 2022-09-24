@@ -1,6 +1,6 @@
 package com.example.there.moviperfood.viper.search.list;
 
-import android.databinding.ObservableList;
+import androidx.databinding.ObservableList;
 
 import com.example.there.moviperfood.data.food.restaurant.Restaurant;
 

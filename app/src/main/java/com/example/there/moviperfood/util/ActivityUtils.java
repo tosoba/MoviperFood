@@ -1,7 +1,7 @@
 package com.example.there.moviperfood.util;
 
-import android.support.annotation.DrawableRes;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.DrawableRes;
+import androidx.appcompat.app.AppCompatActivity;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

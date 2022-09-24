@@ -1,7 +1,7 @@
 package com.example.there.moviperfood.binding;
 
-import android.databinding.BindingAdapter;
-import android.support.design.widget.BottomNavigationView;
+import androidx.databinding.BindingAdapter;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class BottomNavigationViewBindings {
     @BindingAdapter("onNavigationItemSelectedListener")

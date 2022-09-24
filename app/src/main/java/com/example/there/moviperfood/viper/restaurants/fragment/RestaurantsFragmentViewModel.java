@@ -1,7 +1,7 @@
 package com.example.there.moviperfood.viper.restaurants.fragment;
 
-import android.databinding.ObservableArrayList;
-import android.databinding.ObservableList;
+import androidx.databinding.ObservableArrayList;
+import androidx.databinding.ObservableList;
 import android.os.Parcel;
 import android.os.Parcelable;
 

@@ -1,13 +1,15 @@
 package com.example.there.moviperfood.lifecycle;
 
 import android.app.Activity;
-import android.arch.lifecycle.Lifecycle;
-import android.arch.lifecycle.LifecycleObserver;
-import android.arch.lifecycle.OnLifecycleEvent;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.OnLifecycleEvent;
 import android.content.Intent;
 import android.provider.Settings;
-import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
+
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.core.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -115,9 +117,9 @@ public class ConnectivityComponent implements LifecycleObserver {
                 })
                 .setActionTextColor(color);
 
-        TextView textView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+        TextView textView = snackbar.getView().findViewById(R.id.snackbar_text);
         textView.setTextColor(color);
-        snackbar.setDuration(Snackbar.LENGTH_INDEFINITE);
+        snackbar.setDuration(BaseTransientBottomBar.LENGTH_INDEFINITE);
 
         if (!shouldShowSnackbarWithBottomMargin) {
             snackbar.show();

@@ -1,7 +1,7 @@
 package com.example.there.moviperfood.viper.reviews;
 
-import android.databinding.ObservableField;
-import android.databinding.ObservableList;
+import androidx.databinding.ObservableField;
+import androidx.databinding.ObservableList;
 import android.os.Parcel;
 import android.os.Parcelable;
 

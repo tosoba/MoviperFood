@@ -1,9 +1,9 @@
 package com.example.there.moviperfood.binding;
 
-import android.databinding.BindingAdapter;
+import androidx.databinding.BindingAdapter;
 import android.graphics.Color;
 import android.graphics.drawable.LayerDrawable;
-import android.support.v4.graphics.drawable.DrawableCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import android.widget.RatingBar;
 
 public class RatingBarBindings {
